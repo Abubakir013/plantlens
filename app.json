@@ -8,11 +8,14 @@
     "scheme": "plantlens",
     "userInterfaceStyle": "light",
     "ios": {
-      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.abubakir.plantlens",
+      "buildNumber": "1",
+      "icon": "./assets/images/icon.png",
+      "supportsTablet": false,
       "infoPlist": {
-        "NSCameraUsageDescription": "PlantLens uses your camera to identify plants in real time.",
-        "NSPhotoLibraryUsageDescription": "PlantLens needs photo access to identify plants from your gallery.",
-        "NSPhotoLibraryAddUsageDescription": "PlantLens saves identified plant photos to your library."
+        "NSCameraUsageDescription": "PlantLens uses your camera to photograph and identify plants in real time.",
+        "NSPhotoLibraryUsageDescription": "PlantLens accesses your photo library so you can identify plants from existing photos.",
+        "NSPhotoLibraryAddUsageDescription": "PlantLens saves photos of identified plants to your library."
       }
     },
     "android": {
