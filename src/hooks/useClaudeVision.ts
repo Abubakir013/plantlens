@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useLocale } from '@/hooks/useLocale';
-import { LANGUAGES } from '@/constants/languages';
+import { API_BASE_URL } from '@/api/config';
 
 export interface GuideTopic {
   id: string;
@@ -20,7 +20,6 @@ export interface PlantResult {
   guideTopics?: GuideTopic[];
 }
 
-// ─── Media type detection ─────────────────────────────────────────────────────
 type ImageMediaType = 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif';
 
 function detectMediaType(base64: string): ImageMediaType {
@@ -31,42 +30,6 @@ function detectMediaType(base64: string): ImageMediaType {
   return 'image/jpeg';
 }
 
-// ─── System prompt ────────────────────────────────────────────────────────────
-const BASE_SYSTEM_PROMPT = `You are a world-class botanist. When given a plant image, respond with ONLY a valid JSON object — no markdown fences, no prose before or after. Use exactly this structure:
-{
-  "name": "Common Plant Name",
-  "scientificName": "Genus species",
-  "confidence": 92,
-  "watering": "Short watering guidance",
-  "light": "Light requirement",
-  "temperature": "Ideal temperature range",
-  "toxicity": "Toxicity summary",
-  "funFact": "One fascinating fact",
-  "guideTopics": [
-    {"id":"watering","title":"Watering","summary":"One sentence."},
-    {"id":"pruning","title":"Pruning","summary":"One sentence."},
-    {"id":"propagation","title":"Propagation","summary":"One sentence."},
-    {"id":"repotting","title":"Repotting","summary":"One sentence."},
-    {"id":"fertilizing","title":"Fertilizing","summary":"One sentence."},
-    {"id":"sunlight","title":"Sunlight","summary":"One sentence."},
-    {"id":"temperature","title":"Temperature","summary":"One sentence."},
-    {"id":"soil","title":"Soil","summary":"One sentence."},
-    {"id":"commonProblems","title":"Common Problems","summary":"One sentence."}
-  ]
-}
-Rules: All JSON keys stay in English exactly as shown. scientificName stays in Latin — do not translate it. If no plant is visible: name="Unknown Plant", scientificName="N/A", confidence=0.`;
-
-function buildSystemPrompt(locale: string): string {
-  const lang = LANGUAGES.find((l) => l.code === locale);
-  const langName = lang?.englishName ?? 'English';
-  if (langName === 'English') return BASE_SYSTEM_PROMPT;
-  return (
-    BASE_SYSTEM_PROMPT +
-    `\n\nIMPORTANT: Translate ALL text values into ${langName}. Keep every JSON key in English. Keep scientificName in Latin. Translate guideTopics titles and summaries into ${langName}.`
-  );
-}
-
-// ─── Hook ─────────────────────────────────────────────────────────────────────
 export function useClaudeVision() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -78,39 +41,12 @@ export function useClaudeVision() {
       setError(null);
 
       try {
-        const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
-        if (!apiKey) throw new Error('EXPO_PUBLIC_ANTHROPIC_API_KEY is not set');
-
         const mediaType = detectMediaType(base64Image);
 
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
+        const response = await fetch(`${API_BASE_URL}/identify`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': apiKey,
-            'anthropic-version': '2023-06-01',
-          },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-6',
-            max_tokens: 1200,
-            system: buildSystemPrompt(locale),
-            messages: [
-              {
-                role: 'user',
-                content: [
-                  {
-                    type: 'image',
-                    source: {
-                      type: 'base64',
-                      media_type: mediaType,
-                      data: base64Image,
-                    },
-                  },
-                  { type: 'text', text: 'Identify this plant.' },
-                ],
-              },
-            ],
-          }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ base64: base64Image, mediaType, language: locale }),
         });
 
         if (!response.ok) {
@@ -118,41 +54,18 @@ export function useClaudeVision() {
           throw new Error(`API ${response.status}: ${errText}`);
         }
 
-        // response.json() gives us the parsed Anthropic envelope — never call
-        // JSON.parse() on it again or you get "Unexpected character: 'o'".
-        const envelope = await response.json();
-        const raw: string =
-          typeof envelope?.content?.[0]?.text === 'string'
-            ? envelope.content[0].text
-            : '';
-
-        console.log('[Claude] raw response:', raw.slice(0, 200));
-
-        // Strip markdown fences, then pull the first {...} block so any prose
-        // preamble from non-English locale instructions is safely ignored.
-        const fenceless = raw.replace(/```json|```/g, '').trim();
-        const jsonMatch = fenceless.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error('No JSON object found in Claude response');
-
-        let parsed: Record<string, unknown>;
-        try {
-          parsed = JSON.parse(jsonMatch[0]);
-        } catch (parseErr) {
-          console.log('[Claude] JSON.parse failed on:', jsonMatch[0].slice(0, 300));
-          throw new Error(`JSON parse failed: ${parseErr}`);
-        }
-
-        const gt = parsed.guideTopics;
+        const data = (await response.json()) as Record<string, unknown>;
+        const gt = data.guideTopics;
 
         return {
-          name: (parsed.name as string) ?? 'Unknown Plant',
-          scientificName: (parsed.scientificName as string) ?? 'N/A',
-          confidence: typeof parsed.confidence === 'number' ? parsed.confidence : 0,
-          watering: (parsed.watering as string) ?? '',
-          light: (parsed.light as string) ?? '',
-          temperature: (parsed.temperature as string) ?? '',
-          toxicity: (parsed.toxicity as string) ?? '',
-          funFact: (parsed.funFact as string) ?? '',
+          name: (data.name as string) ?? 'Unknown Plant',
+          scientificName: (data.scientificName as string) ?? 'N/A',
+          confidence: typeof data.confidence === 'number' ? data.confidence : 0,
+          watering: (data.watering as string) ?? '',
+          light: (data.light as string) ?? '',
+          temperature: (data.temperature as string) ?? '',
+          toxicity: (data.toxicity as string) ?? '',
+          funFact: (data.funFact as string) ?? '',
           guideTopics: Array.isArray(gt)
             ? (gt as GuideTopic[]).filter(
                 (t) => t && typeof t.id === 'string' && typeof t.title === 'string'
@@ -161,7 +74,7 @@ export function useClaudeVision() {
         };
       } catch (e) {
         const msg = e instanceof Error ? e.message : 'Failed to identify plant';
-        console.log('[Claude] identify error:', msg);
+        console.log('[identify] error:', msg);
         setError(msg);
         return null;
       } finally {

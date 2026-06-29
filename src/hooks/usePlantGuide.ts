@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useCallback } from 'react';
-import { LANGUAGES } from '@/constants/languages';
+import { API_BASE_URL } from '@/api/config';
 import type { SavedPlant } from '@/hooks/usePlantCollection';
 
 
@@ -28,53 +28,17 @@ function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-// ─── Language name lookup ─────────────────────────────────────────────────────
-function langName(locale: string): string {
-  const lang = LANGUAGES.find((l) => l.code === locale);
-  return lang?.englishName ?? 'English';
-}
-
-// ─── Prompt ───────────────────────────────────────────────────────────────────
-function buildGuidePrompt(latinName: string, topicTitle: string, locale: string): string {
-  const lang = langName(locale);
-  return (
-    `You are an expert botanist. Write an in-depth care guide about "${topicTitle}" specifically for ${latinName}.\n` +
-    `Respond with ONLY a valid JSON object — no markdown fences, no prose:\n` +
-    `{\n` +
-    `  "title": "Guide title",\n` +
-    `  "seasonOrKeyFacts": "One sentence: best season, timing, or 2-3 key facts",\n` +
-    `  "benefits": ["Benefit 1", "Benefit 2", "Benefit 3"],\n` +
-    `  "detailedText": "2-3 paragraphs of expert, plant-specific guidance.",\n` +
-    `  "tips": ["Practical tip 1", "Practical tip 2", "Practical tip 3", "Practical tip 4"]\n` +
-    `}\n` +
-    `Rules: JSON keys in English. Translate ALL text values into ${lang}.`
-  );
-}
-
-// ─── Core Anthropic fetch (single attempt, throws on failure) ─────────────────
-async function callAnthropicForGuide(
+// ─── Core proxy fetch (single attempt, throws on failure) ─────────────────────
+async function callProxyForGuide(
   latinName: string,
+  topicId: string,
   topicTitle: string,
   language: string
 ): Promise<PlantGuide> {
-  const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('EXPO_PUBLIC_ANTHROPIC_API_KEY is not set');
-
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetch(`${API_BASE_URL}/guide`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1500,
-      system: buildGuidePrompt(latinName, topicTitle, language),
-      messages: [
-        { role: 'user', content: `Write the ${topicTitle} guide for ${latinName}.` },
-      ],
-    }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ plantLatinName: latinName, topicId, topicTitle, language }),
   });
 
   if (!response.ok) {
@@ -82,21 +46,13 @@ async function callAnthropicForGuide(
     throw new Error(`API ${response.status}: ${errText}`);
   }
 
-  const envelope = await response.json();
-  const raw: string =
-    typeof envelope?.content?.[0]?.text === 'string' ? envelope.content[0].text : '';
-
-  const fenceless = raw.replace(/```json|```/g, '').trim();
-  const jsonMatch = fenceless.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error('No JSON in guide response');
-
-  const parsed = JSON.parse(jsonMatch[0]) as Record<string, unknown>;
+  const data = (await response.json()) as Record<string, unknown>;
   return {
-    title: (parsed.title as string) ?? topicTitle,
-    seasonOrKeyFacts: (parsed.seasonOrKeyFacts as string) ?? '',
-    benefits: Array.isArray(parsed.benefits) ? (parsed.benefits as string[]) : [],
-    detailedText: (parsed.detailedText as string) ?? '',
-    tips: Array.isArray(parsed.tips) ? (parsed.tips as string[]) : [],
+    title: (data.title as string) ?? topicTitle,
+    seasonOrKeyFacts: (data.seasonOrKeyFacts as string) ?? '',
+    benefits: Array.isArray(data.benefits) ? (data.benefits as string[]) : [],
+    detailedText: (data.detailedText as string) ?? '',
+    tips: Array.isArray(data.tips) ? (data.tips as string[]) : [],
   };
 }
 
@@ -117,7 +73,7 @@ function fetchOneWithRetry(
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
       if (attempt > 0) await sleep(700 * attempt); // 700ms → 1400ms backoff
       try {
-        const guide = await callAnthropicForGuide(latinName, topicTitle, language);
+        const guide = await callProxyForGuide(latinName, topicId, topicTitle, language);
         guideCache.set(key, guide);
         return guide;
       } catch (e) {

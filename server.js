@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-const MODEL = 'claude-sonnet-4-6';
+const MODEL = 'claude-3-5-sonnet-20240620';
 
 // Inline .env loader — no dotenv package required
 try {
@@ -270,8 +270,8 @@ const server = http.createServer(async (req, res) => {
   send(res, 404, { error: 'Not found' });
 });
 
-server.listen(PORT, () => {
-  console.log(`🌿  PlantLens server → http://localhost:${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌿  PlantLens server → http://0.0.0.0:${PORT}`);
   console.log(`    POST /identify   plant identification`);
   console.log(`    POST /guide      topic deep-dive`);
 });
