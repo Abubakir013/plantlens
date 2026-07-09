@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
-import Svg, { G, Path } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 
 import { Colors } from '@/constants/colors';
 
@@ -10,21 +10,21 @@ interface Props {
 
 export function LeafLoader({ label = '' }: Props) {
   const spinAnim = useRef(new Animated.Value(0)).current;
-  const opacityAnim = useRef(new Animated.Value(0.6)).current;
+  const pulseAnim = useRef(new Animated.Value(0.65)).current;
 
   useEffect(() => {
     Animated.loop(
       Animated.timing(spinAnim, {
         toValue: 1,
-        duration: 1400,
+        duration: 1800,
         useNativeDriver: true,
       }),
     ).start();
 
     Animated.loop(
       Animated.sequence([
-        Animated.timing(opacityAnim, { toValue: 1, duration: 700, useNativeDriver: true }),
-        Animated.timing(opacityAnim, { toValue: 0.6, duration: 700, useNativeDriver: true }),
+        Animated.timing(pulseAnim, { toValue: 1, duration: 950, useNativeDriver: true }),
+        Animated.timing(pulseAnim, { toValue: 0.65, duration: 950, useNativeDriver: true }),
       ]),
     ).start();
   }, []);
@@ -36,34 +36,36 @@ export function LeafLoader({ label = '' }: Props) {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{ transform: [{ rotate }] }}>
-        <Svg width={64} height={64} viewBox="0 0 64 64">
-          <G transform="translate(32,32)">
-            {/* Main leaf body */}
+      <View style={styles.loaderWrap}>
+        {/* Spinning arc ring */}
+        <Animated.View style={[StyleSheet.absoluteFill, { transform: [{ rotate }] }]}>
+          <Svg width={64} height={64} viewBox="0 0 64 64">
+            {/* Track */}
+            <Circle cx={32} cy={32} r={26} stroke="#D8E6DE" strokeWidth={3} fill="none" />
+            {/* 270° arc (12 o'clock → 9 o'clock, clockwise) */}
             <Path
-              d="M0 -26 C12 -22 22 -12 22 0 C22 14 12 22 0 24 C-12 22 -22 14 -22 0 C-22 -12 -12 -22 0 -26 Z"
-              fill="#4ADE80"
-            />
-            {/* Central vein */}
-            <Path
-              d="M0 -23 C1 -12 1 0 0 14 C0 20 0 22 0 24"
-              stroke="#16A34A"
-              strokeWidth={2}
+              d="M32 6 A26 26 0 1 1 6 32"
+              stroke="#1B4332"
+              strokeWidth={3}
               fill="none"
               strokeLinecap="round"
             />
-            {/* Left veins */}
-            <Path d="M0 -6 C-5 -2 -11 2 -16 6" stroke="#16A34A" strokeWidth={1.2} fill="none" strokeLinecap="round" opacity={0.7} />
-            <Path d="M0 4 C-5 7 -10 10 -14 14" stroke="#16A34A" strokeWidth={1.2} fill="none" strokeLinecap="round" opacity={0.7} />
-            {/* Right veins */}
-            <Path d="M0 -6 C5 -2 11 2 16 6" stroke="#16A34A" strokeWidth={1.2} fill="none" strokeLinecap="round" opacity={0.7} />
-            <Path d="M0 4 C5 7 10 10 14 14" stroke="#16A34A" strokeWidth={1.2} fill="none" strokeLinecap="round" opacity={0.7} />
-            {/* Stem nub */}
-            <Path d="M0 22 C0 27 2 30 0 32" stroke="#16A34A" strokeWidth={2.5} fill="none" strokeLinecap="round" />
-          </G>
-        </Svg>
-      </Animated.View>
-      <Animated.Text style={[styles.label, { opacity: opacityAnim }]}>{label}</Animated.Text>
+          </Svg>
+        </Animated.View>
+        {/* Centre leaf — pulsing */}
+        <Animated.View style={{ opacity: pulseAnim }}>
+          <Svg width={22} height={22} viewBox="0 0 22 22">
+            <Path
+              d="M11 20 C6 17 2 12 3 7 C5 9 7 11 9 13 C10 10 9 6 11 3 C13 6 12 10 13 13 C15 11 17 9 19 7 C20 12 16 17 11 20 Z"
+              fill="#2D6A4F"
+              opacity={0.88}
+            />
+          </Svg>
+        </Animated.View>
+      </View>
+      {label ? (
+        <Animated.Text style={[styles.label, { opacity: pulseAnim }]}>{label}</Animated.Text>
+      ) : null}
     </View>
   );
 }
@@ -72,12 +74,19 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+    gap: 18,
+  },
+  loaderWrap: {
+    width: 64,
+    height: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   label: {
-    fontSize: 15,
-    color: Colors.darkGreen,
+    fontSize: 14,
+    color: Colors.textSecondary,
     fontWeight: '500',
-    letterSpacing: 0.3,
+    letterSpacing: 0.4,
+    fontFamily: 'Inter_400Regular',
   },
 });

@@ -14,6 +14,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 
+import { Droplet, Skull, Sparkles, Sun, Thermometer } from 'lucide-react-native';
+
 import { FloralDivider } from '@/components/FloralDivider';
 import { GreenButton } from '@/components/GreenButton';
 import { InfoChip } from '@/components/InfoChip';
@@ -28,28 +30,28 @@ function LeafAccent() {
     <Svg width={28} height={28} viewBox="0 0 28 28">
       <Path
         d="M14 3 C10 5 6 9 6 13 C6 17 9 20 13 21 C13 19 11 15 12 12 C14 16 17 19 20 19 C22 17 23 14 23 11 C23 8 21 5 14 3 Z"
-        fill="#4ADE80"
-        opacity={0.85}
+        fill="#2D6A4F"
+        opacity={0.88}
       />
       <Path
         d="M13 21 C13.5 17 14.5 13 16 10"
-        stroke="#16A34A"
+        stroke="#1B4332"
         strokeWidth={1.5}
         fill="none"
         strokeLinecap="round"
-        opacity={0.6}
+        opacity={0.5}
       />
     </Svg>
   );
 }
 
 function InfoCard({
-  emoji,
+  Icon,
   title,
   value,
   accent,
 }: {
-  emoji: string;
+  Icon: React.ComponentType<{ size?: number; color?: string }>;
   title: string;
   value: string;
   accent?: boolean;
@@ -57,7 +59,7 @@ function InfoCard({
   return (
     <View style={[styles.infoCard, accent && styles.infoCardAccent]}>
       <View style={styles.infoCardHeader}>
-        <Text style={styles.infoEmoji}>{emoji}</Text>
+        <Icon size={18} color={Colors.textMuted} />
         <Text style={styles.infoTitle}>{title}</Text>
       </View>
       <Text style={styles.infoValue}>{value}</Text>
@@ -66,8 +68,8 @@ function InfoCard({
 }
 
 function ConfidenceBadge({ value, label }: { value: number; label: string }) {
-  const color = value >= 80 ? Colors.darkGreen : value >= 50 ? '#F59E0B' : '#EF4444';
-  const bg = value >= 80 ? '#DCFCE7' : value >= 50 ? '#FEF3C7' : '#FEE2E2';
+  const color = value >= 80 ? Colors.darkGreen : value >= 50 ? '#B45309' : '#EF4444';
+  const bg = value >= 80 ? Colors.mintMid : value >= 50 ? '#FEF3C7' : '#FEE2E2';
   return (
     <View style={[styles.confidenceBadge, { backgroundColor: bg }]}>
       <Svg width={10} height={10} viewBox="0 0 10 10">
@@ -149,7 +151,7 @@ export default function PlantDetailScreen() {
         <View style={styles.imageWrapper}>
           <Image source={{ uri: plant.imageUri }} style={styles.heroImage} resizeMode="cover" />
           <LinearGradient
-            colors={['transparent', 'rgba(240,253,244,0.95)']}
+            colors={['transparent', 'rgba(243,246,241,0.97)']}
             style={styles.imageGradient}
           />
           <View style={styles.imageHeader}>
@@ -208,11 +210,11 @@ export default function PlantDetailScreen() {
           {/* Care info grid */}
           <Text style={styles.sectionLabel}>{t('result.careGuide')}</Text>
           <View style={styles.infoGrid}>
-            <InfoCard emoji="💧" title={t('result.watering')} value={plant.watering ?? ''} />
-            <InfoCard emoji="☀️" title={t('result.light')} value={plant.light ?? ''} />
-            <InfoCard emoji="🌡️" title={t('result.temperature')} value={plant.temperature ?? ''} />
+            <InfoCard Icon={Droplet}     title={t('result.watering')}    value={plant.watering ?? ''} />
+            <InfoCard Icon={Sun}         title={t('result.light')}       value={plant.light ?? ''} />
+            <InfoCard Icon={Thermometer} title={t('result.temperature')} value={plant.temperature ?? ''} />
             <InfoCard
-              emoji="☠️"
+              Icon={Skull}
               title={t('result.toxicity')}
               value={plant.toxicity ?? ''}
               accent={(plant.toxicity ?? '').toLowerCase().includes('toxic')}
@@ -224,7 +226,7 @@ export default function PlantDetailScreen() {
           {/* Fun fact */}
           <View style={styles.funFactCard}>
             <View style={styles.funFactHeader}>
-              <Text style={styles.funFactEmoji}>🌟</Text>
+              <Sparkles size={20} color={Colors.darkGreen} />
               <Text style={styles.funFactTitle}>{t('result.funFact')}</Text>
             </View>
             <Text style={styles.funFactText}>{plant.funFact ?? ''}</Text>
@@ -414,7 +416,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  infoEmoji: { fontSize: 18 },
   infoTitle: {
     fontSize: 13,
     fontWeight: '600',
@@ -442,7 +443,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  funFactEmoji: { fontSize: 20 },
   funFactTitle: {
     fontSize: 15,
     fontWeight: '700',
@@ -481,9 +481,9 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 14,
     borderRadius: 14,
-    borderWidth: 2,
-    borderColor: Colors.primaryGreen,
-    backgroundColor: 'rgba(74, 222, 128, 0.08)',
+    borderWidth: 1.5,
+    borderColor: Colors.forestMid,
+    backgroundColor: 'rgba(45, 106, 79, 0.06)',
   },
   shareBtnText: {
     fontSize: 16,

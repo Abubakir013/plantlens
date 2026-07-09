@@ -1,53 +1,50 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Svg, { Circle, G, Path } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 
 interface Props {
   width?: number;
 }
 
-function TinyFlower({ x, y }: { x: number; y: number }) {
-  const angles = [0, 72, 144, 216, 288];
-  return (
-    <G>
-      {angles.map((deg, i) => {
-        const rad = (deg * Math.PI) / 180;
-        return (
-          <Circle
-            key={i}
-            cx={x + Math.cos(rad) * 5}
-            cy={y + Math.sin(rad) * 5}
-            r={3.2}
-            fill="#4ADE80"
-            opacity={0.8}
-          />
-        );
-      })}
-      <Circle cx={x} cy={y} r={2.8} fill="#FDE68A" />
-    </G>
-  );
-}
-
 export function FloralDivider({ width = 300 }: Props) {
-  const h = 32;
+  const h = 24;
   const mid = h / 2;
-  const w = width;
+  const cx = width / 2;
+  const gap = 30;
 
   return (
     <View style={styles.container}>
-      <Svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
-        {/* Wavy vine */}
+      <Svg width={width} height={h} viewBox={`0 0 ${width} ${h}`}>
+        {/* Left rule */}
         <Path
-          d={`M16 ${mid} C${w * 0.15} ${mid - 7} ${w * 0.25} ${mid + 7} ${w * 0.35} ${mid} C${w * 0.45} ${mid - 7} ${w * 0.55} ${mid + 7} ${w * 0.65} ${mid} C${w * 0.75} ${mid - 7} ${w * 0.85} ${mid + 7} ${w - 16} ${mid}`}
-          stroke="#4ADE80"
-          strokeWidth={1.5}
-          fill="none"
+          d={`M0 ${mid} L${cx - gap} ${mid}`}
+          stroke="#2D6A4F"
+          strokeWidth={0.75}
           strokeLinecap="round"
-          opacity={0.65}
+          opacity={0.30}
         />
-        <TinyFlower x={w * 0.2} y={mid - 3} />
-        <TinyFlower x={w * 0.5} y={mid + 3} />
-        <TinyFlower x={w * 0.8} y={mid - 3} />
+        {/* Right rule */}
+        <Path
+          d={`M${cx + gap} ${mid} L${width} ${mid}`}
+          stroke="#2D6A4F"
+          strokeWidth={0.75}
+          strokeLinecap="round"
+          opacity={0.30}
+        />
+        {/* Left leaf */}
+        <Path
+          d={`M${cx - 4} ${mid} C${cx - 12} ${mid - 6} ${cx - 25} ${mid - 4} ${cx - 27} ${mid} C${cx - 25} ${mid + 4} ${cx - 12} ${mid + 6} ${cx - 4} ${mid} Z`}
+          fill="#2D6A4F"
+          opacity={0.50}
+        />
+        {/* Right leaf */}
+        <Path
+          d={`M${cx + 4} ${mid} C${cx + 12} ${mid - 6} ${cx + 25} ${mid - 4} ${cx + 27} ${mid} C${cx + 25} ${mid + 4} ${cx + 12} ${mid + 6} ${cx + 4} ${mid} Z`}
+          fill="#2D6A4F"
+          opacity={0.50}
+        />
+        {/* Centre dot */}
+        <Circle cx={cx} cy={mid} r={1.8} fill="#2D6A4F" opacity={0.55} />
       </Svg>
     </View>
   );

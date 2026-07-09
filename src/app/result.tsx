@@ -1,8 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
+  Animated,
   Image,
   ScrollView,
   Share,
@@ -13,6 +14,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
+
+import { Droplet, Skull, Sparkles, Sun, Thermometer } from 'lucide-react-native';
 
 import { FloralDivider } from '@/components/FloralDivider';
 import { GreenButton } from '@/components/GreenButton';
@@ -30,28 +33,28 @@ function LeafAccent() {
     <Svg width={28} height={28} viewBox="0 0 28 28">
       <Path
         d="M14 3 C10 5 6 9 6 13 C6 17 9 20 13 21 C13 19 11 15 12 12 C14 16 17 19 20 19 C22 17 23 14 23 11 C23 8 21 5 14 3 Z"
-        fill="#4ADE80"
-        opacity={0.85}
+        fill="#2D6A4F"
+        opacity={0.88}
       />
       <Path
         d="M13 21 C13.5 17 14.5 13 16 10"
-        stroke="#16A34A"
+        stroke="#1B4332"
         strokeWidth={1.5}
         fill="none"
         strokeLinecap="round"
-        opacity={0.6}
+        opacity={0.5}
       />
     </Svg>
   );
 }
 
 function InfoCard({
-  emoji,
+  Icon,
   title,
   value,
   accent,
 }: {
-  emoji: string;
+  Icon: React.ComponentType<{ size?: number; color?: string }>;
   title: string;
   value: string;
   accent?: boolean;
@@ -59,7 +62,7 @@ function InfoCard({
   return (
     <View style={[styles.infoCard, accent && styles.infoCardAccent]}>
       <View style={styles.infoCardHeader}>
-        <Text style={styles.infoEmoji}>{emoji}</Text>
+        <Icon size={18} color={Colors.textMuted} />
         <Text style={styles.infoTitle}>{title}</Text>
       </View>
       <Text style={styles.infoValue}>{value}</Text>
@@ -68,8 +71,8 @@ function InfoCard({
 }
 
 function ConfidenceBadge({ value, label }: { value: number; label: string }) {
-  const color = value >= 80 ? Colors.darkGreen : value >= 50 ? '#F59E0B' : '#EF4444';
-  const bg = value >= 80 ? '#DCFCE7' : value >= 50 ? '#FEF3C7' : '#FEE2E2';
+  const color = value >= 80 ? Colors.darkGreen : value >= 50 ? '#B45309' : '#EF4444';
+  const bg = value >= 80 ? Colors.mintMid : value >= 50 ? '#FEF3C7' : '#FEE2E2';
   return (
     <View style={[styles.confidenceBadge, { backgroundColor: bg }]}>
       <Svg width={10} height={10} viewBox="0 0 10 10">
@@ -86,6 +89,24 @@ export default function ResultScreen() {
   const { savePlant, plants } = usePlantCollection();
   const { t, locale } = useLocale();
   const [saved, setSaved] = useState(false);
+
+  // Card entrance animation
+  const cardAnim = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.spring(cardAnim, {
+      toValue: 1,
+      tension: 60,
+      friction: 13,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+  const cardStyle = {
+    opacity: cardAnim,
+    transform: [
+      { translateY: cardAnim.interpolate({ inputRange: [0, 1], outputRange: [48, 0] }) },
+      { scale: cardAnim.interpolate({ inputRange: [0, 1], outputRange: [0.96, 1] }) },
+    ],
+  };
 
   if (!result || !imageUri) {
     return (
@@ -162,7 +183,7 @@ export default function ResultScreen() {
         <View style={styles.imageWrapper}>
           <Image source={{ uri: imageUri }} style={styles.heroImage} resizeMode="cover" />
           <LinearGradient
-            colors={['transparent', 'rgba(240,253,244,0.95)']}
+            colors={['transparent', 'rgba(243,246,241,0.97)']}
             style={styles.imageGradient}
           />
           {/* Back / Close buttons */}
@@ -202,8 +223,18 @@ export default function ResultScreen() {
           </View>
         </View>
 
-        {/* Content card */}
-        <View style={styles.contentCard}>
+        {/* Content card — animates in */}
+        <Animated.View style={[styles.contentCard, cardStyle]}>
+          {/* Orchid photo accent — dark panel blends black bg seamlessly */}
+          <View style={styles.cardOrchidWatermark} pointerEvents="none">
+            <View style={styles.orchidPanel}>
+              <Image
+                source={require('../../assets/images/flower-orchid.png')}
+                style={styles.orchidPanelImg}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
           {/* Plant name */}
           <View style={styles.nameSection}>
             <View style={styles.nameRow}>
@@ -228,11 +259,11 @@ export default function ResultScreen() {
           {/* Care info grid */}
           <Text style={styles.sectionLabel}>{t('result.careGuide')}</Text>
           <View style={styles.infoGrid}>
-            <InfoCard emoji="💧" title={t('result.watering')} value={result.watering} />
-            <InfoCard emoji="☀️" title={t('result.light')} value={result.light} />
-            <InfoCard emoji="🌡️" title={t('result.temperature')} value={result.temperature} />
+            <InfoCard Icon={Droplet}     title={t('result.watering')}     value={result.watering} />
+            <InfoCard Icon={Sun}         title={t('result.light')}        value={result.light} />
+            <InfoCard Icon={Thermometer} title={t('result.temperature')}  value={result.temperature} />
             <InfoCard
-              emoji="☠️"
+              Icon={Skull}
               title={t('result.toxicity')}
               value={result.toxicity}
               accent={result.toxicity.toLowerCase().includes('toxic')}
@@ -244,7 +275,7 @@ export default function ResultScreen() {
           {/* Fun fact */}
           <View style={styles.funFactCard}>
             <View style={styles.funFactHeader}>
-              <Text style={styles.funFactEmoji}>🌟</Text>
+              <Sparkles size={20} color={Colors.darkGreen} />
               <Text style={styles.funFactTitle}>{t('result.funFact')}</Text>
             </View>
             <Text style={styles.funFactText}>{result.funFact}</Text>
@@ -296,7 +327,7 @@ export default function ResultScreen() {
               <Text style={styles.shareBtnText}>{t('common.share')}</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </Animated.View>
 
         <View style={{ height: 32 }} />
       </ScrollView>
@@ -361,6 +392,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 24,
     gap: 16,
+    overflow: 'hidden',
+  },
+  cardOrchidWatermark: {
+    position: 'absolute',
+    bottom: 52,
+    right: -28,
+    opacity: 0.20,
+    transform: [{ rotate: '-16deg' }],
+    zIndex: 0,
+  },
+  orchidPanel: {
+    width: 110,
+    height: 130,
+    borderRadius: 18,
+    overflow: 'hidden',
+    backgroundColor: '#F3F6F1',
+  },
+  orchidPanelImg: {
+    width: 110,
+    height: 130,
   },
   nameSection: {
     gap: 8,
@@ -436,7 +487,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  infoEmoji: { fontSize: 18 },
   infoTitle: {
     fontSize: 13,
     fontWeight: '600',
@@ -464,7 +514,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  funFactEmoji: { fontSize: 20 },
   funFactTitle: {
     fontSize: 15,
     fontWeight: '700',
@@ -491,9 +540,9 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 14,
     borderRadius: 14,
-    borderWidth: 2,
-    borderColor: Colors.primaryGreen,
-    backgroundColor: 'rgba(74, 222, 128, 0.08)',
+    borderWidth: 1.5,
+    borderColor: Colors.forestMid,
+    backgroundColor: 'rgba(45, 106, 79, 0.06)',
   },
   shareBtnText: {
     fontSize: 16,

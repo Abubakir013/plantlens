@@ -6,6 +6,7 @@ import { router } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
+  Animated,
   Dimensions,
   Image,
   StyleSheet,
@@ -16,6 +17,8 @@ import {
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 
+import { Camera } from 'lucide-react-native';
+
 import { LeafLoader } from '@/components/LeafLoader';
 import { Colors } from '@/constants/colors';
 import { useClaudeVision } from '@/hooks/useClaudeVision';
@@ -23,12 +26,10 @@ import { useLocale } from '@/hooks/useLocale';
 import { pendingImageStore } from '@/stores/pendingImageStore';
 import { plantResultStore } from '@/stores/plantResultStore';
 
-const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
-
+const { width: SCREEN_W } = Dimensions.get('window');
+const FRAME_SIZE = SCREEN_W * 0.72;
 const MAX_API_EDGE = 1568;
 
-// Downscale only if the longest edge exceeds MAX_API_EDGE (never upscale).
-// Returns just the base64 for the API — the original URI is kept for display.
 async function resizeForAPI(uri: string, srcW: number, srcH: number): Promise<string> {
   const longest = Math.max(srcW, srcH);
   const result = await ImageManipulator.manipulateAsync(
@@ -41,6 +42,176 @@ async function resizeForAPI(uri: string, srcW: number, srcH: number): Promise<st
   return result.base64 ?? '';
 }
 
+// ── Animated scanning line ────────────────────────────────────────────────────
+function ScanLine() {
+  const progress = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const anim = Animated.loop(
+      Animated.timing(progress, { toValue: 1, duration: 2400, useNativeDriver: true })
+    );
+    anim.start();
+    return () => anim.stop();
+  }, []);
+
+  const translateY = progress.interpolate({
+    inputRange: [0, 0.9, 1],
+    outputRange: [0, FRAME_SIZE - 2, FRAME_SIZE - 2],
+  });
+  const opacity = progress.interpolate({
+    inputRange: [0, 0.06, 0.86, 0.94, 1],
+    outputRange: [0, 0.9, 0.9, 0, 0],
+  });
+
+  return (
+    <Animated.View
+      pointerEvents="none"
+      style={{ position: 'absolute', left: 0, right: 0, top: 0, opacity, transform: [{ translateY }] }}
+    >
+      <LinearGradient
+        colors={['transparent', 'rgba(82,183,136,0.9)', 'transparent']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{ height: 1.5 }}
+      />
+      <LinearGradient
+        colors={['transparent', 'rgba(82,183,136,0.18)', 'transparent']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{ height: 10, marginTop: -4 }}
+      />
+    </Animated.View>
+  );
+}
+
+// ── Pulsing corner brackets ───────────────────────────────────────────────────
+const CORNER_DEFS = [
+  { top: 0, left: 0, borderTopWidth: 2.5, borderLeftWidth: 2.5 },
+  { top: 0, right: 0, borderTopWidth: 2.5, borderRightWidth: 2.5 },
+  { bottom: 0, left: 0, borderBottomWidth: 2.5, borderLeftWidth: 2.5 },
+  { bottom: 0, right: 0, borderBottomWidth: 2.5, borderRightWidth: 2.5 },
+] as const;
+
+function PulsingCorners() {
+  const pulse = useRef(new Animated.Value(0.55)).current;
+
+  useEffect(() => {
+    const anim = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, { toValue: 1, duration: 1100, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 0.55, duration: 1100, useNativeDriver: true }),
+      ])
+    );
+    anim.start();
+    return () => anim.stop();
+  }, []);
+
+  return (
+    <>
+      {CORNER_DEFS.map((corner, i) => (
+        <Animated.View
+          key={i}
+          style={[styles.corner, corner, { borderColor: Colors.primaryGreen, opacity: pulse }]}
+        />
+      ))}
+    </>
+  );
+}
+
+// ── Single floating botanical particle ───────────────────────────────────────
+function FloatingParticle({ leftPx, size, startDelay, cycleDuration }: {
+  leftPx: number;
+  size: number;
+  startDelay: number;
+  cycleDuration: number;
+}) {
+  const progress = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const anim = Animated.loop(
+      Animated.sequence([
+        Animated.delay(startDelay),
+        Animated.timing(progress, { toValue: 1, duration: cycleDuration, useNativeDriver: true }),
+      ])
+    );
+    anim.start();
+    return () => anim.stop();
+  }, []);
+
+  const translateY = progress.interpolate({
+    inputRange: [0, 0.08, 0.82, 0.92, 1],
+    outputRange: [
+      FRAME_SIZE * 0.88,
+      FRAME_SIZE * 0.78,
+      FRAME_SIZE * 0.06,
+      FRAME_SIZE * 0.02,
+      FRAME_SIZE * 0.88,
+    ],
+  });
+  const opacity = progress.interpolate({
+    inputRange: [0, 0.08, 0.72, 0.9, 1],
+    outputRange: [0, 0.5, 0.5, 0, 0],
+  });
+
+  return (
+    <Animated.View
+      pointerEvents="none"
+      style={{ position: 'absolute', left: leftPx, top: 0, opacity, transform: [{ translateY }] }}
+    >
+      <Svg width={size} height={Math.round(size * 1.5)} viewBox="0 0 8 12">
+        <Path
+          d="M4 12 C2 10 0 7 1 4 C2 6 3 8 4 9 C4 6 3 2 4 0 C5 2 4 6 4 9 C5 8 6 6 7 4 C8 7 6 10 4 12Z"
+          fill="#52B788"
+          opacity={0.9}
+        />
+      </Svg>
+    </Animated.View>
+  );
+}
+
+// ── Expanding ring around capture button ─────────────────────────────────────
+function CaptureRing({ active }: { active: boolean }) {
+  const scale = useRef(new Animated.Value(1)).current;
+  const opacity = useRef(new Animated.Value(0.45)).current;
+
+  useEffect(() => {
+    if (!active) return;
+    const anim = Animated.loop(
+      Animated.sequence([
+        Animated.parallel([
+          Animated.timing(scale, { toValue: 1.40, duration: 1600, useNativeDriver: true }),
+          Animated.timing(opacity, { toValue: 0, duration: 1600, useNativeDriver: true }),
+        ]),
+        Animated.parallel([
+          Animated.timing(scale, { toValue: 1, duration: 0, useNativeDriver: true }),
+          Animated.timing(opacity, { toValue: 0.45, duration: 0, useNativeDriver: true }),
+        ]),
+      ])
+    );
+    anim.start();
+    return () => anim.stop();
+  }, [active]);
+
+  if (!active) return null;
+
+  return (
+    <Animated.View
+      pointerEvents="none"
+      style={{
+        position: 'absolute',
+        width: 86,
+        height: 86,
+        borderRadius: 43,
+        borderWidth: 1.5,
+        borderColor: Colors.primaryGreen,
+        opacity,
+        transform: [{ scale }],
+      }}
+    />
+  );
+}
+
+// ── Back button ───────────────────────────────────────────────────────────────
 function BackButton({ onPress }: { onPress: () => void }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.backBtn} activeOpacity={0.8}>
@@ -57,6 +228,7 @@ function BackButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+// ── Permission screen ─────────────────────────────────────────────────────────
 function PermissionScreen({ onRequest, title, text, btnLabel }: {
   onRequest: () => void;
   title: string;
@@ -65,11 +237,11 @@ function PermissionScreen({ onRequest, title, text, btnLabel }: {
 }) {
   return (
     <SafeAreaView style={styles.permissionContainer} edges={['top', 'bottom']}>
-      <Text style={styles.permissionEmoji}>📷</Text>
+      <Camera size={56} color={Colors.darkGreen} />
       <Text style={styles.permissionTitle}>{title}</Text>
       <Text style={styles.permissionText}>{text}</Text>
       <TouchableOpacity style={styles.permissionBtn} onPress={onRequest} activeOpacity={0.85}>
-        <LinearGradient colors={['#4ADE80', '#16A34A']} style={styles.permissionGradient}>
+        <LinearGradient colors={['#2D6A4F', '#143026']} style={styles.permissionGradient}>
           <Text style={styles.permissionBtnText}>{btnLabel}</Text>
         </LinearGradient>
       </TouchableOpacity>
@@ -77,6 +249,7 @@ function PermissionScreen({ onRequest, title, text, btnLabel }: {
   );
 }
 
+// ── Main screen ───────────────────────────────────────────────────────────────
 export default function IdentifyScreen() {
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef<CameraView>(null);
@@ -84,11 +257,8 @@ export default function IdentifyScreen() {
   const { t } = useLocale();
   const insets = useSafeAreaInsets();
 
-  // DEBUG: show exact technical error whenever the hook reports one
   useEffect(() => {
-    if (error) {
-      Alert.alert(t('common.error'), error ?? t('identify.unknownError'));
-    }
+    if (error) Alert.alert(t('common.error'), error ?? t('identify.unknownError'));
   }, [error]);
 
   const [capturedUri, setCapturedUri] = useState<string | null>(null);
@@ -96,7 +266,6 @@ export default function IdentifyScreen() {
   const [cameraReady, setCameraReady] = useState(false);
   const [facing, setFacing] = useState<'back' | 'front'>('back');
 
-  // Pick up any image pre-loaded from the gallery picker on the Home screen
   useEffect(() => {
     const uri = pendingImageStore.getUri();
     const b64 = pendingImageStore.getBase64();
@@ -112,13 +281,8 @@ export default function IdentifyScreen() {
   const handleCapture = async () => {
     if (!cameraRef.current || !cameraReady) return;
     try {
-      const photo = await cameraRef.current.takePictureAsync({
-        base64: false,
-        quality: 0.9,
-        exif: false,
-      });
+      const photo = await cameraRef.current.takePictureAsync({ base64: false, quality: 0.9, exif: false });
       if (!photo) return;
-      // Keep the original high-res URI for display; only the base64 is shrunken for the API.
       const apiBase64 = await resizeForAPI(photo.uri, photo.width, photo.height);
       setCapturedUri(photo.uri);
       setCapturedBase64(apiBase64);
@@ -149,10 +313,7 @@ export default function IdentifyScreen() {
   const handleIdentify = async () => {
     if (!capturedBase64 || !capturedUri) return;
     const result = await identify(capturedBase64);
-    if (!result) {
-      // Alert is shown by the useEffect above once `error` state updates
-      return;
-    }
+    if (!result) return;
     plantResultStore.set(result, capturedUri);
     router.push('/result');
   };
@@ -162,8 +323,6 @@ export default function IdentifyScreen() {
     setCapturedBase64(null);
   };
 
-  // ── Permission not determined / denied ──
-  // Skip camera permission check if we already have a preloaded gallery image
   if (!hasPreloaded) {
     if (!permission) return <View style={styles.bg} />;
     if (!permission.granted) {
@@ -178,7 +337,6 @@ export default function IdentifyScreen() {
     }
   }
 
-  // ── Loading overlay ──
   if (loading) {
     return (
       <View style={[styles.bg, styles.loadingContainer]}>
@@ -187,19 +345,15 @@ export default function IdentifyScreen() {
     );
   }
 
-  // ── Preview mode (after capture) ──
+  // ── Preview (after capture) ───────────────────────────────────────────────
   if (capturedUri) {
     return (
       <View style={styles.bg}>
         <Image source={{ uri: capturedUri }} style={styles.preview} resizeMode="contain" />
-
-        {/* Gradient overlay at bottom */}
         <LinearGradient
           colors={['transparent', 'rgba(0,0,0,0.72)']}
           style={styles.previewOverlay}
         />
-
-        {/* Single back button — inlined to guarantee exactly one instance */}
         <TouchableOpacity
           onPress={handleRetake}
           style={[styles.backBtn, { position: 'absolute', top: insets.top + 16, left: 16, zIndex: 20 }]}
@@ -209,18 +363,12 @@ export default function IdentifyScreen() {
             <Path d="M15 18L9 12L15 6" stroke="white" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
           </Svg>
         </TouchableOpacity>
-
         <SafeAreaView style={StyleSheet.absoluteFill} edges={['bottom']} pointerEvents="box-none">
           <View style={styles.previewActions}>
             <Text style={styles.previewHint}>{t('identify.previewHint')}</Text>
-
-            <TouchableOpacity
-              style={styles.identifyBtn}
-              onPress={handleIdentify}
-              activeOpacity={0.88}
-            >
+            <TouchableOpacity style={styles.identifyBtn} onPress={handleIdentify} activeOpacity={0.88}>
               <LinearGradient
-                colors={['#4ADE80', '#16A34A']}
+                colors={['#2D6A4F', '#143026']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={styles.identifyGradient}
@@ -228,7 +376,6 @@ export default function IdentifyScreen() {
                 <Text style={styles.identifyText}>{t('identify.identifyButton')}</Text>
               </LinearGradient>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={handleRetake} style={styles.retakeBtn} activeOpacity={0.8}>
               <Text style={styles.retakeText}>{t('identify.retake')}</Text>
             </TouchableOpacity>
@@ -238,7 +385,7 @@ export default function IdentifyScreen() {
     );
   }
 
-  // ── Camera view ──
+  // ── Camera view ───────────────────────────────────────────────────────────
   return (
     <View style={styles.bg}>
       <CameraView
@@ -249,15 +396,13 @@ export default function IdentifyScreen() {
         onCameraReady={() => setCameraReady(true)}
       />
 
-      {/* Dark top gradient */}
       <LinearGradient
-        colors={['rgba(0,0,0,0.55)', 'transparent']}
+        colors={['rgba(0,0,0,0.60)', 'transparent']}
         style={styles.topGradient}
         pointerEvents="none"
       />
-      {/* Dark bottom gradient */}
       <LinearGradient
-        colors={['transparent', 'rgba(0,0,0,0.65)']}
+        colors={['transparent', 'rgba(0,0,0,0.70)']}
         style={styles.bottomGradient}
         pointerEvents="none"
       />
@@ -273,46 +418,30 @@ export default function IdentifyScreen() {
             activeOpacity={0.8}
           >
             <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
-              <Path
-                d="M1 4V10H7"
-                stroke="white"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <Path
-                d="M3.51 15A9 9 0 1 0 5.64 5.64L1 10"
-                stroke="white"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <Path d="M1 4V10H7" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+              <Path d="M3.51 15A9 9 0 1 0 5.64 5.64L1 10" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
             </Svg>
           </TouchableOpacity>
         </View>
 
-        {/* Focus frame */}
+        {/* Focus frame with animations */}
         <View style={styles.frameContainer} pointerEvents="none">
           <View style={styles.frame}>
-            {/* Corners */}
-            {[
-              { top: 0, left: 0, borderTopWidth: 3, borderLeftWidth: 3 },
-              { top: 0, right: 0, borderTopWidth: 3, borderRightWidth: 3 },
-              { bottom: 0, left: 0, borderBottomWidth: 3, borderLeftWidth: 3 },
-              { bottom: 0, right: 0, borderBottomWidth: 3, borderRightWidth: 3 },
-            ].map((corner, i) => (
-              <View
-                key={i}
-                style={[styles.corner, corner, { borderColor: Colors.primaryGreen }]}
-              />
-            ))}
+            <PulsingCorners />
+            <ScanLine />
+            {/* Botanical particles floating upward */}
+            <FloatingParticle leftPx={FRAME_SIZE * 0.12} size={6} startDelay={0}    cycleDuration={4000} />
+            <FloatingParticle leftPx={FRAME_SIZE * 0.30} size={5} startDelay={900}  cycleDuration={3600} />
+            <FloatingParticle leftPx={FRAME_SIZE * 0.55} size={7} startDelay={1800} cycleDuration={4400} />
+            <FloatingParticle leftPx={FRAME_SIZE * 0.74} size={5} startDelay={500}  cycleDuration={3800} />
+            <FloatingParticle leftPx={FRAME_SIZE * 0.88} size={6} startDelay={2400} cycleDuration={4200} />
           </View>
           <Text style={styles.frameHint}>{t('identify.centerPlant')}</Text>
         </View>
 
         {/* Bottom controls */}
         <View style={styles.controls}>
-          {/* Gallery button */}
+          {/* Gallery */}
           <TouchableOpacity onPress={handlePickFromGallery} style={styles.sideBtn} activeOpacity={0.8}>
             <Svg width={26} height={26} viewBox="0 0 24 24" fill="none">
               <Path
@@ -326,22 +455,25 @@ export default function IdentifyScreen() {
             <Text style={styles.sideBtnLabel}>{t('identify.gallery')}</Text>
           </TouchableOpacity>
 
-          {/* Capture button */}
-          <TouchableOpacity
-            onPress={handleCapture}
-            style={styles.captureOuter}
-            activeOpacity={0.85}
-            disabled={!cameraReady}
-          >
-            <LinearGradient
-              colors={['#4ADE80', '#16A34A']}
-              style={styles.captureInner}
+          {/* Capture button with expanding ring */}
+          <View style={styles.captureWrap}>
+            <CaptureRing active={cameraReady} />
+            <TouchableOpacity
+              onPress={handleCapture}
+              style={styles.captureOuter}
+              activeOpacity={0.85}
+              disabled={!cameraReady}
             >
-              <View style={styles.captureCore} />
-            </LinearGradient>
-          </TouchableOpacity>
+              <LinearGradient
+                colors={['#2D6A4F', '#143026']}
+                style={styles.captureInner}
+              >
+                <View style={styles.captureCore} />
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
 
-          {/* Flash placeholder (spacing) */}
+          {/* Flash icon (placeholder) */}
           <View style={styles.sideBtn}>
             <Svg width={26} height={26} viewBox="0 0 24 24" fill="none">
               <Path
@@ -376,7 +508,6 @@ const styles = StyleSheet.create({
     padding: 32,
     gap: 16,
   },
-  permissionEmoji: { fontSize: 56 },
   permissionTitle: {
     fontSize: 24,
     fontWeight: '700',
@@ -394,16 +525,17 @@ const styles = StyleSheet.create({
   permissionBtn: {
     borderRadius: 14,
     marginTop: 8,
-    shadowColor: '#16A34A',
+    shadowColor: Colors.darkGreen,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowOpacity: 0.28,
+    shadowRadius: 10,
     elevation: 5,
   },
   permissionGradient: {
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 14,
+    alignItems: 'center',
   },
   permissionBtnText: {
     color: Colors.white,
@@ -415,7 +547,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.42)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -450,7 +582,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.42)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -462,9 +594,10 @@ const styles = StyleSheet.create({
     marginTop: -40,
   },
   frame: {
-    width: SCREEN_W * 0.72,
-    height: SCREEN_W * 0.72,
+    width: FRAME_SIZE,
+    height: FRAME_SIZE,
     position: 'relative',
+    overflow: 'hidden',
   },
   corner: {
     position: 'absolute',
@@ -473,7 +606,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   frameHint: {
-    color: 'rgba(255,255,255,0.75)',
+    color: 'rgba(255,255,255,0.72)',
     fontSize: 13,
     fontFamily: 'Inter_400Regular',
     letterSpacing: 0.3,
@@ -491,20 +624,26 @@ const styles = StyleSheet.create({
     width: 60,
   },
   sideBtnLabel: {
-    color: 'rgba(255,255,255,0.8)',
+    color: 'rgba(255,255,255,0.78)',
     fontSize: 11,
     fontFamily: 'Inter_400Regular',
+  },
+  captureWrap: {
+    width: 110,
+    height: 110,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   captureOuter: {
     width: 80,
     height: 80,
     borderRadius: 40,
     borderWidth: 3,
-    borderColor: 'rgba(255,255,255,0.5)',
+    borderColor: 'rgba(255,255,255,0.45)',
     padding: 3,
-    shadowColor: '#4ADE80',
+    shadowColor: Colors.primaryGreen,
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
+    shadowOpacity: 0.5,
     shadowRadius: 14,
     elevation: 8,
   },
@@ -515,12 +654,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   captureCore: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: 'rgba(255,255,255,0.4)',
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: 'rgba(255,255,255,0.35)',
   },
-  // Preview styles
+  // Preview
   preview: {
     position: 'absolute',
     top: 0,
@@ -553,10 +692,10 @@ const styles = StyleSheet.create({
   identifyBtn: {
     alignSelf: 'stretch',
     borderRadius: 14,
-    shadowColor: '#16A34A',
+    shadowColor: Colors.darkGreen,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
     elevation: 6,
   },
   identifyGradient: {
@@ -575,7 +714,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   retakeText: {
-    color: 'rgba(255,255,255,0.72)',
+    color: 'rgba(255,255,255,0.68)',
     fontSize: 14,
     fontFamily: 'Inter_400Regular',
     textDecorationLine: 'underline',

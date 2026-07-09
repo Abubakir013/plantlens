@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet, ViewStyle } from 'react-native';
 
+import { Colors } from '@/constants/colors';
+
 interface Props {
   label: string;
   color?: string;
@@ -8,7 +10,7 @@ interface Props {
   style?: ViewStyle;
 }
 
-export function InfoChip({ label, color = '#16A34A', bgColor, style }: Props) {
+export function InfoChip({ label, color = Colors.forestMid, bgColor, style }: Props) {
   const bg = bgColor ?? color + '22';
   return (
     <View style={[styles.chip, { backgroundColor: bg }, style]}>

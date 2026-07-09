@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-const MODEL = 'claude-3-5-sonnet-20240620';
+const MODEL = 'claude-sonnet-4-6';
 
 // Inline .env loader — no dotenv package required
 try {

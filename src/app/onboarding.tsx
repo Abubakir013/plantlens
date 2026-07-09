@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Dimensions,
+  Image,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -33,9 +34,10 @@ import Svg, {
   Line,
   LinearGradient as SvgLinearGradient,
   Path,
-  RadialGradient,
   Stop,
 } from 'react-native-svg';
+import { Bug, Droplet, Leaf, Ruler, Trophy } from 'lucide-react-native';
+
 import { useLocale } from '@/hooks/useLocale';
 import { getOnboardingT, OStr } from '@/i18n/onboarding-strings';
 
@@ -47,8 +49,8 @@ const TOTAL = 29;
 // ─── Botanical Luxury Palette ─────────────────────────────────────────────────
 
 const OB = {
-  cream:      '#FAFAF5',
-  parchment:  '#F3EFE5',
+  cream:      '#F3F6F1',  // aligned with Colors.lightMintBg
+  parchment:  '#EAF0EC',  // aligned with Colors.mintMid area
   forest:     '#1B4332',
   forestMid:  '#2D6A4F',
   sage:       '#52B788',
@@ -57,9 +59,9 @@ const OB = {
   gold:       '#C9A84C',
   cardBg:     '#FFFFFF',
   border:     '#D8E4DC',
-  textDark:   '#111812',
-  textMid:    '#3B4F42',
-  textLight:  '#6B7B72',
+  textDark:   '#0D1F15',  // aligned with Colors.textPrimary
+  textMid:    '#3D5247',  // aligned with Colors.textSecondary
+  textLight:  '#7A9080',  // aligned with Colors.textMuted
   errorRed:   '#C0392B',
   amber:      '#D97706',
 } as const;
@@ -211,52 +213,29 @@ function QHeader({ title, sub }: { title: string; sub?: string }) {
   );
 }
 
-// ─── Hero Illustration ────────────────────────────────────────────────────────
+// ─── Welcome Hero Photo ────────────────────────────────────────────────────────
 
-function HeroLeaf() {
-  const glow = useSharedValue(0.5);
-  const sway = useSharedValue(0);
+function WelcomePhoto() {
+  const fadeOp = useSharedValue(0);
+  const photoScale = useSharedValue(0.90);
   useEffect(() => {
-    glow.value = withRepeat(withSequence(
-      withTiming(1, { duration: 2200, easing: Easing.inOut(Easing.sin) }),
-      withTiming(0.5, { duration: 2200, easing: Easing.inOut(Easing.sin) }),
-    ), -1, false);
-    sway.value = withRepeat(withSequence(
-      withTiming(6, { duration: 2800, easing: Easing.inOut(Easing.sin) }),
-      withTiming(-6, { duration: 2800, easing: Easing.inOut(Easing.sin) }),
-    ), -1, false);
+    fadeOp.value = withTiming(1, { duration: 900 });
+    photoScale.value = withSpring(1, { damping: 12, stiffness: 80 });
   }, []);
-  const glowStyle = useAnimatedStyle(() => ({ opacity: glow.value * 0.25 }));
-  const leafStyle = useAnimatedStyle(() => ({ transform: [{ rotate: `${sway.value}deg` }] }));
+  const animStyle = useAnimatedStyle(() => ({
+    opacity: fadeOp.value,
+    transform: [{ scale: photoScale.value }],
+  }));
   return (
-    <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
-      <Animated.View
-        style={[
-          { position: 'absolute', width: 260, height: 260, borderRadius: 130, backgroundColor: OB.sage },
-          glowStyle,
-        ]}
-      />
-      <Animated.View style={leafStyle}>
-        <Svg width={180} height={220} viewBox="0 0 180 220">
-          <Defs>
-            <RadialGradient id="leafGrad" cx="50%" cy="35%" r="60%">
-              <Stop offset="0%" stopColor="#95D5B2" />
-              <Stop offset="100%" stopColor="#1B4332" />
-            </RadialGradient>
-          </Defs>
-          <Path
-            d="M90 200 C40 200 10 165 10 120 C10 60 50 10 90 5 C130 10 170 60 170 120 C170 165 140 200 90 200Z"
-            fill="url(#leafGrad)"
-          />
-          <Path d="M90 200 L90 5" stroke="#1B4332" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <Path d="M90 160 C90 160 55 148 35 128" stroke="#2D6A4F" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity={0.6} />
-          <Path d="M90 130 C90 130 125 118 145 98" stroke="#2D6A4F" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity={0.6} />
-          <Path d="M90 100 C90 100 60 90 42 74" stroke="#2D6A4F" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity={0.6} />
-          <Path d="M90 70 C90 70 118 62 134 48" stroke="#2D6A4F" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity={0.6} />
-          <Path d="M60 40 C65 30 80 25 90 22" stroke="rgba(255,255,255,0.4)" strokeWidth="3" fill="none" strokeLinecap="round" />
-        </Svg>
-      </Animated.View>
-    </View>
+    <Animated.View style={[{ marginBottom: 8 }, animStyle]}>
+      <View style={ss.welcomePhotoPanel}>
+        <Image
+          source={require('../../assets/images/flower-lily-single.png')}
+          style={ss.welcomePhotoImg}
+          resizeMode="contain"
+        />
+      </View>
+    </Animated.View>
   );
 }
 
@@ -425,7 +404,7 @@ function AwardItem({ text, delay }: { text: string; delay: number }) {
   const animStyle = useAnimatedStyle(() => ({ opacity: op.value, transform: [{ translateY: ty.value }] }));
   return (
     <Animated.View style={[ss.awardCard, animStyle]}>
-      <Text style={ss.awardEmoji}>🏆</Text>
+      <Trophy size={24} color={OB.forest} />
       <Text style={ss.awardText}>{text}</Text>
     </Animated.View>
   );
@@ -433,8 +412,8 @@ function AwardItem({ text, delay }: { text: string; delay: number }) {
 
 // ─── Reveal Item Sub-component ────────────────────────────────────────────────
 
-function RevealItem({ emoji, title, desc, delay }: {
-  emoji: string; title: string; desc: string; delay: number;
+function RevealItem({ Icon, title, desc, delay }: {
+  Icon: React.ComponentType<{ size?: number; color?: string }>; title: string; desc: string; delay: number;
 }) {
   const op = useSharedValue(0);
   const tx = useSharedValue(-20);
@@ -445,7 +424,9 @@ function RevealItem({ emoji, title, desc, delay }: {
   const animStyle = useAnimatedStyle(() => ({ opacity: op.value, transform: [{ translateX: tx.value }] }));
   return (
     <Animated.View style={[ss.revealCard, animStyle]}>
-      <Text style={ss.revealEmoji}>{emoji}</Text>
+      <View style={{ marginTop: 2 }}>
+        <Icon size={26} color={OB.forestMid} />
+      </View>
       <View style={{ flex: 1 }}>
         <Text style={ss.revealTitle}>{title}</Text>
         <Text style={ss.revealDesc}>{desc}</Text>
@@ -484,7 +465,7 @@ function Q0_Welcome({ t, onNext }: { t: TFn; onNext: () => void }) {
   const animStyle = useAnimatedStyle(() => ({ opacity: op.value, transform: [{ translateY: ty.value }] }));
   return (
     <View style={[ss.center, { backgroundColor: OB.cream }]}>
-      <HeroLeaf />
+      <WelcomePhoto />
       <Animated.View style={[{ alignItems: 'center' }, animStyle]}>
         <Text style={ss.brandTitle}>{t('q0_title')}</Text>
         <Text style={ss.heroTagline}>{t('q0_tagline')}</Text>
@@ -595,7 +576,7 @@ function A7_Complete({ t, data, onNext }: { t: TFn; data: OData; onNext: () => v
   return (
     <View style={ss.center}>
       <Animated.View style={[{ alignItems: 'center', paddingHorizontal: 24 }, animStyle]}>
-        <Text style={{ fontSize: 72 }}>🌿</Text>
+        <Leaf size={72} color={OB.forestMid} />
         <View style={{ height: 20 }} />
         <Text style={ss.analysisTitle}>{t('a7_title')}</Text>
         <Text style={ss.analysisSub}>{t('a7_sub')}</Text>
@@ -797,12 +778,12 @@ function TR2_Community({ t, onNext, step }: { t: TFn; onNext: () => void; step: 
 
 // ─── Screen 27: Personalized Reveal ──────────────────────────────────────────
 
-const SOL_MAP: Record<string, { title: keyof OStr; desc: keyof OStr; emoji: string }> = {
-  yellowing: { title: 'rv_sol_yellowing', desc: 'rv_sol_yellowing_desc', emoji: '🍂' },
-  pests:     { title: 'rv_sol_pests',     desc: 'rv_sol_pests_desc',     emoji: '🐛' },
-  growth:    { title: 'rv_sol_growth',    desc: 'rv_sol_growth_desc',    emoji: '📏' },
-  watering:  { title: 'rv_sol_watering',  desc: 'rv_sol_watering_desc',  emoji: '💧' },
-  default:   { title: 'rv_sol_default',   desc: 'rv_sol_default_desc',   emoji: '🌿' },
+const SOL_MAP: Record<string, { title: keyof OStr; desc: keyof OStr; Icon: React.ComponentType<{ size?: number; color?: string }> }> = {
+  yellowing: { title: 'rv_sol_yellowing', desc: 'rv_sol_yellowing_desc', Icon: Leaf },
+  pests:     { title: 'rv_sol_pests',     desc: 'rv_sol_pests_desc',     Icon: Bug },
+  growth:    { title: 'rv_sol_growth',    desc: 'rv_sol_growth_desc',    Icon: Ruler },
+  watering:  { title: 'rv_sol_watering',  desc: 'rv_sol_watering_desc',  Icon: Droplet },
+  default:   { title: 'rv_sol_default',   desc: 'rv_sol_default_desc',   Icon: Leaf },
 };
 
 function RV_Reveal({ t, data, onNext, step }: { t: TFn; data: OData; onNext: () => void; step: number }) {
@@ -816,7 +797,7 @@ function RV_Reveal({ t, data, onNext, step }: { t: TFn; data: OData; onNext: () 
         return (
           <RevealItem
             key={i}
-            emoji={sol.emoji}
+            Icon={sol.Icon}
             title={t(sol.title)}
             desc={t(sol.desc)}
             delay={i * 300 + 200}
@@ -885,6 +866,13 @@ function PW_Paywall({ t, data, setData, onFinish, onSkip }: {
         <Text style={ss.pwSkipText}>{t('pw_skip')}</Text>
       </TouchableOpacity>
 
+      <View style={ss.pwHeroPanel}>
+        <Image
+          source={require('../../assets/images/flower-lily-white.png')}
+          style={ss.pwHeroImg}
+          resizeMode="contain"
+        />
+      </View>
       <Text style={ss.pwTitle}>{t('pw_title')}</Text>
       <Text style={ss.pwSub}>{t('pw_sub')}</Text>
 
@@ -1254,7 +1242,6 @@ const ss = StyleSheet.create({
 
   // Awards
   awardCard:  { width: SW - 48, flexDirection: 'row', alignItems: 'center', backgroundColor: OB.parchment, borderRadius: 12, padding: 16, marginBottom: 10, gap: 12 },
-  awardEmoji: { fontSize: 24 },
   awardText:  { fontSize: 14, fontWeight: '600', color: OB.textDark, flex: 1 },
 
   // Community
@@ -1265,7 +1252,6 @@ const ss = StyleSheet.create({
 
   // Reveal
   revealCard:  { width: SW - 48, flexDirection: 'row', alignItems: 'flex-start', backgroundColor: OB.cardBg, borderRadius: 14, borderWidth: 1.5, borderColor: OB.border, padding: 16, marginBottom: 10, gap: 12 },
-  revealEmoji: { fontSize: 26, marginTop: 2 },
   revealTitle: { fontSize: 15, fontWeight: '700', color: OB.forest, marginBottom: 4 },
   revealDesc:  { fontSize: 13, color: OB.textLight, lineHeight: 19 },
 
@@ -1303,4 +1289,41 @@ const ss = StyleSheet.create({
   legalLink:       { fontSize: 11, color: OB.textLight, textDecorationLine: 'underline' },
   legalDot:        { fontSize: 11, color: OB.textLight },
   legalNote:       { fontSize: 10, color: OB.textLight, textAlign: 'center', marginTop: 10, lineHeight: 15, paddingHorizontal: 8 },
+  welcomePhotoPanel: {
+    backgroundColor: '#F3F6F1',
+    borderRadius: 28,
+    width: 240,
+    height: 280,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    shadowColor: '#1B4332',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.14,
+    shadowRadius: 22,
+    elevation: 10,
+  },
+  welcomePhotoImg: {
+    width: 240,
+    height: 280,
+  },
+  pwHeroPanel: {
+    backgroundColor: '#F3F6F1',
+    borderRadius: 20,
+    width: SW - 48,
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginBottom: 20,
+    shadowColor: '#1B4332',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 6,
+  },
+  pwHeroImg: {
+    width: SW - 48,
+    height: 200,
+  },
 });

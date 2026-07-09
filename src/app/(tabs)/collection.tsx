@@ -3,12 +3,12 @@ import {
   Alert,
   Animated,
   FlatList,
+  Image,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Circle, Ellipse, G, Path } from 'react-native-svg';
 import { useFocusEffect, useRouter } from 'expo-router';
 
 import { PlantCard } from '@/components/PlantCard';
@@ -16,87 +16,26 @@ import { Colors } from '@/constants/colors';
 import { SavedPlant, usePlantCollection } from '@/hooks/usePlantCollection';
 import { useLocale } from '@/hooks/useLocale';
 
-function GrowingFlower() {
-  const growAnim = useRef(new Animated.Value(0)).current;
+function TulipPhoto() {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0.88)).current;
 
   useEffect(() => {
-    Animated.spring(growAnim, {
-      toValue: 1,
-      useNativeDriver: true,
-      tension: 38,
-      friction: 7,
-      delay: 400,
-    }).start();
+    Animated.parallel([
+      Animated.timing(fadeAnim, { toValue: 1, duration: 700, delay: 250, useNativeDriver: true }),
+      Animated.spring(scaleAnim, { toValue: 1, tension: 42, friction: 9, useNativeDriver: true }),
+    ]).start();
   }, []);
 
-  const translateY = growAnim.interpolate({ inputRange: [0, 1], outputRange: [40, 0] });
-
   return (
-    <Animated.View style={{ transform: [{ scale: growAnim }, { translateY }], alignItems: 'center' }}>
-      <Svg width={130} height={160} viewBox="0 0 130 160">
-        {/* Stem */}
-        <Path
-          d="M65 148 C64 130 62 110 65 88"
-          stroke="#16A34A"
-          strokeWidth={3.5}
-          fill="none"
-          strokeLinecap="round"
+    <Animated.View style={{ opacity: fadeAnim, transform: [{ scale: scaleAnim }] }}>
+      <View style={styles.tulipPanel}>
+        <Image
+          source={require('../../../assets/images/flower-tulip.png')}
+          style={styles.tulipPhoto}
+          resizeMode="contain"
         />
-        {/* Leaf left */}
-        <Path
-          d="M65 118 C50 108 38 96 42 84 C52 92 58 104 65 118 Z"
-          fill="#22C55E"
-          opacity={0.85}
-        />
-        {/* Leaf right */}
-        <Path
-          d="M65 118 C80 108 92 96 88 84 C78 92 72 104 65 118 Z"
-          fill="#4ADE80"
-          opacity={0.78}
-        />
-        {/* 6 petals */}
-        {[0, 60, 120, 180, 240, 300].map((angle, i) => {
-          const rad = (angle * Math.PI) / 180;
-          const px = 65 + Math.cos(rad) * 20;
-          const py = 68 + Math.sin(rad) * 20;
-          return (
-            <Ellipse
-              key={i}
-              cx={px}
-              cy={py}
-              rx={8}
-              ry={14}
-              fill="#4ADE80"
-              transform={`rotate(${angle + 90}, ${px}, ${py})`}
-              opacity={0.82}
-            />
-          );
-        })}
-        {/* Flower center */}
-        <Circle cx={65} cy={68} r={14} fill="#FDE68A" />
-        <Circle cx={65} cy={68} r={8} fill="#F59E0B" />
-        {/* Dot details on center */}
-        <Circle cx={62} cy={65} r={1.5} fill="#D97706" opacity={0.7} />
-        <Circle cx={68} cy={65} r={1.5} fill="#D97706" opacity={0.7} />
-        <Circle cx={65} cy={71} r={1.5} fill="#D97706" opacity={0.7} />
-        {/* Ground */}
-        <Path
-          d="M25 152 Q65 146 105 152"
-          stroke="#16A34A"
-          strokeWidth={2.5}
-          fill="none"
-          strokeLinecap="round"
-          opacity={0.38}
-        />
-        <Path
-          d="M15 156 Q65 149 115 156"
-          stroke="#16A34A"
-          strokeWidth={1.5}
-          fill="none"
-          strokeLinecap="round"
-          opacity={0.2}
-        />
-      </Svg>
+      </View>
     </Animated.View>
   );
 }
@@ -104,7 +43,7 @@ function GrowingFlower() {
 function EmptyState({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <View style={styles.emptyContainer}>
-      <GrowingFlower />
+      <TulipPhoto />
       <Text style={styles.emptyTitle}>{title}</Text>
       <Text style={styles.emptySubtitle}>{subtitle}</Text>
     </View>
@@ -271,5 +210,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 22,
     fontFamily: 'Inter_400Regular',
+  },
+  tulipPanel: {
+    backgroundColor: '#F3F6F1',
+    borderRadius: 22,
+    width: 170,
+    height: 170,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    shadowColor: '#1B4332',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.14,
+    shadowRadius: 14,
+    elevation: 6,
+  },
+  tulipPhoto: {
+    width: 170,
+    height: 170,
   },
 });

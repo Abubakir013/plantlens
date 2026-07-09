@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, { Circle, Ellipse, G, Path } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 
 interface Props {
   width?: number;
@@ -9,144 +9,109 @@ interface Props {
 export function HeroIllustration({ width = 300, height = 230 }: Props) {
   return (
     <Svg width={width} height={height} viewBox="0 0 300 230">
-      {/* ── Monstera leaf (large, left-center) ── */}
+      {/* ── Primary leaf — deep forest, botanical-study style ── */}
       <Path
-        d="M110 215 C65 205 22 172 28 128 C32 105 50 88 62 72 C82 44 104 20 128 13 C150 7 172 18 182 44 C192 68 187 94 176 115 C164 136 148 150 137 167 C127 182 118 210 110 215 Z"
-        fill="#22C55E"
-        opacity={0.88}
+        d="M105 218 C58 205 18 170 22 124 C26 96 46 76 64 58 C86 36 112 14 138 10 C160 6 180 20 188 48 C196 76 188 104 174 126 C160 148 140 162 128 182 C118 198 112 218 105 218 Z"
+        fill="#1B4332"
+        opacity={0.93}
       />
-      {/* Monstera split left-upper */}
+      {/* Primary midrib */}
       <Path
-        d="M82 150 C72 138 57 116 52 94 C49 80 52 66 60 60"
+        d="M105 215 C116 184 134 156 152 126 C168 98 182 68 186 44"
         fill="none"
-        stroke="#F0FDF4"
-        strokeWidth={3.5}
-        strokeLinecap="round"
-      />
-      {/* Monstera split left-lower */}
-      <Path
-        d="M76 128 C67 120 56 104 53 92"
-        fill="none"
-        stroke="#F0FDF4"
-        strokeWidth={2.5}
-        strokeLinecap="round"
-      />
-      {/* Monstera split right */}
-      <Path
-        d="M148 138 C158 122 169 100 174 78 C177 65 175 52 168 47"
-        fill="none"
-        stroke="#F0FDF4"
-        strokeWidth={3.5}
-        strokeLinecap="round"
-      />
-      {/* Primary vein */}
-      <Path
-        d="M110 212 C118 182 132 155 148 128 C162 103 174 76 180 50"
-        fill="none"
-        stroke="#16A34A"
-        strokeWidth={2.2}
-        opacity={0.45}
-        strokeLinecap="round"
-      />
-      {/* Secondary veins */}
-      <Path
-        d="M110 212 C94 182 76 152 62 122"
-        fill="none"
-        stroke="#16A34A"
+        stroke="#F3F6F1"
         strokeWidth={1.6}
-        opacity={0.35}
+        opacity={0.28}
         strokeLinecap="round"
       />
+      {/* Secondary veins — left side */}
+      <Path d="M113 190 C96 178 76 168 58 162" fill="none" stroke="#F3F6F1" strokeWidth={0.9} opacity={0.18} strokeLinecap="round" />
+      <Path d="M124 168 C108 158 88 150 70 146" fill="none" stroke="#F3F6F1" strokeWidth={0.9} opacity={0.16} strokeLinecap="round" />
+      <Path d="M136 144 C120 136 102 130 82 126" fill="none" stroke="#F3F6F1" strokeWidth={0.9} opacity={0.16} strokeLinecap="round" />
+      <Path d="M146 118 C132 112 114 108 94 106" fill="none" stroke="#F3F6F1" strokeWidth={0.9} opacity={0.14} strokeLinecap="round" />
+      {/* Secondary veins — right side */}
+      <Path d="M144 148 C156 136 168 122 174 104" fill="none" stroke="#F3F6F1" strokeWidth={0.9} opacity={0.16} strokeLinecap="round" />
+      <Path d="M158 124 C168 112 176 96 180 78" fill="none" stroke="#F3F6F1" strokeWidth={0.9} opacity={0.14} strokeLinecap="round" />
+      {/* Leaf fenestrations / edge cuts */}
       <Path
-        d="M120 180 C104 170 85 162 68 155"
+        d="M78 150 C68 136 50 112 46 86 C44 72 48 58 58 52"
         fill="none"
-        stroke="#16A34A"
-        strokeWidth={1.2}
-        opacity={0.3}
+        stroke="#F3F6F1"
+        strokeWidth={1.8}
         strokeLinecap="round"
-      />
-
-      {/* ── Smaller accent monstera (right) ── */}
-      <Path
-        d="M168 195 C148 186 128 168 133 146 C137 132 148 122 160 114 C174 103 190 95 202 92 C216 87 227 94 229 108 C232 124 222 138 210 147 C198 156 183 165 174 178 C168 187 170 198 168 195 Z"
-        fill="#4ADE80"
-        opacity={0.72}
-      />
-      {/* Small monstera split */}
-      <Path
-        d="M174 165 C182 153 192 136 196 120"
-        fill="none"
-        stroke="#F0FDF4"
-        strokeWidth={2}
-        strokeLinecap="round"
-        opacity={0.85}
-      />
-
-      {/* ── Daisy ── */}
-      {/* Stem */}
-      <Path
-        d="M238 220 C236 202 233 184 230 166"
-        stroke="#16A34A"
-        strokeWidth={2.5}
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* Petals (8) */}
-      {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
-        const rad = (angle * Math.PI) / 180;
-        const px = 230 + Math.cos(rad) * 13;
-        const py = 156 + Math.sin(rad) * 13;
-        return (
-          <Ellipse
-            key={i}
-            cx={px}
-            cy={py}
-            rx={5}
-            ry={9}
-            fill="#FFFFFF"
-            transform={`rotate(${angle}, ${px}, ${py})`}
-            opacity={0.95}
-          />
-        );
-      })}
-      {/* Daisy center */}
-      <Circle cx={230} cy={156} r={8} fill="#FDE68A" />
-      <Circle cx={230} cy={156} r={4.5} fill="#F59E0B" />
-
-      {/* Stem leaf left */}
-      <Path
-        d="M235 190 C224 182 214 178 212 170 C220 173 228 178 235 190 Z"
-        fill="#22C55E"
-        opacity={0.82}
-      />
-      {/* Stem leaf right */}
-      <Path
-        d="M232 175 C242 167 252 163 254 155 C245 159 238 165 232 175 Z"
-        fill="#4ADE80"
-        opacity={0.75}
-      />
-
-      {/* ── Small decorative leaves near bottom ── */}
-      <Path
-        d="M42 210 C36 198 30 188 35 180 C40 188 42 198 42 210 Z"
-        fill="#4ADE80"
-        opacity={0.6}
-      />
-      <Path
-        d="M55 218 C48 206 50 194 58 188 C58 198 57 208 55 218 Z"
-        fill="#22C55E"
-        opacity={0.5}
-      />
-
-      {/* ── Ground suggestion ── */}
-      <Path
-        d="M30 225 Q165 218 270 225"
-        stroke="#16A34A"
-        strokeWidth={2}
-        strokeLinecap="round"
-        fill="none"
         opacity={0.22}
       />
+      <Path
+        d="M156 138 C166 122 174 100 176 78"
+        fill="none"
+        stroke="#F3F6F1"
+        strokeWidth={1.8}
+        strokeLinecap="round"
+        opacity={0.20}
+      />
+
+      {/* ── Secondary leaf (right, mid-green) ── */}
+      <Path
+        d="M172 200 C150 190 130 170 136 148 C140 134 152 124 166 116 C182 106 200 98 214 96 C228 92 238 100 240 116 C242 132 232 146 220 156 C208 166 192 176 182 190 C176 198 176 204 172 200 Z"
+        fill="#2D6A4F"
+        opacity={0.78}
+      />
+      {/* Secondary leaf midrib */}
+      <Path
+        d="M172 197 C180 178 192 162 208 148 C220 136 230 118 236 104"
+        fill="none"
+        stroke="#F3F6F1"
+        strokeWidth={1.0}
+        opacity={0.18}
+        strokeLinecap="round"
+      />
+      {/* Secondary leaf side veins */}
+      <Path d="M182 176 C190 166 200 156 208 148" fill="none" stroke="#F3F6F1" strokeWidth={0.8} opacity={0.14} strokeLinecap="round" />
+      <Path d="M192 158 C200 150 210 140 218 132" fill="none" stroke="#F3F6F1" strokeWidth={0.8} opacity={0.12} strokeLinecap="round" />
+
+      {/* ── Stem ── */}
+      <Path
+        d="M105 218 C108 222 110 226 108 230"
+        stroke="#1B4332"
+        strokeWidth={3.5}
+        strokeLinecap="round"
+        fill="none"
+        opacity={0.55}
+      />
+
+      {/* ── Small accent leaves, bottom-left ── */}
+      <Path
+        d="M36 216 C30 200 28 184 38 176 C40 188 40 204 36 216 Z"
+        fill="#2D6A4F"
+        opacity={0.52}
+      />
+      <Path
+        d="M52 222 C44 206 44 190 56 182 C58 194 56 210 52 222 Z"
+        fill="#1B4332"
+        opacity={0.42}
+      />
+
+      {/* ── Leaf tip bud — sage highlight ── */}
+      <Path
+        d="M138 10 C142 4 149 2 151 7 C148 11 142 12 138 10 Z"
+        fill="#52B788"
+        opacity={0.65}
+      />
+
+      {/* ── Ground hint ── */}
+      <Path
+        d="M25 226 Q165 220 272 226"
+        stroke="#1B4332"
+        strokeWidth={1.0}
+        strokeLinecap="round"
+        fill="none"
+        opacity={0.16}
+      />
+
+      {/* ── Subtle pollen dots (depth detail) ── */}
+      <Circle cx={230} cy={108} r={1.5} fill="#52B788" opacity={0.40} />
+      <Circle cx={238} cy={118} r={1.0} fill="#52B788" opacity={0.30} />
+      <Circle cx={246} cy={112} r={1.2} fill="#52B788" opacity={0.25} />
     </Svg>
   );
 }

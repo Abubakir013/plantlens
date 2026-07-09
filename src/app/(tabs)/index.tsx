@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
+  Image,
   Modal,
   ScrollView,
   StyleSheet,
@@ -14,9 +15,10 @@ import {
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 
+import { Globe, Leaf, Zap } from 'lucide-react-native';
+
 import { FloralDivider } from '@/components/FloralDivider';
 import { GreenButton } from '@/components/GreenButton';
-import { HeroIllustration } from '@/components/HeroIllustration';
 import { PlantCard } from '@/components/PlantCard';
 import { Colors } from '@/constants/colors';
 import { usePlantCollection } from '@/hooks/usePlantCollection';
@@ -26,11 +28,11 @@ import { pendingImageStore } from '@/stores/pendingImageStore';
 function PlantLensLogo() {
   return (
     <Svg width={32} height={32} viewBox="0 0 32 32">
-      <Circle cx={16} cy={16} r={16} fill="#4ADE80" />
+      <Circle cx={16} cy={16} r={16} fill="#1B4332" />
       <Path
-        d="M16 6 C12 8 8 12 8 16 C8 20 11 23 15 24 C15 22 13 18 14 15 C16 19 19 22 22 22 C25 20 26 17 26 14 C26 11 23 8 16 6Z"
+        d="M16 7 C13 9 9 13 9 17 C9 21 12 24 16 25 C16 23 14 19 15 16 C17 20 20 23 23 23 C26 21 27 18 27 15 C27 12 23 9 16 7Z"
         fill="white"
-        opacity={0.92}
+        opacity={0.88}
       />
     </Svg>
   );
@@ -38,6 +40,8 @@ function PlantLensLogo() {
 
 export default function HomeScreen() {
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const heroFade = useRef(new Animated.Value(0)).current;
+  const heroScale = useRef(new Animated.Value(0.93)).current;
   const { plants } = usePlantCollection();
   const { t } = useLocale();
   const insets = useSafeAreaInsets();
@@ -87,6 +91,10 @@ export default function HomeScreen() {
         Animated.timing(pulseAnim, { toValue: 1, duration: 2200, useNativeDriver: true }),
       ]),
     ).start();
+    Animated.parallel([
+      Animated.timing(heroFade, { toValue: 1, duration: 900, useNativeDriver: true }),
+      Animated.spring(heroScale, { toValue: 1, tension: 48, friction: 11, useNativeDriver: true }),
+    ]).start();
   }, []);
 
   const handleUploadPhoto = async () => {
@@ -121,6 +129,26 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
+      {/* SVG botanical corner accents — absolute, zero-weight, no network */}
+      <View style={styles.cornerLeafTR} pointerEvents="none">
+        <Svg width={160} height={200} viewBox="0 0 160 200">
+          <Path d="M80 190 C28 190 0 152 12 104 C22 60 54 14 80 8 C106 14 138 60 148 104 C160 152 132 190 80 190Z" fill="#1B4332" opacity={0.9} />
+          <Path d="M80 190 L80 8" stroke="#F3F6F1" strokeWidth={1.4} fill="none" strokeLinecap="round" opacity={0.22} />
+          <Path d="M80 160 C55 148 36 132 28 114" stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.15} strokeLinecap="round" />
+          <Path d="M80 130 C56 120 40 106 32 90"  stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.14} strokeLinecap="round" />
+          <Path d="M80 100 C105 88 120 74 126 58"  stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.14} strokeLinecap="round" />
+          <Path d="M80 68  C104 58 118 44 124 28"  stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.12} strokeLinecap="round" />
+        </Svg>
+      </View>
+      <View style={styles.cornerLeafBL} pointerEvents="none">
+        <Svg width={140} height={175} viewBox="0 0 160 200">
+          <Path d="M80 190 C28 190 0 152 12 104 C22 60 54 14 80 8 C106 14 138 60 148 104 C160 152 132 190 80 190Z" fill="#1B4332" opacity={0.9} />
+          <Path d="M80 190 L80 8" stroke="#F3F6F1" strokeWidth={1.4} fill="none" strokeLinecap="round" opacity={0.20} />
+          <Path d="M80 160 C105 148 124 132 132 114" stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.14} strokeLinecap="round" />
+          <Path d="M80 130 C104 120 120 106 128 90"  stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.13} strokeLinecap="round" />
+        </Svg>
+      </View>
+
       <Animated.View
         style={[styles.orbSmall, { transform: [{ scale: pulseAnim }] }]}
         pointerEvents="none"
@@ -149,7 +177,15 @@ export default function HomeScreen() {
 
         {/* Hero section */}
         <View style={styles.heroSection}>
-          <HeroIllustration width={300} height={220} />
+          <Animated.View style={{ opacity: heroFade, transform: [{ scale: heroScale }] }}>
+            <View style={styles.heroPhotoPanel}>
+              <Image
+                source={require('../../../assets/images/flower-lily-pink.png')}
+                style={styles.heroPhotoImg}
+                resizeMode="contain"
+              />
+            </View>
+          </Animated.View>
           <Text style={styles.tagline}>
             {t('home.tagline')}{'\n'}
             <Text style={styles.taglineAccent}>{t('home.taglineAccent')}</Text>
@@ -175,12 +211,12 @@ export default function HomeScreen() {
         {/* Stats pills */}
         <View style={styles.statsRow}>
           {[
-            { emoji: '🌿', value: plants.length.toString(), label: t('home.identified') },
-            { emoji: '🌍', value: '10K+', label: t('home.species') },
-            { emoji: '⚡', value: '< 5s', label: t('home.speed') },
+            { Icon: Leaf,  value: plants.length.toString(), label: t('home.identified') },
+            { Icon: Globe, value: '10K+',                  label: t('home.species') },
+            { Icon: Zap,   value: '< 5s',                  label: t('home.speed') },
           ].map((s) => (
             <View key={s.label} style={styles.statPill}>
-              <Text style={styles.statEmoji}>{s.emoji}</Text>
+              <s.Icon size={20} color={Colors.darkGreen} />
               <Text style={styles.statValue}>{s.value}</Text>
               <Text style={styles.statLabel}>{s.label}</Text>
             </View>
@@ -279,7 +315,7 @@ const styles = StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
-    backgroundColor: 'rgba(163, 230, 53, 0.10)',
+    backgroundColor: 'rgba(45, 106, 79, 0.07)',
   },
   scroll: {
     flex: 1,
@@ -319,10 +355,44 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 3,
   },
+  cornerLeafTR: {
+    position: 'absolute',
+    top: -28,
+    right: -52,
+    opacity: 0.09,
+    transform: [{ rotate: '22deg' }],
+    zIndex: 0,
+  },
+  cornerLeafBL: {
+    position: 'absolute',
+    bottom: 100,
+    left: -58,
+    opacity: 0.07,
+    transform: [{ rotate: '-12deg' }, { scaleX: -1 }],
+    zIndex: 0,
+  },
   heroSection: {
     alignItems: 'center',
     paddingVertical: 12,
-    gap: 10,
+    gap: 12,
+  },
+  heroPhotoPanel: {
+    backgroundColor: '#F3F6F1',
+    borderRadius: 26,
+    width: 300,
+    height: 220,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    shadowColor: '#1B4332',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.14,
+    shadowRadius: 20,
+    elevation: 8,
+  },
+  heroPhotoImg: {
+    width: 300,
+    height: 220,
   },
   tagline: {
     fontSize: 32,
@@ -332,6 +402,7 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     fontFamily: 'Inter_700Bold',
     letterSpacing: -0.8,
+    zIndex: 1,
   },
   taglineAccent: {
     color: Colors.darkGreen,
@@ -369,7 +440,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   },
-  statEmoji: { fontSize: 20 },
   statValue: {
     fontSize: 16,
     fontWeight: '700',

@@ -277,7 +277,7 @@ export default function SettingsScreen() {
         <View style={styles.headerCenter}>
           {/* Small leaf accent */}
           <Svg width={16} height={16} viewBox="0 0 24 24" fill="none" style={{ marginRight: 6 }}>
-            <Path d="M12 3C8 5 4 9 4 13c0 4 3 7 7 8-1-3-1-6 0-9 2 4 5 7 8 7 2-2 3-5 3-8S19 5 12 3Z" fill="#4ADE80" opacity={0.85} />
+            <Path d="M12 3C8 5 4 9 4 13c0 4 3 7 7 8-1-3-1-6 0-9 2 4 5 7 8 7 2-2 3-5 3-8S19 5 12 3Z" fill="#2D6A4F" opacity={0.88} />
           </Svg>
           <Text style={styles.headerTitle}>{t('settings.title')}</Text>
         </View>
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
   sectionLabel: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#2D6A4F',
+    color: Colors.forestMid,
     fontFamily: 'Inter_700Bold',
     textTransform: 'uppercase',
     letterSpacing: 1,

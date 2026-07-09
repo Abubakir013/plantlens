@@ -1,7 +1,8 @@
+import { Award, Flame, Flower, Leaf, Microscope, Sprout, Target } from 'lucide-react-native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Circle, Ellipse, G, Path } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 import { useRouter } from 'expo-router';
 
 import { Colors } from '@/constants/colors';
@@ -10,75 +11,47 @@ import { useLocale } from '@/hooks/useLocale';
 import { loadStreak } from '@/hooks/useStreak';
 
 function BotanicalBorder({ width = 340 }: { width?: number }) {
+  const cx = width / 2;
   return (
-    <Svg width={width} height={48} viewBox={`0 0 ${width} 48`}>
-      {/* Horizontal base vine */}
+    <Svg width={width} height={36} viewBox={`0 0 ${width} 36`}>
+      {/* Left rule */}
       <Path
-        d={`M0 30 C${width * 0.12} 22 ${width * 0.22} 38 ${width * 0.33} 30 C${width * 0.44} 22 ${width * 0.56} 38 ${width * 0.67} 30 C${width * 0.78} 22 ${width * 0.88} 38 ${width} 30`}
-        stroke="#4ADE80"
-        strokeWidth={1.8}
-        fill="none"
+        d={`M0 18 L${cx - 36} 18`}
+        stroke="#2D6A4F"
+        strokeWidth={0.7}
         strokeLinecap="round"
-        opacity={0.55}
+        opacity={0.28}
       />
-      {/* Top accent vine */}
+      {/* Right rule */}
       <Path
-        d={`M20 15 C${width * 0.15} 8 ${width * 0.28} 22 ${width * 0.4} 15 C${width * 0.52} 8 ${width * 0.65} 22 ${width * 0.78} 15 C${width * 0.88} 10 ${width - 20} 15 ${width - 20} 15`}
-        stroke="#A3E635"
-        strokeWidth={1.2}
-        fill="none"
+        d={`M${cx + 36} 18 L${width} 18`}
+        stroke="#2D6A4F"
+        strokeWidth={0.7}
         strokeLinecap="round"
-        opacity={0.4}
+        opacity={0.28}
       />
-      {/* Small leaves along vine */}
-      {[0.15, 0.38, 0.62, 0.85].map((frac, i) => {
-        const x = width * frac;
-        return (
-          <G key={i}>
-            <Path
-              d={`M${x} 30 C${x - 8} 22 ${x - 14} 20 ${x - 12} 14 C${x - 5} 18 ${x - 2} 24 ${x} 30 Z`}
-              fill="#22C55E"
-              opacity={0.5}
-            />
-            <Path
-              d={`M${x} 30 C${x + 8} 22 ${x + 14} 20 ${x + 12} 14 C${x + 5} 18 ${x + 2} 24 ${x} 30 Z`}
-              fill="#4ADE80"
-              opacity={0.4}
-            />
-          </G>
-        );
-      })}
-      {/* Tiny flowers */}
-      {[0.25, 0.5, 0.75].map((frac, i) => {
-        const x = width * frac;
-        const y = 30;
-        return (
-          <G key={`flower-${i}`}>
-            {[0, 72, 144, 216, 288].map((deg, j) => {
-              const rad = (deg * Math.PI) / 180;
-              return (
-                <Circle
-                  key={j}
-                  cx={x + Math.cos(rad) * 4.5}
-                  cy={y + Math.sin(rad) * 4.5}
-                  r={2.8}
-                  fill="#A3E635"
-                  opacity={0.7}
-                />
-              );
-            })}
-            <Circle cx={x} cy={y} r={2.5} fill="#FDE68A" />
-          </G>
-        );
-      })}
+      {/* Left leaf */}
+      <Path
+        d={`M${cx - 6} 18 C${cx - 16} 11 ${cx - 30} 12 ${cx - 33} 18 C${cx - 30} 24 ${cx - 16} 25 ${cx - 6} 18 Z`}
+        fill="#2D6A4F"
+        opacity={0.48}
+      />
+      {/* Right leaf */}
+      <Path
+        d={`M${cx + 6} 18 C${cx + 16} 11 ${cx + 30} 12 ${cx + 33} 18 C${cx + 30} 24 ${cx + 16} 25 ${cx + 6} 18 Z`}
+        fill="#2D6A4F"
+        opacity={0.48}
+      />
+      {/* Centre dot */}
+      <Circle cx={cx} cy={18} r={2} fill="#2D6A4F" opacity={0.52} />
     </Svg>
   );
 }
 
-function StatCard({ emoji, value, label }: { emoji: string; value: string; label: string }) {
+function StatCard({ Icon, value, label }: { Icon: React.ComponentType<{ size?: number; color?: string }>; value: string; label: string }) {
   return (
     <View style={styles.statCard}>
-      <Text style={styles.statEmoji}>{emoji}</Text>
+      <Icon size={24} color={Colors.primaryGreen} />
       <Text style={styles.statValue}>{value}</Text>
       <Text style={styles.statLabel}>{label}</Text>
     </View>
@@ -134,7 +107,7 @@ export default function ProfileScreen() {
         <View style={styles.headerCard}>
           <View style={styles.avatarRing}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>🌿</Text>
+              <Leaf size={36} color={Colors.primaryGreen} />
             </View>
           </View>
           <Text style={styles.userName}>{t('profile.userName')}</Text>
@@ -147,28 +120,28 @@ export default function ProfileScreen() {
         {/* Stats */}
         <Text style={styles.sectionTitle}>{t('profile.yourStats')}</Text>
         <View style={styles.statsGrid}>
-          <StatCard emoji="🌱" value={plants.length.toString()} label={t('profile.plantsFound')} />
-          <StatCard emoji="🔥" value={streak.toString()} label={t('profile.dayStreak')} />
+          <StatCard Icon={Sprout} value={plants.length.toString()} label={t('profile.plantsFound')} />
+          <StatCard Icon={Flame}  value={streak.toString()} label={t('profile.dayStreak')} />
           <StatCard
-            emoji="🎯"
+            Icon={Target}
             value={plants.length > 0 ? `${totalConfidence}%` : '–'}
             label={t('profile.avgAccuracy')}
           />
-          <StatCard emoji="🌸" value={rarest.split(' ')[0]} label={t('profile.rarestFind')} />
+          <StatCard Icon={Flower} value={rarest.split(' ')[0]} label={t('profile.rarestFind')} />
         </View>
 
         {/* Badge row */}
         <View style={styles.badgeRow}>
           {[
-            { emoji: '🥇', label: t('profile.firstId') },
-            { emoji: '🌻', label: t('profile.fivePlants') },
-            { emoji: '🔬', label: t('profile.botanist') },
+            { Icon: Award,      label: t('profile.firstId') },
+            { Icon: Flower,     label: t('profile.fivePlants') },
+            { Icon: Microscope, label: t('profile.botanist') },
           ].map((b) => (
             <View
               key={b.label}
               style={[styles.badge, plants.length === 0 && styles.badgeLocked]}
             >
-              <Text style={styles.badgeEmoji}>{b.emoji}</Text>
+              <b.Icon size={22} color={Colors.primaryGreen} />
               <Text style={styles.badgeLabel}>{b.label}</Text>
             </View>
           ))}
@@ -253,7 +226,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatarText: { fontSize: 36 },
   userName: {
     fontSize: 22,
     fontWeight: '800',
@@ -297,7 +269,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   },
-  statEmoji: { fontSize: 24 },
   statValue: {
     fontSize: 22,
     fontWeight: '800',
@@ -329,7 +300,6 @@ const styles = StyleSheet.create({
     opacity: 0.4,
     borderColor: Colors.cardBorder,
   },
-  badgeEmoji: { fontSize: 22 },
   badgeLabel: {
     fontSize: 11,
     fontWeight: '600',

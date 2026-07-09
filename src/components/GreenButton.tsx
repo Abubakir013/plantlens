@@ -25,7 +25,7 @@ export function GreenButton({
         style={[styles.secondary, style, disabled && styles.disabled]}
         onPress={onPress}
         disabled={disabled}
-        activeOpacity={0.75}
+        activeOpacity={0.72}
       >
         <Text style={[styles.secondaryText, textStyle]}>{label}</Text>
       </TouchableOpacity>
@@ -37,10 +37,10 @@ export function GreenButton({
       style={[styles.wrapper, style, disabled && styles.disabled]}
       onPress={onPress}
       disabled={disabled}
-      activeOpacity={0.82}
+      activeOpacity={0.80}
     >
       <LinearGradient
-        colors={['#4ADE80', '#16A34A']}
+        colors={['#2D6A4F', '#143026']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
@@ -54,10 +54,10 @@ export function GreenButton({
 const styles = StyleSheet.create({
   wrapper: {
     borderRadius: 14,
-    shadowColor: '#16A34A',
+    shadowColor: '#1B4332',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
+    shadowOpacity: 0.30,
+    shadowRadius: 12,
     elevation: 6,
   },
   gradient: {
@@ -71,25 +71,25 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '700',
-    letterSpacing: 0.4,
+    letterSpacing: 0.5,
   },
   secondary: {
     borderRadius: 14,
-    borderWidth: 2,
-    borderColor: '#4ADE80',
+    borderWidth: 1.5,
+    borderColor: '#2D6A4F',
     paddingVertical: 14,
     paddingHorizontal: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(74, 222, 128, 0.08)',
+    backgroundColor: 'rgba(45, 106, 79, 0.06)',
   },
   secondaryText: {
-    color: '#16A34A',
+    color: '#1B4332',
     fontSize: 16,
     fontWeight: '600',
     letterSpacing: 0.4,
   },
   disabled: {
-    opacity: 0.5,
+    opacity: 0.45,
   },
 });
