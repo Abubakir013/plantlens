@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Główna",
     "collection": "Kolekcja",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnoza"
   },
   "home": {
     "tagline": "Poznaj każdą roślinę",
@@ -103,8 +104,7 @@
     "select": "Wybierz język",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Diagnoza roЕ›liny",
+    "buttonLabel": "Zdiagnozuj zdrowie",
+    "uploadLabel": "Zdiagnozuj z galerii",
+    "scanningLeaves": "Skanowanie liЕ›ci...",
+    "checkingSymptoms": "Sprawdzanie objawГіw...",
+    "buildingPlan": "Tworzenie planu leczenia...",
+    "previewHint": "Pokazanie caЕ‚ej roЕ›liny daje najlepszД… diagnozД™",
+    "analyzeButton": "Zdiagnozuj tД™ roЕ›linД™",
+    "retake": "ZrГіb zdjД™cie ponownie",
+    "healthScore": "Ocena zdrowia",
+    "severityLabel": "Nasilenie",
+    "severity": {
+      "none": "Zdrowa",
+      "mild": "ЕЃagodne",
+      "moderate": "Umiarkowane",
+      "severe": "PowaЕјne"
+    },
+    "diagnosisCard": "Co jest nie tak",
+    "causeCard": "Dlaczego to siД™ staЕ‚o",
+    "treatmentCard": "Jak leczyД‡",
+    "preventionCard": "Jak zapobiegaД‡",
+    "confidence": "PewnoЕ›Д‡",
+    "symptoms": "Widoczne objawy",
+    "factors": "Czynniki przyczyniajД…ce siД™",
+    "urgency": "PilnoЕ›Д‡",
+    "materialsNeeded": "Potrzebne materiaЕ‚y",
+    "recovery": "Oczekiwany powrГіt do zdrowia",
+    "saveBtn": "Zapisz do kolekcji",
+    "savedBtn": "Zapisano do kolekcji",
+    "step": "Krok",
+    "noPlant": {
+      "title": "Nie wykryto roЕ›liny",
+      "text": "ZdjД™cie nie wydaje siД™ zawieraД‡ roЕ›liny. ZrГіb wyraЕєne zdjД™cie roЕ›liny do diagnozy."
+    },
+    "healthy": {
+      "title": "Twoja roЕ›lina wyglД…da zdrowo!",
+      "text": "Nie wykryto problemГіw. PostД™puj zgodnie z poniЕјszymi wskazГіwkami."
+    },
+    "error": {
+      "title": "Diagnoza nie powiodЕ‚a siД™",
+      "retry": "SprГіbuj ponownie"
+    },
+    "disclaimer": "Tylko wskazГіwki generowane przez AI. W przypadku powaЕјnych chorГіb roЕ›lin skonsultuj siД™ z ogrodnikiem."
   }
 }

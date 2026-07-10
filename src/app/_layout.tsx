@@ -56,6 +56,8 @@ export default function RootLayout() {
         <Stack.Screen name="plant-detail" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="settings" options={{ headerShown: false, animation: 'slide_from_right' }} />
         <Stack.Screen name="guide-detail" options={{ headerShown: false, animation: 'slide_from_right' }} />
+        <Stack.Screen name="diagnose" options={{ animation: 'slide_from_bottom', gestureEnabled: true }} />
+        <Stack.Screen name="diagnosis-result" options={{ headerShown: false, animation: 'slide_from_right' }} />
       </Stack>
       {needsOnboarding && <Redirect href="/onboarding" />}
     </LocaleProvider>

@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Utama",
     "collection": "Koleksi",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnosis"
   },
   "home": {
     "tagline": "Kenali setiap tumbuhan",
@@ -103,8 +104,7 @@
     "select": "Pilih bahasa",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Diagnosis Tanaman",
+    "buttonLabel": "Diagnosis Kesihatan",
+    "uploadLabel": "Diagnosis dari Galeri",
+    "scanningLeaves": "Mengimbas daun...",
+    "checkingSymptoms": "Memeriksa gejala...",
+    "buildingPlan": "Membuat pelan rawatan...",
+    "previewHint": "Menunjukkan keseluruhan tanaman memberikan diagnosis terbaik",
+    "analyzeButton": "Diagnosis Tanaman Ini",
+    "retake": "Ambil Gambar Semula",
+    "healthScore": "Skor Kesihatan",
+    "severityLabel": "Keterukan",
+    "severity": {
+      "none": "Sihat",
+      "mild": "Ringan",
+      "moderate": "Sederhana",
+      "severe": "Teruk"
+    },
+    "diagnosisCard": "Apa yang Salah",
+    "causeCard": "Mengapa Berlaku",
+    "treatmentCard": "Cara Merawat",
+    "preventionCard": "Cara Mencegah",
+    "confidence": "Keyakinan",
+    "symptoms": "Gejala yang Kelihatan",
+    "factors": "Faktor Penyumbang",
+    "urgency": "Keutamaan",
+    "materialsNeeded": "Bahan yang Diperlukan",
+    "recovery": "Jangkaan Pemulihan",
+    "saveBtn": "Simpan ke Koleksi",
+    "savedBtn": "Disimpan ke Koleksi",
+    "step": "Langkah",
+    "noPlant": {
+      "title": "Tiada Tanaman Dikesan",
+      "text": "Foto nampaknya tidak mengandungi tanaman. Ambil foto yang jelas dari tanaman yang ingin didiagnosis."
+    },
+    "healthy": {
+      "title": "Tanaman Anda Kelihatan Sihat!",
+      "text": "Tiada masalah dikesan. Ikuti tips pencegahan di bawah."
+    },
+    "error": {
+      "title": "Diagnosis Gagal",
+      "retry": "Cuba Lagi"
+    },
+    "disclaimer": "Panduan yang dijana AI sahaja. Untuk penyakit tanaman yang serius, rujuk pakar hortikultur profesional."
   }
 }

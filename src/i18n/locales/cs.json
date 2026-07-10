@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Domů",
     "collection": "Kolekce",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnóza"
   },
   "home": {
     "tagline": "Poznej každou rostlinu",
@@ -103,8 +104,7 @@
     "select": "Vybrat jazyk",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "DiagnГіza rostliny",
+    "buttonLabel": "Diagnostikovat zdravГ­",
+    "uploadLabel": "Diagnostikovat z galerie",
+    "scanningLeaves": "SkenovГЎnГ­ listЕЇ...",
+    "checkingSymptoms": "Kontrola pЕ™Г­znakЕЇ...",
+    "buildingPlan": "SestavovГЎnГ­ lГ©ДЌebnГ©ho plГЎnu...",
+    "previewHint": "ZobrazenГ­ celГ© rostliny poskytuje nejlepЕЎГ­ diagnГіzu",
+    "analyzeButton": "Diagnostikovat tuto rostlinu",
+    "retake": "Vyfotit znovu",
+    "healthScore": "SkГіre zdravГ­",
+    "severityLabel": "ZГЎvaЕѕnost",
+    "severity": {
+      "none": "ZdravГЎ",
+      "mild": "MГ­rnГЎ",
+      "moderate": "StЕ™ednГ­",
+      "severe": "ZГЎvaЕѕnГЎ"
+    },
+    "diagnosisCard": "Co je ЕЎpatnД›",
+    "causeCard": "ProДЌ k tomu doЕЎlo",
+    "treatmentCard": "Jak lГ©ДЌit",
+    "preventionCard": "Jak pЕ™edchГЎzet",
+    "confidence": "Jistota",
+    "symptoms": "ViditelnГ© pЕ™Г­znaky",
+    "factors": "PЕ™ispГ­vajГ­cГ­ faktory",
+    "urgency": "NalГ©havost",
+    "materialsNeeded": "PotЕ™ebnГ© materiГЎly",
+    "recovery": "OДЌekГЎvanГ© zotavenГ­",
+    "saveBtn": "UloЕѕit do sbГ­rky",
+    "savedBtn": "UloЕѕeno do sbГ­rky",
+    "step": "Krok",
+    "noPlant": {
+      "title": "Rostlina nebyla zjiЕЎtД›na",
+      "text": "Fotografie zЕ™ejmД› neobsahuje rostlinu. PoЕ™iДЏte jasnou fotografii rostliny."
+    },
+    "healthy": {
+      "title": "VaЕЎe rostlina vypadГЎ zdravД›!",
+      "text": "Nebyly zjiЕЎtД›ny ЕѕГЎdnГ© problГ©my. Postupujte podle tipЕЇ pro prevenci."
+    },
+    "error": {
+      "title": "DiagnГіza selhala",
+      "retry": "Zkusit znovu"
+    },
+    "disclaimer": "Pouze pokyny generovanГ© umД›lou inteligencГ­. PЕ™i zГЎvaЕѕnГЅch chorobГЎch rostlin se poraДЏte s profesionГЎlnГ­m zahradnГ­kem."
   }
 }

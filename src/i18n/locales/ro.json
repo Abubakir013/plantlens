@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Acasă",
     "collection": "Colecție",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnostic"
   },
   "home": {
     "tagline": "Cunoaște fiecare plantă",
@@ -103,8 +104,7 @@
     "select": "Selectează limba",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Diagnosticul plantei",
+    "buttonLabel": "DiagnosticheazДѓ sДѓnДѓtatea",
+    "uploadLabel": "DiagnosticheazДѓ din galerie",
+    "scanningLeaves": "Scanare frunze...",
+    "checkingSymptoms": "Verificare simptome...",
+    "buildingPlan": "Elaborare plan de tratament...",
+    "previewHint": "ArДѓtГўnd toatДѓ planta obИ›ii cel mai bun diagnostic",
+    "analyzeButton": "DiagnosticheazДѓ aceastДѓ plantДѓ",
+    "retake": "RefДѓ fotografia",
+    "healthScore": "Scor sДѓnДѓtate",
+    "severityLabel": "Gravitate",
+    "severity": {
+      "none": "SДѓnДѓtoasДѓ",
+      "mild": "UИ™oarДѓ",
+      "moderate": "ModeratДѓ",
+      "severe": "GravДѓ"
+    },
+    "diagnosisCard": "Ce este Г®n neregulДѓ",
+    "causeCard": "De ce s-a Г®ntГўmplat",
+    "treatmentCard": "Cum sДѓ tratezi",
+    "preventionCard": "Cum sДѓ previi",
+    "confidence": "ГЋncredere",
+    "symptoms": "Simptome vizibile",
+    "factors": "Factori contribuitori",
+    "urgency": "UrgenИ›Дѓ",
+    "materialsNeeded": "Materiale necesare",
+    "recovery": "Recuperare aИ™teptatДѓ",
+    "saveBtn": "SalveazДѓ Г®n colecИ›ie",
+    "savedBtn": "Salvat Г®n colecИ›ie",
+    "step": "Pas",
+    "noPlant": {
+      "title": "Nicio plantДѓ detectatДѓ",
+      "text": "Fotografia nu pare sДѓ conИ›inДѓ o plantДѓ. FДѓ o fotografie clarДѓ a plantei."
+    },
+    "healthy": {
+      "title": "Planta ta aratДѓ sДѓnДѓtoasДѓ!",
+      "text": "Nu au fost detectate probleme. UrmeazДѓ sfaturile de prevenИ›ie de mai jos."
+    },
+    "error": {
+      "title": "Diagnosticul a eИ™uat",
+      "retry": "ГЋncearcДѓ din nou"
+    },
+    "disclaimer": "Numai Г®ndrumДѓri generate de AI. Pentru boli grave ale plantelor, consultaИ›i un horticultor profesionist."
   }
 }

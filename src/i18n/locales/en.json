@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Home",
     "collection": "Collection",
-    "profile": "Profile"
+    "profile": "Profile",
+    "diagnosis": "Diagnosis"
   },
   "home": {
     "tagline": "Know every plant",
@@ -161,5 +162,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Plant Diagnosis",
+    "buttonLabel": "Diagnose Plant Health",
+    "uploadLabel": "Diagnose from Gallery",
+    "scanningLeaves": "Scanning leaves...",
+    "checkingSymptoms": "Checking symptoms...",
+    "buildingPlan": "Building treatment plan...",
+    "previewHint": "Showing the whole plant gives the best diagnosis",
+    "analyzeButton": "Diagnose This Plant",
+    "retake": "Retake Photo",
+    "healthScore": "Health Score",
+    "severityLabel": "Severity",
+    "severity": {
+      "none": "Healthy",
+      "mild": "Mild",
+      "moderate": "Moderate",
+      "severe": "Severe"
+    },
+    "diagnosisCard": "What's Wrong",
+    "causeCard": "Why It Happened",
+    "treatmentCard": "How to Treat",
+    "preventionCard": "How to Prevent",
+    "confidence": "Confidence",
+    "symptoms": "Visible Symptoms",
+    "factors": "Contributing Factors",
+    "urgency": "Urgency",
+    "materialsNeeded": "Materials Needed",
+    "recovery": "Expected Recovery",
+    "saveBtn": "Save to Collection",
+    "savedBtn": "Saved to Collection",
+    "step": "Step",
+    "noPlant": {
+      "title": "No Plant Detected",
+      "text": "The photo doesn't appear to contain a plant. Please take a clear photo of the plant you want to diagnose."
+    },
+    "healthy": {
+      "title": "Your Plant Looks Healthy!",
+      "text": "No problems detected. Follow the prevention tips below to keep it thriving."
+    },
+    "error": {
+      "title": "Diagnosis Failed",
+      "retry": "Try Again"
+    },
+    "disclaimer": "AI-generated guidance only. For serious plant diseases, consult a professional horticulturist or plant pathologist."
   }
 }

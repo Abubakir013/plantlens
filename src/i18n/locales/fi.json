@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Koti",
     "collection": "Kokoelma",
-    "profile": "Profiili"
+    "profile": "Profiili",
+    "diagnosis": "Diagnoosi"
   },
   "home": {
     "tagline": "Tunne jokainen kasvi",
@@ -103,8 +104,7 @@
     "select": "Valitse kieli",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Kasvidiagnoosi",
+    "buttonLabel": "Diagnosoi terveys",
+    "uploadLabel": "Diagnosoi galleriasta",
+    "scanningLeaves": "Skannataan lehtiГ¤...",
+    "checkingSymptoms": "Tarkistetaan oireita...",
+    "buildingPlan": "Laaditaan hoitosuunnitelmaa...",
+    "previewHint": "Koko kasvin nГ¤yttГ¤minen antaa parhaan diagnoosin",
+    "analyzeButton": "Diagnosoi tГ¤mГ¤ kasvi",
+    "retake": "Ota kuva uudelleen",
+    "healthScore": "Terveyspisteet",
+    "severityLabel": "Vakavuus",
+    "severity": {
+      "none": "Terve",
+      "mild": "LievГ¤",
+      "moderate": "Kohtalainen",
+      "severe": "Vakava"
+    },
+    "diagnosisCard": "MikГ¤ on vialla",
+    "causeCard": "Miksi se tapahtui",
+    "treatmentCard": "Kuinka hoitaa",
+    "preventionCard": "Kuinka ehkГ¤istГ¤",
+    "confidence": "Luotettavuus",
+    "symptoms": "NГ¤kyvГ¤t oireet",
+    "factors": "MyГ¶tГ¤vaikuttavat tekijГ¤t",
+    "urgency": "Kiireellisyys",
+    "materialsNeeded": "Tarvittavat materiaalit",
+    "recovery": "Odotettu toipuminen",
+    "saveBtn": "Tallenna kokoelmaan",
+    "savedBtn": "Tallennettu kokoelmaan",
+    "step": "Vaihe",
+    "noPlant": {
+      "title": "Kasvia ei havaittu",
+      "text": "Kuvassa ei nГ¤ytГ¤ olevan kasvia. Ota selkeГ¤ kuva diagnosoitavasta kasvista."
+    },
+    "healthy": {
+      "title": "Kasvisi nГ¤yttГ¤Г¤ terveeltГ¤!",
+      "text": "Ongelmia ei havaittu. Noudata alla olevia ehkГ¤isyvinkkejГ¤."
+    },
+    "error": {
+      "title": "Diagnoosi epГ¤onnistui",
+      "retry": "YritГ¤ uudelleen"
+    },
+    "disclaimer": "Vain tekoГ¤lyn luomia ohjeita. Vakavissa kasvitaudeissa ota yhteyttГ¤ ammattipuutarhurin."
   }
 }

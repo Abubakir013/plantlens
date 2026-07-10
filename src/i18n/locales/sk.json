@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Domov",
     "collection": "Kolekcia",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnóza"
   },
   "home": {
     "tagline": "Spoznaj každú rastlinu",
@@ -103,8 +104,7 @@
     "select": "Vybrať jazyk",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "DiagnГіza rastliny",
+    "buttonLabel": "DiagnostikovaЕҐ zdravie",
+    "uploadLabel": "DiagnostikovaЕҐ z galГ©rie",
+    "scanningLeaves": "Skenovanie listov...",
+    "checkingSymptoms": "Kontrola prГ­znakov...",
+    "buildingPlan": "Zostavovanie lieДЌebnГ©ho plГЎnu...",
+    "previewHint": "Zobrazenie celej rastliny poskytuje najlepЕЎiu diagnГіzu",
+    "analyzeButton": "DiagnostikovaЕҐ tГєto rastlinu",
+    "retake": "OdfotiЕҐ znova",
+    "healthScore": "SkГіre zdravia",
+    "severityLabel": "ZГЎvaЕѕnosЕҐ",
+    "severity": {
+      "none": "ZdravГЎ",
+      "mild": "Mierna",
+      "moderate": "StrednГЎ",
+      "severe": "ZГЎvaЕѕnГЎ"
+    },
+    "diagnosisCard": "ДЊo je zlГ©",
+    "causeCard": "PreДЌo sa to stalo",
+    "treatmentCard": "Ako lieДЌiЕҐ",
+    "preventionCard": "Ako predchГЎdzaЕҐ",
+    "confidence": "Istota",
+    "symptoms": "ViditeДѕnГ© prГ­znaky",
+    "factors": "PrispievajГєce faktory",
+    "urgency": "NaliehavosЕҐ",
+    "materialsNeeded": "PotrebnГ© materiГЎly",
+    "recovery": "OДЌakГЎvanГ© zotavenie",
+    "saveBtn": "UloЕѕiЕҐ do zbierky",
+    "savedBtn": "UloЕѕenГ© do zbierky",
+    "step": "Krok",
+    "noPlant": {
+      "title": "Rastlina nebola zistenГЎ",
+      "text": "Fotografia zrejme neobsahuje rastlinu. Urobte jasnГЅ zГЎber rastliny."
+    },
+    "healthy": {
+      "title": "VaЕЎa rastlina vyzerГЎ zdravo!",
+      "text": "Neboli zistenГ© Еѕiadne problГ©my. Postupujte podДѕa tipov na prevenciu."
+    },
+    "error": {
+      "title": "DiagnГіza zlyhala",
+      "retry": "SkГєsiЕҐ znova"
+    },
+    "disclaimer": "Iba usmernenia generovanГ© umelou inteligenciou. Pri zГЎvaЕѕnГЅch chorobГЎch rastlГ­n sa poraДЏte s odbornГЅm zГЎhradnГ­kom."
   }
 }

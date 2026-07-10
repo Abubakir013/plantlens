@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Ana Sayfa",
     "collection": "Koleksiyon",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Tanı"
   },
   "home": {
     "tagline": "Her bitkiyi tanı",
@@ -103,8 +104,7 @@
     "select": "Dil seç",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Bitki TeЕџhisi",
+    "buttonLabel": "SaДџlД±ДџД± teЕџhis et",
+    "uploadLabel": "Galeriden teЕџhis et",
+    "scanningLeaves": "Yapraklar taranД±yor...",
+    "checkingSymptoms": "Belirtiler kontrol ediliyor...",
+    "buildingPlan": "Tedavi planД± hazД±rlanД±yor...",
+    "previewHint": "Bitkinin tamamД±nД± gГ¶stermek en iyi teЕџhisi saДџlar",
+    "analyzeButton": "Bu bitkiyi teЕџhis et",
+    "retake": "FotoДџrafД± yeniden Г§ek",
+    "healthScore": "SaДџlД±k Skoru",
+    "severityLabel": "Ећiddet",
+    "severity": {
+      "none": "SaДџlД±klД±",
+      "mild": "Hafif",
+      "moderate": "Orta",
+      "severe": "AДџД±r"
+    },
+    "diagnosisCard": "Ne yanlД±Еџ",
+    "causeCard": "Neden oldu",
+    "treatmentCard": "NasД±l tedavi edilir",
+    "preventionCard": "NasД±l Г¶nlenir",
+    "confidence": "GГјven",
+    "symptoms": "GГ¶rГјnГјr belirtiler",
+    "factors": "KatkД±da bulunan faktГ¶rler",
+    "urgency": "Aciliyet",
+    "materialsNeeded": "Gerekli malzemeler",
+    "recovery": "Beklenen iyileЕџme",
+    "saveBtn": "Koleksiyona kaydet",
+    "savedBtn": "Koleksiyona kaydedildi",
+    "step": "AdД±m",
+    "noPlant": {
+      "title": "Bitki tespit edilmedi",
+      "text": "FotoДџrafta bitki gГ¶rГјnmГјyor. TeЕџhis etmek istediДџiniz bitkinin net bir fotoДџrafД±nД± Г§ekin."
+    },
+    "healthy": {
+      "title": "Bitkini saДџlД±klД± gГ¶rГјnГјyor!",
+      "text": "Sorun tespit edilmedi. AЕџaДџД±daki Г¶nleme ipuГ§larД±nД± takip edin."
+    },
+    "error": {
+      "title": "TeЕџhis baЕџarД±sД±z",
+      "retry": "Tekrar dene"
+    },
+    "disclaimer": "YalnД±zca yapay zeka tarafД±ndan oluЕџturulan rehberlik. Ciddi bitki hastalД±klarД± iГ§in uzman bir bahГ§eciye danД±ЕџД±n."
   }
 }

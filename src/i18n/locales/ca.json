@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Inici",
     "collection": "Col·lecció",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "diagnosis": "Diagnosi"
   },
   "home": {
     "tagline": "Coneix cada planta",
@@ -103,8 +104,7 @@
     "select": "Selecciona idioma",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Diagnosi de la planta",
+    "buttonLabel": "Diagnostica la salut",
+    "uploadLabel": "Diagnostica des de la galeria",
+    "scanningLeaves": "Escanejant fulles...",
+    "checkingSymptoms": "Comprovant sГ­mptomes...",
+    "buildingPlan": "Elaborant pla de tractament...",
+    "previewHint": "Mostrar tota la planta dona el millor diagnГІstic",
+    "analyzeButton": "Diagnostica aquesta planta",
+    "retake": "Torna a fer la foto",
+    "healthScore": "PuntuaciГі de salut",
+    "severityLabel": "Gravetat",
+    "severity": {
+      "none": "Sana",
+      "mild": "Lleu",
+      "moderate": "Moderada",
+      "severe": "Greu"
+    },
+    "diagnosisCard": "QuГЁ hi ha de mal",
+    "causeCard": "Per quГЁ ha passat",
+    "treatmentCard": "Com tractar",
+    "preventionCard": "Com prevenir",
+    "confidence": "ConfianГ§a",
+    "symptoms": "SГ­mptomes visibles",
+    "factors": "Factors contribuents",
+    "urgency": "UrgГЁncia",
+    "materialsNeeded": "Materials necessaris",
+    "recovery": "RecuperaciГі esperada",
+    "saveBtn": "Desa a la colВ·lecciГі",
+    "savedBtn": "Desat a la colВ·lecciГі",
+    "step": "Pas",
+    "noPlant": {
+      "title": "No s'ha detectat cap planta",
+      "text": "La foto no sembla contenir una planta. Fes una foto clara de la planta a diagnosticar."
+    },
+    "healthy": {
+      "title": "La teva planta sembla sana!",
+      "text": "No s'han detectat problemes. Segueix els consells de prevenciГі a continuaciГі."
+    },
+    "error": {
+      "title": "El diagnГІstic ha fallat",
+      "retry": "Torna-ho a intentar"
+    },
+    "disclaimer": "NomГ©s orientaciГі generada per IA. Per a malalties greus, consulteu un horticultor professional."
   }
 }

@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Hem",
     "collection": "Samling",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnos"
   },
   "home": {
     "tagline": "Känn igen varje växt",
@@ -103,8 +104,7 @@
     "select": "Välj språk",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "VГ¤xtdiagnos",
+    "buttonLabel": "Diagnostisera hГ¤lsa",
+    "uploadLabel": "Diagnostisera frГҐn galleri",
+    "scanningLeaves": "Skannar blad...",
+    "checkingSymptoms": "Kontrollerar symptom...",
+    "buildingPlan": "Skapar behandlingsplan...",
+    "previewHint": "Visa hela vГ¤xten fГ¶r bГ¤sta diagnos",
+    "analyzeButton": "Diagnostisera denna vГ¤xt",
+    "retake": "Ta om fotot",
+    "healthScore": "HГ¤lsopoГ¤ng",
+    "severityLabel": "Allvarlighetsgrad",
+    "severity": {
+      "none": "Frisk",
+      "mild": "Mild",
+      "moderate": "MГҐttlig",
+      "severe": "Allvarlig"
+    },
+    "diagnosisCard": "Vad Г¤r fel",
+    "causeCard": "VarfГ¶r det hГ¤nde",
+    "treatmentCard": "Hur man behandlar",
+    "preventionCard": "Hur man fГ¶rebygger",
+    "confidence": "Konfidens",
+    "symptoms": "Synliga symptom",
+    "factors": "Bidragande faktorer",
+    "urgency": "BrГҐdska",
+    "materialsNeeded": "NГ¶dvГ¤ndiga material",
+    "recovery": "FГ¶rvГ¤ntad ГҐterhГ¤mtning",
+    "saveBtn": "Spara i samling",
+    "savedBtn": "Sparad i samling",
+    "step": "Steg",
+    "noPlant": {
+      "title": "Ingen vГ¤xt hittades",
+      "text": "Fotot verkar inte innehГҐlla en vГ¤xt. Ta ett tydligt foto av vГ¤xten du vill diagnostisera."
+    },
+    "healthy": {
+      "title": "Din vГ¤xt ser frisk ut!",
+      "text": "Inga problem hittades. FГ¶lj fГ¶rebyggande tipsen nedan."
+    },
+    "error": {
+      "title": "Diagnos misslyckades",
+      "retry": "FГ¶rsГ¶k igen"
+    },
+    "disclaimer": "Endast AI-genererade rГҐd. Konsultera en professionell hortikulturalist vid allvarliga vГ¤xtsjukdomar."
   }
 }

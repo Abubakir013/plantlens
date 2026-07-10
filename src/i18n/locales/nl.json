@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Home",
     "collection": "Collectie",
-    "profile": "Profiel"
+    "profile": "Profiel",
+    "diagnosis": "Diagnose"
   },
   "home": {
     "tagline": "Ken elke plant",
@@ -103,8 +104,7 @@
     "select": "Taal selecteren",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Plantdiagnose",
+    "buttonLabel": "Gezondheid diagnosticeren",
+    "uploadLabel": "Diagnosticeren uit galerij",
+    "scanningLeaves": "Bladeren scannen...",
+    "checkingSymptoms": "Symptomen controleren...",
+    "buildingPlan": "Behandelplan opstellen...",
+    "previewHint": "De hele plant tonen geeft de beste diagnose",
+    "analyzeButton": "Deze plant diagnosticeren",
+    "retake": "Foto opnieuw nemen",
+    "healthScore": "Gezondheidscore",
+    "severityLabel": "Ernst",
+    "severity": {
+      "none": "Gezond",
+      "mild": "Mild",
+      "moderate": "Matig",
+      "severe": "Ernstig"
+    },
+    "diagnosisCard": "Wat is er mis",
+    "causeCard": "Waarom het is gebeurd",
+    "treatmentCard": "Hoe te behandelen",
+    "preventionCard": "Hoe te voorkomen",
+    "confidence": "Betrouwbaarheid",
+    "symptoms": "Zichtbare symptomen",
+    "factors": "Bijdragende factoren",
+    "urgency": "Urgentie",
+    "materialsNeeded": "Benodigde materialen",
+    "recovery": "Verwacht herstel",
+    "saveBtn": "Opslaan in collectie",
+    "savedBtn": "Opgeslagen in collectie",
+    "step": "Stap",
+    "noPlant": {
+      "title": "Geen plant gedetecteerd",
+      "text": "De foto lijkt geen plant te bevatten. Maak een duidelijke foto van de te diagnosticeren plant."
+    },
+    "healthy": {
+      "title": "Uw plant ziet er gezond uit!",
+      "text": "Geen problemen gedetecteerd. Volg de preventietips hieronder."
+    },
+    "error": {
+      "title": "Diagnose mislukt",
+      "retry": "Opnieuw proberen"
+    },
+    "disclaimer": "Alleen AI-gegenereerde adviezen. Raadpleeg voor ernstige plantenziekten een professionele tuinman."
   }
 }

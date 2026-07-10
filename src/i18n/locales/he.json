@@ -13,7 +13,8 @@
   "tabs": {
     "home": "בית",
     "collection": "אוסף",
-    "profile": "פרופיל"
+    "profile": "פרופיל",
+    "diagnosis": "אבחון"
   },
   "home": {
     "tagline": "הכר כל צמח",
@@ -103,8 +104,7 @@
     "select": "בחר שפה",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "ЧђЧ‘Ч—Ч•Чџ Ч¦ЧћЧ—",
+    "buttonLabel": "ЧђЧ‘Ч—Чџ ЧђЧЄ Ч”Ч‘ЧЁЧ™ЧђЧ•ЧЄ",
+    "uploadLabel": "ЧђЧ‘Ч—Чџ ЧћЧ’ЧњЧЁЧ™Ч”",
+    "scanningLeaves": "ЧЎЧЁЧ™Ч§ЧЄ ЧўЧњЧ™Чќ...",
+    "checkingSymptoms": "Ч‘Ч“Ч™Ч§ЧЄ ЧЄЧЎЧћЧ™Ч Ч™Чќ...",
+    "buildingPlan": "Ч‘Ч Ч™Ч™ЧЄ ЧЄЧ›Ч Ч™ЧЄ ЧЧ™Ч¤Ч•Чњ...",
+    "previewHint": "Ч”Ч¦Ч’ЧЄ Ч”Ч¦ЧћЧ— Ч›Ч•ЧњЧ• Ч Ч•ЧЄЧ ЧЄ ЧђЧЄ Ч”ЧђЧ‘Ч—Ч•Чџ Ч”ЧЧ•Ч‘ Ч‘Ч™Ч•ЧЄЧЁ",
+    "analyzeButton": "ЧђЧ‘Ч—Чџ Ч¦ЧћЧ— Ч–Ч”",
+    "retake": "Ч¦ЧњЧќ ЧћЧ—Ч“Ч©",
+    "healthScore": "Ч¦Ч™Ч•Чџ Ч‘ЧЁЧ™ЧђЧ•ЧЄ",
+    "severityLabel": "Ч—Ч•ЧћЧЁЧ”",
+    "severity": {
+      "none": "Ч‘ЧЁЧ™Чђ",
+      "mild": "Ч§Чњ",
+      "moderate": "Ч‘Ч™Ч Ч•Ч Ч™",
+      "severe": "Ч—ЧћЧ•ЧЁ"
+    },
+    "diagnosisCard": "ЧћЧ” ЧњЧђ Ч‘ЧЎЧ“ЧЁ",
+    "causeCard": "ЧњЧћЧ” Ч–Ч” Ч§ЧЁЧ”",
+    "treatmentCard": "Ч›Ч™Ч¦Ч“ ЧњЧЧ¤Чњ",
+    "preventionCard": "Ч›Ч™Ч¦Ч“ ЧњЧћЧ Ч•Чў",
+    "confidence": "Ч‘Ч™ЧЧ—Ч•Чџ",
+    "symptoms": "ЧЄЧЎЧћЧ™Ч Ч™Чќ Ч ЧЁЧђЧ™Чќ",
+    "factors": "Ч’Ч•ЧЁЧћЧ™Чќ ЧЄЧ•ЧЁЧћЧ™Чќ",
+    "urgency": "Ч“Ч—Ч™Ч¤Ч•ЧЄ",
+    "materialsNeeded": "Ч—Ч•ЧћЧЁЧ™Чќ Ч Ч“ЧЁЧ©Ч™Чќ",
+    "recovery": "Ч”Ч—ЧњЧћЧ” Ч¦Ч¤Ч•Ч™Ч”",
+    "saveBtn": "Ч©ЧћЧ•ЧЁ ЧњЧђЧ•ЧЎЧЈ",
+    "savedBtn": "Ч Ч©ЧћЧЁ ЧњЧђЧ•ЧЎЧЈ",
+    "step": "Ч©ЧњЧ‘",
+    "noPlant": {
+      "title": "ЧњЧђ Ч–Ч•Ч”Ч” Ч¦ЧћЧ—",
+      "text": "Ч”ЧЄЧћЧ•Ч Ч” ЧђЧ™Ч Ч” Ч ЧЁЧђЧ™ЧЄ Ч›Ч•ЧњЧњЧЄ Ч¦ЧћЧ—. Ч¦ЧњЧќ ЧЄЧћЧ•Ч Ч” Ч‘ЧЁЧ•ЧЁЧ” Ч©Чњ Ч”Ч¦ЧћЧ— ЧњЧђЧ‘Ч—Ч•Чџ."
+    },
+    "healthy": {
+      "title": "Ч”Ч¦ЧћЧ— Ч©ЧњЧљ Ч ЧЁЧђЧ” Ч‘ЧЁЧ™Чђ!",
+      "text": "ЧњЧђ Ч–Ч•Ч”Ч• Ч‘ЧўЧ™Ч•ЧЄ. ЧўЧ§Ч•Ч‘ ЧђЧ—ЧЁ ЧЧ™Ч¤Ч™Чќ ЧњЧћЧ Ч™ЧўЧ” ЧњЧћЧЧ”."
+    },
+    "error": {
+      "title": "Ч”ЧђЧ‘Ч—Ч•Чџ Ч Ч›Ч©Чњ",
+      "retry": "Ч ЧЎЧ” Ч©Ч•Ч‘"
+    },
+    "disclaimer": "Ч”Ч Ч—Ч™Ч•ЧЄ Ч©Ч Ч•Ч¦ЧЁЧ• ЧўЧњ Ч™Ч“Ч™ Ч‘Ч™Ч Ч” ЧћЧњЧђЧ›Ч•ЧЄЧ™ЧЄ Ч‘ЧњЧ‘Ч“. ЧњЧћЧ—ЧњЧ•ЧЄ Ч¦ЧћЧ—Ч™Чќ Ч—ЧћЧ•ЧЁЧ•ЧЄ, Ч”ЧЄЧ™Ч™ЧўЧҐ ЧўЧќ Ч’Ч Чџ ЧћЧ§Ч¦Ч•ЧўЧ™."
   }
 }

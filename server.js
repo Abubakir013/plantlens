@@ -255,6 +255,122 @@ async function handleGuide(req, res) {
   }
 }
 
+// ─── Diagnose prompt ─────────────────────────────────────────────────────────
+const DIAGNOSE_BASE = `You are an expert plant pathologist and horticulturist. When given a plant image, respond with ONLY a valid JSON object — no markdown fences, no prose before or after. Use exactly this structure:
+{
+  "isPlant": true,
+  "plantName": "Common Plant Name",
+  "isHealthy": false,
+  "healthScore": 45,
+  "severity": "moderate",
+  "diagnosis": {
+    "problemName": "Root rot",
+    "problemType": "disease",
+    "confidence": 82,
+    "visibleSymptoms": ["yellowing lower leaves", "wilting despite moist soil", "black stem base"]
+  },
+  "cause": {
+    "summary": "Caused by overwatering and poor drainage, which creates anaerobic conditions that allow Phytophthora fungi to destroy roots.",
+    "contributingFactors": ["soil staying wet for more than 3 days", "pot without drainage holes", "low light reducing transpiration"]
+  },
+  "treatment": {
+    "urgency": "Act within 48 hours",
+    "steps": [
+      { "step": 1, "title": "Remove from pot", "detail": "Gently slide the plant out and shake off all old soil. Cut away any black, mushy roots with sterilized scissors.", "timeframe": "Today" },
+      { "step": 2, "title": "Treat with fungicide", "detail": "Soak remaining roots in a solution of 1 tsp copper-based fungicide per 1 liter of water for 30 minutes.", "timeframe": "Today" },
+      { "step": 3, "title": "Repot in fresh mix", "detail": "Use a fast-draining mix (50% perlite, 50% potting soil) in a pot with at least 2 drainage holes.", "timeframe": "Today" },
+      { "step": 4, "title": "Withhold water", "detail": "Do not water for 7 days to allow roots to dry and recover. Resume with 50ml every 10 days.", "timeframe": "7 days" }
+    ],
+    "materialsNeeded": ["sterilized scissors", "copper fungicide", "fresh potting mix", "perlite", "pot with drainage holes"]
+  },
+  "prevention": {
+    "summary": "Root rot is almost always preventable with proper watering discipline and drainage.",
+    "tips": ["Always check soil dryness 5cm deep before watering", "Use pots with drainage holes only", "Empty saucers 30 minutes after watering", "Reduce watering by 50% in winter"]
+  },
+  "expectedRecovery": "3-4 weeks with proper treatment, assuming at least 30% of roots survive"
+}
+Rules:
+- JSON keys stay in English exactly as shown.
+- severity must be one of: "none", "mild", "moderate", "severe".
+- problemType must be one of: "disease", "pest", "nutrient", "watering", "light", "environment".
+- If the plant is healthy: set isHealthy=true, severity="none", healthScore 80-100, problemName="No problems detected", visibleSymptoms=[], cause.summary="Plant appears healthy", treatment.steps=[], and provide meaningful prevention tips.
+- If no plant is visible in the image: return {"isPlant":false,"plantName":"","isHealthy":false,"healthScore":0,"severity":"none","diagnosis":{"problemName":"","problemType":"disease","confidence":0,"visibleSymptoms":[]},"cause":{"summary":"","contributingFactors":[]},"treatment":{"urgency":"","steps":[],"materialsNeeded":[]},"prevention":{"summary":"","tips":[]},"expectedRecovery":""}
+- Treatment steps must be CONCRETE and ACTIONABLE: include exact amounts (milliliters, grams, percentages), specific product types, and clear actions. Never write vague advice like "water properly".`;
+
+function buildDiagnosePrompt(locale) {
+  const lang = langName(locale);
+  if (lang === 'English') return DIAGNOSE_BASE;
+  return (
+    DIAGNOSE_BASE +
+    `\nIMPORTANT: Translate ALL text VALUES into ${lang}. Keep every JSON key in English. Keep plantName and any scientific names in their standard form. The severity and problemType values must remain in English exactly as specified.`
+  );
+}
+
+async function handleDiagnose(req, res) {
+  let body;
+  try {
+    body = JSON.parse(await readBody(req));
+  } catch {
+    return send(res, 400, { error: 'Invalid JSON body' });
+  }
+
+  const { image, language = 'en' } = body;
+  if (!image) return send(res, 400, { error: 'image (base64) is required' });
+
+  const mediaType = body.mediaType ?? 'image/jpeg';
+
+  try {
+    const claudeRes = await callClaude({
+      model: MODEL,
+      max_tokens: 2000,
+      system: buildDiagnosePrompt(language),
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: mediaType, data: image } },
+            { type: 'text', text: 'Diagnose this plant. Is it healthy? If not, what is wrong and how do I fix it?' },
+          ],
+        },
+      ],
+    });
+
+    const raw = claudeRes.content?.[0]?.text ?? '';
+    const parsed = extractJSON(raw);
+
+    send(res, 200, {
+      isPlant:   typeof parsed.isPlant === 'boolean' ? parsed.isPlant : true,
+      plantName: parsed.plantName ?? '',
+      isHealthy: typeof parsed.isHealthy === 'boolean' ? parsed.isHealthy : false,
+      healthScore: typeof parsed.healthScore === 'number' ? Math.min(100, Math.max(0, parsed.healthScore)) : 0,
+      severity:   ['none','mild','moderate','severe'].includes(parsed.severity) ? parsed.severity : 'moderate',
+      diagnosis: {
+        problemName:     parsed.diagnosis?.problemName ?? '',
+        problemType:     parsed.diagnosis?.problemType ?? 'disease',
+        confidence:      typeof parsed.diagnosis?.confidence === 'number' ? parsed.diagnosis.confidence : 0,
+        visibleSymptoms: Array.isArray(parsed.diagnosis?.visibleSymptoms) ? parsed.diagnosis.visibleSymptoms : [],
+      },
+      cause: {
+        summary:              parsed.cause?.summary ?? '',
+        contributingFactors:  Array.isArray(parsed.cause?.contributingFactors) ? parsed.cause.contributingFactors : [],
+      },
+      treatment: {
+        urgency:          parsed.treatment?.urgency ?? '',
+        steps:            Array.isArray(parsed.treatment?.steps) ? parsed.treatment.steps : [],
+        materialsNeeded:  Array.isArray(parsed.treatment?.materialsNeeded) ? parsed.treatment.materialsNeeded : [],
+      },
+      prevention: {
+        summary: parsed.prevention?.summary ?? '',
+        tips:    Array.isArray(parsed.prevention?.tips) ? parsed.prevention.tips : [],
+      },
+      expectedRecovery: parsed.expectedRecovery ?? '',
+    });
+  } catch (e) {
+    console.error('[/diagnose]', e.message);
+    send(res, 500, { error: e.message });
+  }
+}
+
 // ─── Server ───────────────────────────────────────────────────────────────────
 const server = http.createServer(async (req, res) => {
   if (req.method === 'OPTIONS') {
@@ -267,6 +383,7 @@ const server = http.createServer(async (req, res) => {
   }
   if (req.method === 'POST' && req.url === '/identify') return handleIdentify(req, res);
   if (req.method === 'POST' && req.url === '/guide') return handleGuide(req, res);
+  if (req.method === 'POST' && req.url === '/diagnose') return handleDiagnose(req, res);
   send(res, 404, { error: 'Not found' });
 });
 
@@ -274,4 +391,5 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`🌿  PlantLens server → http://0.0.0.0:${PORT}`);
   console.log(`    POST /identify   plant identification`);
   console.log(`    POST /guide      topic deep-dive`);
+  console.log(`    POST /diagnose   plant health diagnosis`);
 });

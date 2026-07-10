@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Početna",
     "collection": "Kolekcija",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Dijagnoza"
   },
   "home": {
     "tagline": "Upoznaj svaku biljku",
@@ -103,8 +104,7 @@
     "select": "Odaberi jezik",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Dijagnoza biljke",
+    "buttonLabel": "Dijagnosticiraj zdravlje",
+    "uploadLabel": "Dijagnosticiraj iz galerije",
+    "scanningLeaves": "Skeniranje listova...",
+    "checkingSymptoms": "Provjera simptoma...",
+    "buildingPlan": "Izrada plana lijeДЌenja...",
+    "previewHint": "Prikazivanje cijele biljke daje najbolju dijagnozu",
+    "analyzeButton": "Dijagnosticiraj ovu biljku",
+    "retake": "Ponovi fotografiju",
+    "healthScore": "Ocjena zdravlja",
+    "severityLabel": "Ozbiljnost",
+    "severity": {
+      "none": "Zdrava",
+      "mild": "Blaga",
+      "moderate": "Umjerena",
+      "severe": "TeЕЎka"
+    },
+    "diagnosisCard": "Е to nije u redu",
+    "causeCard": "ZaЕЎto se dogodilo",
+    "treatmentCard": "Kako lijeДЌiti",
+    "preventionCard": "Kako sprijeДЌiti",
+    "confidence": "Pouzdanost",
+    "symptoms": "Vidljivi simptomi",
+    "factors": "DoprinoseД‡i ДЌimbenici",
+    "urgency": "Hitnost",
+    "materialsNeeded": "Potrebni materijali",
+    "recovery": "OДЌekivani oporavak",
+    "saveBtn": "Spremi u kolekciju",
+    "savedBtn": "Spremljeno u kolekciju",
+    "step": "Korak",
+    "noPlant": {
+      "title": "Nije otkrivena biljka",
+      "text": "Fotografija ne izgleda kao da sadrЕѕi biljku. Napravite jasnu fotografiju biljke."
+    },
+    "healthy": {
+      "title": "VaЕЎa biljka izgleda zdravo!",
+      "text": "Nisu otkriveni problemi. Slijedite savjete za prevenciju ispod."
+    },
+    "error": {
+      "title": "Dijagnoza nije uspjela",
+      "retry": "PokuЕЎajte ponovo"
+    },
+    "disclaimer": "Samo smjernice generirane AI-jem. Za ozbiljne bolesti biljaka posavjetujte se s profesionalnim hortikulturistom."
   }
 }

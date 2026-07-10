@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Nyumbani",
     "collection": "Mkusanyiko",
-    "profile": "Wasifu"
+    "profile": "Wasifu",
+    "diagnosis": "Uchunguzi"
   },
   "home": {
     "tagline": "Jua kila mmea",
@@ -103,8 +104,7 @@
     "select": "Chagua lugha",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Uchunguzi wa Mmea",
+    "buttonLabel": "Chunguza Afya",
+    "uploadLabel": "Chunguza kutoka Matunzio",
+    "scanningLeaves": "Inachunguza majani...",
+    "checkingSymptoms": "Inaangalia dalili...",
+    "buildingPlan": "Inaunda mpango wa matibabu...",
+    "previewHint": "Kuonyesha mmea wote hutoa uchunguzi bora zaidi",
+    "analyzeButton": "Chunguza Mmea Huu",
+    "retake": "Piga Picha Tena",
+    "healthScore": "Alama ya Afya",
+    "severityLabel": "Ukali",
+    "severity": {
+      "none": "Mzima",
+      "mild": "Kidogo",
+      "moderate": "Wastani",
+      "severe": "Kali"
+    },
+    "diagnosisCard": "Nini Kimekwenda Vibaya",
+    "causeCard": "Kwa Nini Ilitokea",
+    "treatmentCard": "Jinsi ya Kutibu",
+    "preventionCard": "Jinsi ya Kuzuia",
+    "confidence": "Uhakika",
+    "symptoms": "Dalili Zinazoonekana",
+    "factors": "Mambo Yanayochangia",
+    "urgency": "Uharaka",
+    "materialsNeeded": "Vifaa Vinavyohitajika",
+    "recovery": "Kupona Kunaotarajiwa",
+    "saveBtn": "Hifadhi kwenye Mkusanyiko",
+    "savedBtn": "Imehifadhiwa kwenye Mkusanyiko",
+    "step": "Hatua",
+    "noPlant": {
+      "title": "Hakuna Mmea Uliogunduliwa",
+      "text": "Picha hionekani kuwa na mmea. Piga picha wazi ya mmea unaotaka kuchunguza."
+    },
+    "healthy": {
+      "title": "Mmea Wako Unaonekana Mzima!",
+      "text": "Hakuna matatizo yaliyogunduliwa. Fuata vidokezo vya kuzuia hapa chini."
+    },
+    "error": {
+      "title": "Uchunguzi Umeshindwa",
+      "retry": "Jaribu Tena"
+    },
+    "disclaimer": "Mwongozo ulioundwa na AI pekee. Kwa magonjwa makubwa ya mimea, wasiliana na mtaalamu wa kilimo."
   }
 }

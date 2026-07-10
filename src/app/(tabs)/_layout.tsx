@@ -3,6 +3,8 @@ import React from 'react';
 import { ColorValue, Platform } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
+import { Stethoscope } from 'lucide-react-native';
+
 import { Colors } from '@/constants/colors';
 import { useLocale } from '@/hooks/useLocale';
 
@@ -81,6 +83,13 @@ export default function TabLayout() {
         options={{
           title: t('tabs.home'),
           tabBarIcon: ({ color, size }) => <HomeIcon color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="diagnosis"
+        options={{
+          title: t('tabs.diagnosis'),
+          tabBarIcon: ({ color, size }) => <Stethoscope color={str(color)} size={size} />,
         }}
       />
       <Tabs.Screen

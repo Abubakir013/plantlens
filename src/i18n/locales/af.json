@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Tuis",
     "collection": "Versameling",
-    "profile": "Profiel"
+    "profile": "Profiel",
+    "diagnosis": "Diagnose"
   },
   "home": {
     "tagline": "Ken elke plant",
@@ -103,8 +104,7 @@
     "select": "Kies taal",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Plantdiagnose",
+    "buttonLabel": "Gesondheid diagnoseer",
+    "uploadLabel": "Diagnoseer vanaf galery",
+    "scanningLeaves": "Blare word geskandeer...",
+    "checkingSymptoms": "Simptome word nagegaan...",
+    "buildingPlan": "Behandelingsplan word opgestel...",
+    "previewHint": "Die hele plant wys gee die beste diagnose",
+    "analyzeButton": "Diagnoseer hierdie plant",
+    "retake": "Neem foto oor",
+    "healthScore": "Gesondheidstelling",
+    "severityLabel": "Erns",
+    "severity": {
+      "none": "Gesond",
+      "mild": "Lig",
+      "moderate": "Matig",
+      "severe": "Ernstig"
+    },
+    "diagnosisCard": "Wat is verkeerd",
+    "causeCard": "Waarom dit gebeur het",
+    "treatmentCard": "Hoe om te behandel",
+    "preventionCard": "Hoe om te voorkom",
+    "confidence": "Vertroue",
+    "symptoms": "Sigbare simptome",
+    "factors": "Bydraende faktore",
+    "urgency": "Dringendheid",
+    "materialsNeeded": "Benodigde materiale",
+    "recovery": "Verwagte herstel",
+    "saveBtn": "Stoor in versameling",
+    "savedBtn": "Gestoor in versameling",
+    "step": "Stap",
+    "noPlant": {
+      "title": "Geen plant opgespoor nie",
+      "text": "Die foto blyk nie 'n plant te bevat nie. Neem 'n duidelike foto van die plant."
+    },
+    "healthy": {
+      "title": "Jou plant lyk gesond!",
+      "text": "Geen probleme opgespoor nie. Volg die voorkomingstips hieronder."
+    },
+    "error": {
+      "title": "Diagnose misluk",
+      "retry": "Probeer weer"
+    },
+    "disclaimer": "Slegs KI-gegenereerde leiding. Raadpleeg 'n professionele tuinman vir ernstige plantsiekte."
   }
 }

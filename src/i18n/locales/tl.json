@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Home",
     "collection": "Koleksyon",
-    "profile": "Profile"
+    "profile": "Profile",
+    "diagnosis": "Diagnosis"
   },
   "home": {
     "tagline": "Alamin ang bawat halaman",
@@ -103,8 +104,7 @@
     "select": "Pumili ng wika",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Diagnosis ng Halaman",
+    "buttonLabel": "I-diagnose ang Kalusugan",
+    "uploadLabel": "I-diagnose mula sa Gallery",
+    "scanningLeaves": "Ini-scan ang mga dahon...",
+    "checkingSymptoms": "Sinisuri ang mga sintomas...",
+    "buildingPlan": "Ginagawa ang plano ng paggamot...",
+    "previewHint": "Ang pagpapakita ng buong halaman ay nagbibigay ng pinakamahusay na diagnosis",
+    "analyzeButton": "I-diagnose ang Halamang Ito",
+    "retake": "Muling Kumuha ng Litrato",
+    "healthScore": "Marka ng Kalusugan",
+    "severityLabel": "Kalubhaan",
+    "severity": {
+      "none": "Malusog",
+      "mild": "Banayad",
+      "moderate": "Katamtaman",
+      "severe": "Malubha"
+    },
+    "diagnosisCard": "Ano ang Mali",
+    "causeCard": "Bakit Nangyari",
+    "treatmentCard": "Paano Gamutin",
+    "preventionCard": "Paano Maiwasan",
+    "confidence": "Kumpiyansa",
+    "symptoms": "Mga Nakikitang Sintomas",
+    "factors": "Mga Nakakatulong na Salik",
+    "urgency": "Apurahan",
+    "materialsNeeded": "Mga Kailangan na Materyales",
+    "recovery": "Inaasahang Pagbawi",
+    "saveBtn": "I-save sa Koleksyon",
+    "savedBtn": "Nai-save sa Koleksyon",
+    "step": "Hakbang",
+    "noPlant": {
+      "title": "Walang Nahanap na Halaman",
+      "text": "Ang litrato ay mukhang walang halaman. Kumuha ng malinaw na litrato ng halamang nais i-diagnose."
+    },
+    "healthy": {
+      "title": "Ang Iyong Halaman ay Mukhang Malusog!",
+      "text": "Walang nahanap na problema. Sundin ang mga tip sa pag-iwas sa ibaba."
+    },
+    "error": {
+      "title": "Nabigong Mag-diagnose",
+      "retry": "Subukang Muli"
+    },
+    "disclaimer": "Gabay na gawa ng AI lamang. Para sa malalang sakit ng halaman, kumonsulta sa propesyonal na hortikulturista."
   }
 }

@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Trang chủ",
     "collection": "Bộ sưu tập",
-    "profile": "Hồ sơ"
+    "profile": "Hồ sơ",
+    "diagnosis": "Chẩn đoán"
   },
   "home": {
     "tagline": "Nhận biết mọi loài cây",
@@ -103,8 +104,7 @@
     "select": "Chọn ngôn ngữ",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Chбє©n Д‘oГЎn cГўy",
+    "buttonLabel": "Chбє©n Д‘oГЎn sб»©c khб»Џe",
+    "uploadLabel": "Chбє©n Д‘oГЎn tб»« thЖ° viб»‡n",
+    "scanningLeaves": "Дђang quГ©t lГЎ...",
+    "checkingSymptoms": "Дђang kiб»ѓm tra triб»‡u chб»©ng...",
+    "buildingPlan": "Дђang xГўy dб»±ng kбєї hoбєЎch Д‘iб»Ѓu trб»‹...",
+    "previewHint": "Hiб»ѓn thб»‹ toГ n bб»™ cГўy cho kбєїt quбєЈ chбє©n Д‘oГЎn tб»‘t nhбєҐt",
+    "analyzeButton": "Chбє©n Д‘oГЎn cГўy nГ y",
+    "retake": "Chб»Ґp lбєЎi бєЈnh",
+    "healthScore": "Дђiб»ѓm sб»©c khб»Џe",
+    "severityLabel": "Mб»©c Д‘б»™ nghiГЄm trб»Ќng",
+    "severity": {
+      "none": "Khб»Џe mбєЎnh",
+      "mild": "Nhбє№",
+      "moderate": "Vб»«a phбєЈi",
+      "severe": "NghiГЄm trб»Ќng"
+    },
+    "diagnosisCard": "CГі vбєҐn Д‘б»Ѓ gГ¬",
+    "causeCard": "TбєЎi sao xбєЈy ra",
+    "treatmentCard": "CГЎch Д‘iб»Ѓu trб»‹",
+    "preventionCard": "CГЎch phГІng ngб»«a",
+    "confidence": "Дђб»™ tin cбє­y",
+    "symptoms": "Triб»‡u chб»©ng nhГ¬n thбєҐy",
+    "factors": "CГЎc yбєїu tб»‘ gГіp phбє§n",
+    "urgency": "Mб»©c Д‘б»™ khбє©n cбєҐp",
+    "materialsNeeded": "Vбє­t liб»‡u cбє§n thiбєїt",
+    "recovery": "Thб»ќi gian hб»“i phб»Ґc dб»± kiбєїn",
+    "saveBtn": "LЖ°u vГ o bб»™ sЖ°u tбє­p",
+    "savedBtn": "ДђГЈ lЖ°u vГ o bб»™ sЖ°u tбє­p",
+    "step": "BЖ°б»›c",
+    "noPlant": {
+      "title": "KhГґng phГЎt hiб»‡n cГўy",
+      "text": "бєўnh dЖ°б»ќng nhЖ° khГґng chб»©a cГўy. HГЈy chб»Ґp бєЈnh rГµ rГ ng cб»§a cГўy cбє§n chбє©n Д‘oГЎn."
+    },
+    "healthy": {
+      "title": "CГўy cб»§a bбєЎn trГґng khб»Џe mбєЎnh!",
+      "text": "KhГґng phГЎt hiб»‡n vбєҐn Д‘б»Ѓ. HГЈy lГ m theo cГЎc mбє№o phГІng ngб»«a bГЄn dЖ°б»›i."
+    },
+    "error": {
+      "title": "Chбє©n Д‘oГЎn thбєҐt bбєЎi",
+      "retry": "Thб»­ lбєЎi"
+    },
+    "disclaimer": "Chб»‰ lГ  hЖ°б»›ng dбє«n do AI tбєЎo ra. Дђб»‘i vб»›i bб»‡nh cГўy nghiГЄm trб»Ќng, hГЈy tham khбєЈo ГЅ kiбєїn nhГ  lГ m vЖ°б»ќn chuyГЄn nghiб»‡p."
   }
 }

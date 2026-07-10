@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Főoldal",
     "collection": "Gyűjtemény",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnózis"
   },
   "home": {
     "tagline": "Ismerd meg az összes növényt",
@@ -103,8 +104,7 @@
     "select": "Nyelv kiválasztása",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "NГ¶vГ©nydiagnГіzis",
+    "buttonLabel": "EgГ©szsГ©g diagnosztizГЎlГЎsa",
+    "uploadLabel": "DiagnosztizГЎlГЎs galГ©riГЎbГіl",
+    "scanningLeaves": "Levelek szkennelГ©se...",
+    "checkingSymptoms": "TГјnetek ellenЕ‘rzГ©se...",
+    "buildingPlan": "KezelГ©si terv kГ©szГ­tГ©se...",
+    "previewHint": "Az egГ©sz nГ¶vГ©ny megmutatГЎsa adja a legjobb diagnГіzist",
+    "analyzeButton": "Ezt a nГ¶vГ©nyt diagnosztizГЎlja",
+    "retake": "FotГі ГєjrakГ©szГ­tГ©se",
+    "healthScore": "EgГ©szsГ©gi pontszГЎm",
+    "severityLabel": "SГєlyossГЎg",
+    "severity": {
+      "none": "EgГ©szsГ©ges",
+      "mild": "Enyhe",
+      "moderate": "KГ¶zepes",
+      "severe": "SГєlyos"
+    },
+    "diagnosisCard": "Mi a baj",
+    "causeCard": "MiГ©rt tГ¶rtГ©nt",
+    "treatmentCard": "Hogyan kell kezelni",
+    "preventionCard": "Hogyan lehet megelЕ‘zni",
+    "confidence": "BiztonsГЎg",
+    "symptoms": "LГЎthatГі tГјnetek",
+    "factors": "HozzГЎjГЎrulГі tГ©nyezЕ‘k",
+    "urgency": "SГјrgЕ‘ssГ©g",
+    "materialsNeeded": "SzГјksГ©ges anyagok",
+    "recovery": "VГЎrhatГі felГ©pГјlГ©s",
+    "saveBtn": "MentГ©s gyЕ±jtemГ©nybe",
+    "savedBtn": "Elmentve a gyЕ±jtemГ©nybe",
+    "step": "LГ©pГ©s",
+    "noPlant": {
+      "title": "Nem Г©szlelhetЕ‘ nГ¶vГ©ny",
+      "text": "A fotГі Гєgy tЕ±nik, nem tartalmaz nГ¶vГ©nyt. KГ©szГ­tsen tiszta fotГіt a diagnosztizГЎlandГі nГ¶vГ©nyrЕ‘l."
+    },
+    "healthy": {
+      "title": "A nГ¶vГ©nye egГ©szsГ©gesnek tЕ±nik!",
+      "text": "Nem Г©szlelhetЕ‘ problГ©ma. KГ¶vesse az alГЎbbi megelЕ‘zГ©si tippeket."
+    },
+    "error": {
+      "title": "A diagnГіzis sikertelen",
+      "retry": "PrГіbГЎlja Гєjra"
+    },
+    "disclaimer": "Csak mestersГ©ges intelligencia ГЎltal generГЎlt ГєtmutatГЎs. SГєlyos nГ¶vГ©nybetegsГ©gek esetГ©n konzultГЎljon szakember kertГ©sszel."
   }
 }

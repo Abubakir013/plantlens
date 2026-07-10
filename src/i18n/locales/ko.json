@@ -13,7 +13,8 @@
   "tabs": {
     "home": "홈",
     "collection": "컬렉션",
-    "profile": "프로필"
+    "profile": "프로필",
+    "diagnosis": "진단"
   },
   "home": {
     "tagline": "모든 식물을 알아보세요",
@@ -103,8 +104,7 @@
     "select": "언어 선택",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "м‹ќл¬ј м§„л‹Ё",
+    "buttonLabel": "к±ґк°• м§„л‹Ён•кё°",
+    "uploadLabel": "к°¤лџ¬л¦¬м—ђм„њ м§„л‹Ё",
+    "scanningLeaves": "мћЋ мЉ¤мє” м¤‘...",
+    "checkingSymptoms": "м¦ќмѓЃ н™•мќё м¤‘...",
+    "buildingPlan": "м№лЈЊ кі„нљЌ м€л¦Ѕ м¤‘...",
+    "previewHint": "м‹ќл¬ј м „мІґлҐј ліґм—¬мЈјл©ґ мµњмѓЃмќ м§„л‹Ёмќ„ л°›мќ„ м€ мћ€мЉµл‹€л‹¤",
+    "analyzeButton": "мќґ м‹ќл¬ј м§„л‹Ён•кё°",
+    "retake": "л‹¤м‹њ мґ¬мЃ",
+    "healthScore": "к±ґк°• м ђм€",
+    "severityLabel": "м‹¬к°ЃлЏ„",
+    "severity": {
+      "none": "к±ґк°•н•Ё",
+      "mild": "кІЅлЇё",
+      "moderate": "м¤‘к°„",
+      "severe": "м‹¬к°Ѓ"
+    },
+    "diagnosisCard": "л¬ґм—‡мќґ л¬ём њмќёк°Ђ",
+    "causeCard": "м™њ л°њмѓќн–€лЉ”к°Ђ",
+    "treatmentCard": "м№лЈЊ л°©лІ•",
+    "preventionCard": "м€л°© л°©лІ•",
+    "confidence": "м‹ лў°лЏ„",
+    "symptoms": "л€€м—ђ ліґмќґлЉ” м¦ќмѓЃ",
+    "factors": "кё°м—¬ мљ”мќё",
+    "urgency": "кёґкё‰м„±",
+    "materialsNeeded": "н•„мљ”н•њ мћ¬лЈЊ",
+    "recovery": "м€мѓЃ нљЊліµ",
+    "saveBtn": "м»¬л ‰м…м—ђ м ЂмћҐ",
+    "savedBtn": "м»¬л ‰м…м—ђ м ЂмћҐлђЁ",
+    "step": "л‹Ёкі„",
+    "noPlant": {
+      "title": "м‹ќл¬јмќґ к°ђм§Ђлђм§Ђ м•Љм•мЉµл‹€л‹¤",
+      "text": "м‚¬м§„м—ђ м‹ќл¬јмќґ м—†лЉ” кІѓ к°™мЉµл‹€л‹¤. м§„л‹Ён•  м‹ќл¬јмќ м„ лЄ…н•њ м‚¬м§„мќ„ м°Ќм–ґмЈјм„ёмљ”."
+    },
+    "healthy": {
+      "title": "м‹ќл¬јмќґ к±ґк°•н•ґ ліґмћ…л‹€л‹¤!",
+      "text": "л¬ём њк°Ђ л°њкІ¬лђм§Ђ м•Љм•мЉµл‹€л‹¤. м•„лћ м€л°© нЊЃмќ„ л”°лҐґм„ёмљ”."
+    },
+    "error": {
+      "title": "м§„л‹Ё м‹¤нЊЁ",
+      "retry": "л‹¤м‹њ м‹њлЏ„"
+    },
+    "disclaimer": "AIк°Ђ мѓќм„±н•њ м•€л‚ґл§Њ м њкіµлђ©л‹€л‹¤. м‹¬к°Ѓн•њ м‹ќл¬ј м§€лі‘мќ кІЅмљ° м „л¬ё м›ђм€м‚¬м™Ђ мѓЃл‹ґн•м„ёмљ”."
   }
 }

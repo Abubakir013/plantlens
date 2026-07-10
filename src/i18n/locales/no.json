@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Hjem",
     "collection": "Samling",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnose"
   },
   "home": {
     "tagline": "Kjenn igjen alle planter",
@@ -103,8 +104,7 @@
     "select": "Velg språk",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Plantediagnose",
+    "buttonLabel": "Diagnostiser helse",
+    "uploadLabel": "Diagnostiser fra galleri",
+    "scanningLeaves": "Skanner blader...",
+    "checkingSymptoms": "Sjekker symptomer...",
+    "buildingPlan": "Lager behandlingsplan...",
+    "previewHint": "Vis hele planten for beste diagnose",
+    "analyzeButton": "Diagnostiser denne planten",
+    "retake": "Ta bildet pГҐ nytt",
+    "healthScore": "Helsepoeng",
+    "severityLabel": "Alvorlighetsgrad",
+    "severity": {
+      "none": "Frisk",
+      "mild": "Mild",
+      "moderate": "Moderat",
+      "severe": "Alvorlig"
+    },
+    "diagnosisCard": "Hva er galt",
+    "causeCard": "Hvorfor det skjedde",
+    "treatmentCard": "Slik behandler du",
+    "preventionCard": "Slik forebygger du",
+    "confidence": "Konfidens",
+    "symptoms": "Synlige symptomer",
+    "factors": "Bidragende faktorer",
+    "urgency": "Haster",
+    "materialsNeeded": "NГёdvendige materialer",
+    "recovery": "Forventet bedring",
+    "saveBtn": "Lagre i samling",
+    "savedBtn": "Lagret i samling",
+    "step": "Steg",
+    "noPlant": {
+      "title": "Ingen plante oppdaget",
+      "text": "Bildet ser ikke ut til ГҐ inneholde en plante. Ta et tydelig bilde av planten du vil diagnostisere."
+    },
+    "healthy": {
+      "title": "Planten din ser frisk ut!",
+      "text": "Ingen problemer oppdaget. FГёlg forebyggingstipsene nedenfor."
+    },
+    "error": {
+      "title": "Diagnose mislyktes",
+      "retry": "PrГёv igjen"
+    },
+    "disclaimer": "Kun AI-generert veiledning. Konsulter en profesjonell hagebruker ved alvorlige plantesjukdommer."
   }
 }

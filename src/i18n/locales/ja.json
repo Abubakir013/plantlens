@@ -13,7 +13,8 @@
   "tabs": {
     "home": "ホーム",
     "collection": "コレクション",
-    "profile": "プロフィール"
+    "profile": "プロフィール",
+    "diagnosis": "診断"
   },
   "home": {
     "tagline": "すべての植物を知ろう",
@@ -103,8 +104,7 @@
     "select": "言語を選択",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "ж¤Ќз‰©иЁєж–­",
+    "buttonLabel": "еЃҐеє·г‚’иЁєж–­гЃ™г‚‹",
+    "uploadLabel": "г‚®гѓЈгѓ©гѓЄгѓјгЃ‹г‚‰иЁєж–­",
+    "scanningLeaves": "и‘‰г‚’г‚№г‚­гѓЈгѓідё­...",
+    "checkingSymptoms": "з—‡зЉ¶г‚’зўєиЄЌдё­...",
+    "buildingPlan": "жІ»з™‚иЁ€з”»г‚’дЅњж€ђдё­...",
+    "previewHint": "ж¤Ќз‰©е…ЁдЅ“г‚’е†™гЃ™гЃЁжњЂи‰ЇгЃ®иЁєж–­гЃЊеѕ—г‚‰г‚ЊгЃѕгЃ™",
+    "analyzeButton": "гЃ“гЃ®ж¤Ќз‰©г‚’иЁєж–­гЃ™г‚‹",
+    "retake": "е†™зњџг‚’ж’®г‚Љз›ґгЃ™",
+    "healthScore": "еЃҐеє·г‚№г‚іг‚ў",
+    "severityLabel": "й‡Ќз—‡еє¦",
+    "severity": {
+      "none": "еЃҐеє·",
+      "mild": "и»Ѕеє¦",
+      "moderate": "дё­зЁ‹еє¦",
+      "severe": "й‡Ќеє¦"
+    },
+    "diagnosisCard": "дЅ•гЃЊе•ЏйЎЊгЃ‹",
+    "causeCard": "гЃЄгЃњиµ·гЃЌгЃџгЃ‹",
+    "treatmentCard": "жІ»з™‚ж–№жі•",
+    "preventionCard": "дє€йІж–№жі•",
+    "confidence": "дїЎй јеє¦",
+    "symptoms": "з›®гЃ«и¦‹гЃ€г‚‹з—‡зЉ¶",
+    "factors": "и¦Ѓе› ",
+    "urgency": "з·ЉжЂҐжЂ§",
+    "materialsNeeded": "еї…и¦ЃгЃЄжќђж–™",
+    "recovery": "е›ћеѕ©гЃ®и¦‹иѕјгЃї",
+    "saveBtn": "г‚ігѓ¬г‚Їг‚·гѓ§гѓігЃ«дїќе­",
+    "savedBtn": "г‚ігѓ¬г‚Їг‚·гѓ§гѓігЃ«дїќе­жё€гЃї",
+    "step": "г‚№гѓ†гѓѓгѓ—",
+    "noPlant": {
+      "title": "ж¤Ќз‰©гЃЊж¤ње‡єгЃ•г‚ЊгЃѕгЃ›г‚“",
+      "text": "е†™зњџгЃ«ж¤Ќз‰©гЃЊе†™гЃЈгЃ¦гЃ„гЃЄгЃ„г‚€гЃ†гЃ§гЃ™гЂ‚иЁєж–­гЃ—гЃџгЃ„ж¤Ќз‰©гЃ®е†™зњџг‚’ж’®гЃЈгЃ¦гЃЏгЃ гЃ•гЃ„гЂ‚"
+    },
+    "healthy": {
+      "title": "ж¤Ќз‰©гЃЇеЃҐеє·гЃќгЃ†гЃ§гЃ™пјЃ",
+      "text": "е•ЏйЎЊгЃЇж¤ње‡єгЃ•г‚ЊгЃѕгЃ›г‚“гЃ§гЃ—гЃџгЂ‚д»Ґдё‹гЃ®дє€йІгѓ’гѓігѓ€гЃ«еѕ“гЃЈгЃ¦гЃЏгЃ гЃ•гЃ„гЂ‚"
+    },
+    "error": {
+      "title": "иЁєж–­гЃ«е¤±ж•—гЃ—гЃѕгЃ—гЃџ",
+      "retry": "е†Ќи©¦иЎЊ"
+    },
+    "disclaimer": "AIгЃ«г‚€г‚‹жЏђжЎ€гЃ®гЃїгЃ§гЃ™гЂ‚ж·±е€»гЃЄж¤Ќз‰©з—…е®ігЃ«гЃ¤гЃ„гЃ¦гЃЇгЂЃе°‚й–ЂгЃ®ењ’иЉёе®¶гЃ«гЃ”з›ёи«‡гЃЏгЃ гЃ•гЃ„гЂ‚"
   }
 }

@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Home",
     "collection": "Collezione",
-    "profile": "Profilo"
+    "profile": "Profilo",
+    "diagnosis": "Diagnosi"
   },
   "home": {
     "tagline": "Conosci ogni pianta",
@@ -103,8 +104,7 @@
     "select": "Seleziona lingua",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Diagnosi della pianta",
+    "buttonLabel": "Diagnostica la salute",
+    "uploadLabel": "Diagnostica dalla galleria",
+    "scanningLeaves": "Scansione delle foglie...",
+    "checkingSymptoms": "Verifica dei sintomi...",
+    "buildingPlan": "Elaborazione del piano di trattamento...",
+    "previewHint": "Mostrare l'intera pianta dГ  la migliore diagnosi",
+    "analyzeButton": "Diagnostica questa pianta",
+    "retake": "Rifai la foto",
+    "healthScore": "Punteggio di salute",
+    "severityLabel": "GravitГ ",
+    "severity": {
+      "none": "Sana",
+      "mild": "Lieve",
+      "moderate": "Moderata",
+      "severe": "Grave"
+    },
+    "diagnosisCard": "Cosa c'ГЁ che non va",
+    "causeCard": "PerchГ© ГЁ successo",
+    "treatmentCard": "Come trattare",
+    "preventionCard": "Come prevenire",
+    "confidence": "Confidenza",
+    "symptoms": "Sintomi visibili",
+    "factors": "Fattori contribuenti",
+    "urgency": "Urgenza",
+    "materialsNeeded": "Materiali necessari",
+    "recovery": "Recupero previsto",
+    "saveBtn": "Salva nella collezione",
+    "savedBtn": "Salvato nella collezione",
+    "step": "Passo",
+    "noPlant": {
+      "title": "Nessuna pianta rilevata",
+      "text": "La foto non sembra contenere una pianta. Scatta una foto nitida della pianta."
+    },
+    "healthy": {
+      "title": "La tua pianta sembra sana!",
+      "text": "Nessun problema rilevato. Segui i consigli di prevenzione qui sotto."
+    },
+    "error": {
+      "title": "Diagnosi fallita",
+      "retry": "Riprova"
+    },
+    "disclaimer": "Solo indicazioni IA. Per malattie gravi, consulta un orticoltore professionista."
   }
 }

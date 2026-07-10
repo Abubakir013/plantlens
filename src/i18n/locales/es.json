@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Inicio",
     "collection": "Colección",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "diagnosis": "Diagnóstico"
   },
   "home": {
     "tagline": "Conoce cada planta",
@@ -103,8 +104,7 @@
     "select": "Seleccionar idioma",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "DiagnГіstico de planta",
+    "buttonLabel": "Diagnosticar salud",
+    "uploadLabel": "Diagnosticar desde galerГ­a",
+    "scanningLeaves": "Escaneando hojas...",
+    "checkingSymptoms": "Verificando sГ­ntomas...",
+    "buildingPlan": "Elaborando plan de tratamiento...",
+    "previewHint": "Mostrar toda la planta mejora el diagnГіstico",
+    "analyzeButton": "Diagnosticar esta planta",
+    "retake": "Retomar foto",
+    "healthScore": "PuntuaciГіn de salud",
+    "severityLabel": "Gravedad",
+    "severity": {
+      "none": "Sana",
+      "mild": "Leve",
+      "moderate": "Moderada",
+      "severe": "Grave"
+    },
+    "diagnosisCard": "QuГ© estГЎ mal",
+    "causeCard": "Por quГ© ocurriГі",
+    "treatmentCard": "CГіmo tratar",
+    "preventionCard": "CГіmo prevenir",
+    "confidence": "Confianza",
+    "symptoms": "SГ­ntomas visibles",
+    "factors": "Factores contribuyentes",
+    "urgency": "Urgencia",
+    "materialsNeeded": "Materiales necesarios",
+    "recovery": "RecuperaciГіn esperada",
+    "saveBtn": "Guardar en colecciГіn",
+    "savedBtn": "Guardado en colecciГіn",
+    "step": "Paso",
+    "noPlant": {
+      "title": "No se detectГі planta",
+      "text": "La foto no parece contener una planta. Tome una foto clara de la planta."
+    },
+    "healthy": {
+      "title": "ВЎSu planta se ve saludable!",
+      "text": "No se detectaron problemas. Siga los consejos a continuaciГіn."
+    },
+    "error": {
+      "title": "DiagnГіstico fallido",
+      "retry": "Intentar de nuevo"
+    },
+    "disclaimer": "Solo orientaciГіn de IA. Para enfermedades graves, consulte a un horticultor profesional."
   }
 }

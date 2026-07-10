@@ -13,7 +13,8 @@
   "tabs": {
     "home": "首页",
     "collection": "收藏",
-    "profile": "我的"
+    "profile": "我的",
+    "diagnosis": "诊断"
   },
   "home": {
     "tagline": "识别身边每一株植物",
@@ -103,8 +104,7 @@
     "select": "选择语言",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "ж¤Ќз‰©иЇЉж–­",
+    "buttonLabel": "иЇЉж–­ж¤Ќз‰©еЃҐеє·",
+    "uploadLabel": "д»Ће›ѕеє“иЇЉж–­",
+    "scanningLeaves": "ж‰«жЏЏеЏ¶з‰‡...",
+    "checkingSymptoms": "жЈЂжџҐз—‡зЉ¶...",
+    "buildingPlan": "е€¶е®љжІ»з–—ж–№жЎ€...",
+    "previewHint": "е±•з¤єж•ґж Єж¤Ќз‰©еЏЇиЋ·еѕ—жњЂдЅіиЇЉж–­ж•€жћњ",
+    "analyzeButton": "иЇЉж–­иї™ж Єж¤Ќз‰©",
+    "retake": "й‡Ќж–°ж‹Ќз…§",
+    "healthScore": "еЃҐеє·иЇ„е€†",
+    "severityLabel": "дёҐй‡ЌзЁ‹еє¦",
+    "severity": {
+      "none": "еЃҐеє·",
+      "mild": "иЅ»еѕ®",
+      "moderate": "дё­з­‰",
+      "severe": "дёҐй‡Ќ"
+    },
+    "diagnosisCard": "е‡єдє†д»Ђд№€й—®йў",
+    "causeCard": "дёєд»Ђд№€дјљеЏ‘з”џ",
+    "treatmentCard": "е¦‚дЅ•жІ»з–—",
+    "preventionCard": "е¦‚дЅ•йў„йІ",
+    "confidence": "зЅ®дїЎеє¦",
+    "symptoms": "еЏЇи§Ѓз—‡зЉ¶",
+    "factors": "дїѓж€ђе› зґ ",
+    "urgency": "зґ§иї«жЂ§",
+    "materialsNeeded": "ж‰ЂйњЂжќђж–™",
+    "recovery": "йў„жњџжЃўе¤Ќ",
+    "saveBtn": "дїќе­е€°ж”¶и—Џ",
+    "savedBtn": "е·Ідїќе­е€°ж”¶и—Џ",
+    "step": "ж­ҐйЄ¤",
+    "noPlant": {
+      "title": "жњЄжЈЂжµ‹е€°ж¤Ќз‰©",
+      "text": "з…§з‰‡дё­дјјд№ЋжІЎжњ‰ж¤Ќз‰©гЂ‚иЇ·ж‹ЌдёЂеј жё…ж™°зљ„ж¤Ќз‰©з…§з‰‡гЂ‚"
+    },
+    "healthy": {
+      "title": "ж‚Ёзљ„ж¤Ќз‰©зњ‹иµ·жќҐеѕ€еЃҐеє·пјЃ",
+      "text": "жњЄжЈЂжµ‹е€°й—®йўгЂ‚иЇ·йЃµеѕЄд»Ґдё‹йў„йІжЏђз¤єгЂ‚"
+    },
+    "error": {
+      "title": "иЇЉж–­е¤±иґҐ",
+      "retry": "й‡ЌиЇ•"
+    },
+    "disclaimer": "д»…дёєAIз”џж€ђзљ„е»єи®®гЂ‚еЇ№дєЋдёҐй‡Ќж¤Ќз‰©з—…е®іпјЊиЇ·е’ЁиЇўдё“дёље›­и‰єеё€гЂ‚"
   }
 }

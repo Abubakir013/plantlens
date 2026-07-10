@@ -118,54 +118,25 @@ function PulsingCorners() {
   );
 }
 
-// ── Single floating botanical particle ───────────────────────────────────────
-function FloatingParticle({ leftPx, size, startDelay, cycleDuration }: {
-  leftPx: number;
-  size: number;
-  startDelay: number;
-  cycleDuration: number;
-}) {
-  const progress = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const anim = Animated.loop(
-      Animated.sequence([
-        Animated.delay(startDelay),
-        Animated.timing(progress, { toValue: 1, duration: cycleDuration, useNativeDriver: true }),
-      ])
-    );
-    anim.start();
-    return () => anim.stop();
-  }, []);
-
-  const translateY = progress.interpolate({
-    inputRange: [0, 0.08, 0.82, 0.92, 1],
-    outputRange: [
-      FRAME_SIZE * 0.88,
-      FRAME_SIZE * 0.78,
-      FRAME_SIZE * 0.06,
-      FRAME_SIZE * 0.02,
-      FRAME_SIZE * 0.88,
-    ],
-  });
-  const opacity = progress.interpolate({
-    inputRange: [0, 0.08, 0.72, 0.9, 1],
-    outputRange: [0, 0.5, 0.5, 0, 0],
-  });
-
+// ── Background leaf photo decorations ────────────────────────────────────────
+function BgLeaves() {
   return (
-    <Animated.View
-      pointerEvents="none"
-      style={{ position: 'absolute', left: leftPx, top: 0, opacity, transform: [{ translateY }] }}
-    >
-      <Svg width={size} height={Math.round(size * 1.5)} viewBox="0 0 8 12">
-        <Path
-          d="M4 12 C2 10 0 7 1 4 C2 6 3 8 4 9 C4 6 3 2 4 0 C5 2 4 6 4 9 C5 8 6 6 7 4 C8 7 6 10 4 12Z"
-          fill="#52B788"
-          opacity={0.9}
+    <>
+      <View style={styles.bgLeafTR} pointerEvents="none">
+        <Image
+          source={require('../../assets/images/flower-orchid.png')}
+          style={styles.bgLeafImg}
+          resizeMode="contain"
         />
-      </Svg>
-    </Animated.View>
+      </View>
+      <View style={styles.bgLeafBL} pointerEvents="none">
+        <Image
+          source={require('../../assets/images/flower-tulip.png')}
+          style={styles.bgLeafImg}
+          resizeMode="contain"
+        />
+      </View>
+    </>
   );
 }
 
@@ -396,6 +367,8 @@ export default function IdentifyScreen() {
         onCameraReady={() => setCameraReady(true)}
       />
 
+      <BgLeaves />
+
       <LinearGradient
         colors={['rgba(0,0,0,0.60)', 'transparent']}
         style={styles.topGradient}
@@ -429,12 +402,6 @@ export default function IdentifyScreen() {
           <View style={styles.frame}>
             <PulsingCorners />
             <ScanLine />
-            {/* Botanical particles floating upward */}
-            <FloatingParticle leftPx={FRAME_SIZE * 0.12} size={6} startDelay={0}    cycleDuration={4000} />
-            <FloatingParticle leftPx={FRAME_SIZE * 0.30} size={5} startDelay={900}  cycleDuration={3600} />
-            <FloatingParticle leftPx={FRAME_SIZE * 0.55} size={7} startDelay={1800} cycleDuration={4400} />
-            <FloatingParticle leftPx={FRAME_SIZE * 0.74} size={5} startDelay={500}  cycleDuration={3800} />
-            <FloatingParticle leftPx={FRAME_SIZE * 0.88} size={6} startDelay={2400} cycleDuration={4200} />
           </View>
           <Text style={styles.frameHint}>{t('identify.centerPlant')}</Text>
         </View>
@@ -658,6 +625,31 @@ const styles = StyleSheet.create({
     height: 26,
     borderRadius: 13,
     backgroundColor: 'rgba(255,255,255,0.35)',
+  },
+  // Background leaf decorations
+  bgLeafTR: {
+    position: 'absolute',
+    top: 52,
+    right: -24,
+    width: 130,
+    height: 155,
+    opacity: 0.10,
+    transform: [{ rotate: '18deg' }],
+    zIndex: 1,
+  },
+  bgLeafBL: {
+    position: 'absolute',
+    bottom: 160,
+    left: -24,
+    width: 120,
+    height: 142,
+    opacity: 0.10,
+    transform: [{ rotate: '-14deg' }],
+    zIndex: 1,
+  },
+  bgLeafImg: {
+    width: '100%',
+    height: '100%',
   },
   // Preview
   preview: {

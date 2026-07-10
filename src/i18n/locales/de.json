@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Startseite",
     "collection": "Sammlung",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnose"
   },
   "home": {
     "tagline": "Jede Pflanze kennen",
@@ -103,8 +104,7 @@
     "select": "Sprache auswählen",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Pflanzendiagnose",
+    "buttonLabel": "Gesundheit diagnostizieren",
+    "uploadLabel": "Aus Galerie diagnostizieren",
+    "scanningLeaves": "Blätter scannen...",
+    "checkingSymptoms": "Symptome prüfen...",
+    "buildingPlan": "Behandlungsplan erstellen...",
+    "previewHint": "Die ganze Pflanze zeigen ergibt die beste Diagnose",
+    "analyzeButton": "Diese Pflanze diagnostizieren",
+    "retake": "Foto wiederholen",
+    "healthScore": "Gesundheitswert",
+    "severityLabel": "Schweregrad",
+    "severity": {
+      "none": "Gesund",
+      "mild": "Leicht",
+      "moderate": "Mäßig",
+      "severe": "Schwer"
+    },
+    "diagnosisCard": "Was ist falsch",
+    "causeCard": "Warum es passierte",
+    "treatmentCard": "Wie behandeln",
+    "preventionCard": "Wie verhindern",
+    "confidence": "Konfidenz",
+    "symptoms": "Sichtbare Symptome",
+    "factors": "Begünstigende Faktoren",
+    "urgency": "Dringlichkeit",
+    "materialsNeeded": "Benötigte Materialien",
+    "recovery": "Erwartete Erholung",
+    "saveBtn": "In Sammlung speichern",
+    "savedBtn": "In Sammlung gespeichert",
+    "step": "Schritt",
+    "noPlant": {
+      "title": "Keine Pflanze erkannt",
+      "text": "Das Foto scheint keine Pflanze zu enthalten. Bitte machen Sie ein klares Foto der Pflanze."
+    },
+    "healthy": {
+      "title": "Ihre Pflanze sieht gesund aus!",
+      "text": "Keine Probleme erkannt. Befolgen Sie die Tipps unten."
+    },
+    "error": {
+      "title": "Diagnose fehlgeschlagen",
+      "retry": "Erneut versuchen"
+    },
+    "disclaimer": "Nur KI-generierte Empfehlungen. Bei schweren Pflanzenkrankheiten wenden Sie sich an einen Fachgärtner."
   }
 }

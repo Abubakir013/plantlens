@@ -13,7 +13,8 @@
   "tabs": {
     "home": "Accueil",
     "collection": "Collection",
-    "profile": "Profil"
+    "profile": "Profil",
+    "diagnosis": "Diagnostic"
   },
   "home": {
     "tagline": "Connaissez chaque plante",
@@ -103,8 +104,7 @@
     "select": "Choisir une langue",
     "restartTitle": "Restart Required",
     "restartText": "Please restart the app to apply the new text direction."
-  }
-,
+  },
   "settings": {
     "title": "Settings",
     "general": "General",
@@ -137,5 +137,50 @@
     "termsOfService": "Terms of Service",
     "appVersionTitle": "PlantLens v1.0.0",
     "poweredBy": "Powered by Claude AI"
+  },
+  "diagnose": {
+    "title": "Diagnostic vГ©gГ©tal",
+    "buttonLabel": "Diagnostiquer la santГ©",
+    "uploadLabel": "Diagnostiquer depuis la galerie",
+    "scanningLeaves": "Analyse des feuilles...",
+    "checkingSymptoms": "VГ©rification des symptГґmes...",
+    "buildingPlan": "Г‰laboration du plan de traitement...",
+    "previewHint": "Montrer toute la plante donne le meilleur diagnostic",
+    "analyzeButton": "Diagnostiquer cette plante",
+    "retake": "Reprendre la photo",
+    "healthScore": "Score de santГ©",
+    "severityLabel": "GravitГ©",
+    "severity": {
+      "none": "Saine",
+      "mild": "LГ©gГЁre",
+      "moderate": "ModГ©rГ©e",
+      "severe": "Grave"
+    },
+    "diagnosisCard": "Quel est le problГЁme",
+    "causeCard": "Pourquoi c'est arrivГ©",
+    "treatmentCard": "Comment traiter",
+    "preventionCard": "Comment prГ©venir",
+    "confidence": "Confiance",
+    "symptoms": "SymptГґmes visibles",
+    "factors": "Facteurs contribuant",
+    "urgency": "Urgence",
+    "materialsNeeded": "MatГ©riaux nГ©cessaires",
+    "recovery": "RГ©tablissement attendu",
+    "saveBtn": "Enregistrer dans la collection",
+    "savedBtn": "EnregistrГ© dans la collection",
+    "step": "Г‰tape",
+    "noPlant": {
+      "title": "Aucune plante dГ©tectГ©e",
+      "text": "La photo ne semble pas contenir de plante. Veuillez prendre une photo nette."
+    },
+    "healthy": {
+      "title": "Votre plante semble saine!",
+      "text": "Aucun problГЁme dГ©tectГ©. Suivez les conseils ci-dessous."
+    },
+    "error": {
+      "title": "Diagnostic Г©chouГ©",
+      "retry": "RГ©essayer"
+    },
+    "disclaimer": "Recommandations IA uniquement. Pour les maladies graves, consultez un horticulteur professionnel."
   }
 }

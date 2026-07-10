@@ -122,31 +122,26 @@ export default function HomeScreen() {
     );
     if (!resized.base64) return;
 
-    // Store original URI for display; resized base64 for the API call.
     pendingImageStore.set(asset.uri, resized.base64);
     router.push('/identify');
   };
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      {/* SVG botanical corner accents — absolute, zero-weight, no network */}
+      {/* Botanical corner photo accents */}
       <View style={styles.cornerLeafTR} pointerEvents="none">
-        <Svg width={160} height={200} viewBox="0 0 160 200">
-          <Path d="M80 190 C28 190 0 152 12 104 C22 60 54 14 80 8 C106 14 138 60 148 104 C160 152 132 190 80 190Z" fill="#1B4332" opacity={0.9} />
-          <Path d="M80 190 L80 8" stroke="#F3F6F1" strokeWidth={1.4} fill="none" strokeLinecap="round" opacity={0.22} />
-          <Path d="M80 160 C55 148 36 132 28 114" stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.15} strokeLinecap="round" />
-          <Path d="M80 130 C56 120 40 106 32 90"  stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.14} strokeLinecap="round" />
-          <Path d="M80 100 C105 88 120 74 126 58"  stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.14} strokeLinecap="round" />
-          <Path d="M80 68  C104 58 118 44 124 28"  stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.12} strokeLinecap="round" />
-        </Svg>
+        <Image
+          source={require('../../../assets/images/flower-lily-single.png')}
+          style={{ width: 160, height: 200 }}
+          resizeMode="contain"
+        />
       </View>
       <View style={styles.cornerLeafBL} pointerEvents="none">
-        <Svg width={140} height={175} viewBox="0 0 160 200">
-          <Path d="M80 190 C28 190 0 152 12 104 C22 60 54 14 80 8 C106 14 138 60 148 104 C160 152 132 190 80 190Z" fill="#1B4332" opacity={0.9} />
-          <Path d="M80 190 L80 8" stroke="#F3F6F1" strokeWidth={1.4} fill="none" strokeLinecap="round" opacity={0.20} />
-          <Path d="M80 160 C105 148 124 132 132 114" stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.14} strokeLinecap="round" />
-          <Path d="M80 130 C104 120 120 106 128 90"  stroke="#F3F6F1" strokeWidth={0.9} fill="none" opacity={0.13} strokeLinecap="round" />
-        </Svg>
+        <Image
+          source={require('../../../assets/images/flower-orchid.png')}
+          style={{ width: 140, height: 175 }}
+          resizeMode="contain"
+        />
       </View>
 
       <Animated.View
