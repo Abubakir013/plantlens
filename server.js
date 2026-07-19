@@ -108,7 +108,7 @@ function readBody(req) {
   });
 }
 
-function callClaude(payload) {
+function callClaude(payload, timeoutMs = 55000) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify(payload);
     const req = https.request(
@@ -129,10 +129,19 @@ function callClaude(payload) {
         res.on('end', () => {
           const text = Buffer.concat(chunks).toString('utf8');
           if (res.statusCode !== 200) return reject(new Error(`Claude ${res.statusCode}: ${text}`));
-          resolve(JSON.parse(text));
+          try {
+            resolve(JSON.parse(text));
+          } catch (parseErr) {
+            reject(new Error(`Failed to parse Claude response: ${text.slice(0, 300)}`));
+          }
         });
+        res.on('error', reject);
       }
     );
+    req.setTimeout(timeoutMs, () => {
+      req.destroy();
+      reject(new Error(`Claude API timeout after ${timeoutMs}ms`));
+    });
     req.on('error', reject);
     req.write(body);
     req.end();
@@ -307,6 +316,9 @@ function buildDiagnosePrompt(locale) {
 }
 
 async function handleDiagnose(req, res) {
+  const start = Date.now();
+  console.log(`[/diagnose] ← request received`);
+
   let body;
   try {
     body = JSON.parse(await readBody(req));
@@ -316,6 +328,7 @@ async function handleDiagnose(req, res) {
 
   const { image, language = 'en' } = body;
   if (!image) return send(res, 400, { error: 'image (base64) is required' });
+  console.log(`[/diagnose] image=${image.length}chars lang=${language}`);
 
   const mediaType = body.mediaType ?? 'image/jpeg';
 
@@ -333,11 +346,13 @@ async function handleDiagnose(req, res) {
           ],
         },
       ],
-    });
+    }, 55000);
 
     const raw = claudeRes.content?.[0]?.text ?? '';
+    console.log(`[/diagnose] Claude replied in ${Date.now() - start}ms, raw (first 300): ${raw.slice(0, 300).replace(/\n/g, ' ')}`);
     const parsed = extractJSON(raw);
 
+    console.log(`[/diagnose] ✓ done in ${Date.now() - start}ms`);
     send(res, 200, {
       isPlant:   typeof parsed.isPlant === 'boolean' ? parsed.isPlant : true,
       plantName: parsed.plantName ?? '',
@@ -366,7 +381,7 @@ async function handleDiagnose(req, res) {
       expectedRecovery: parsed.expectedRecovery ?? '',
     });
   } catch (e) {
-    console.error('[/diagnose]', e.message);
+    console.error(`[/diagnose] ✗ error after ${Date.now() - start}ms:`, e.message);
     send(res, 500, { error: e.message });
   }
 }

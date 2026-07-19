@@ -54,12 +54,16 @@ export function usePlantDiagnosis() {
       setLoading(true);
       setError(null);
 
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 60_000);
+
       try {
         const mediaType = detectMediaType(base64Image);
         const response = await fetch(`${API_BASE_URL}/diagnose`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ image: base64Image, mediaType, language: locale }),
+          signal: controller.signal,
         });
 
         if (!response.ok) {
@@ -73,6 +77,7 @@ export function usePlantDiagnosis() {
         setError(msg);
         return null;
       } finally {
+        clearTimeout(tid);
         setLoading(false);
       }
     },
