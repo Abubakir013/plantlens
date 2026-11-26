@@ -51,14 +51,27 @@ function interpolate(template: string, vars?: Record<string, string | number>): 
   );
 }
 
+// Maps device language codes that differ from our supported keys.
+// Covers: Norwegian variants, Filipino macrolanguage, Android legacy codes.
+const LOCALE_ALIASES: Record<string, string> = {
+  nb:  'no', // Norwegian Bokmål  → Norwegian
+  nn:  'no', // Norwegian Nynorsk → Norwegian
+  fil: 'tl', // Filipino (macro)  → Tagalog/Filipino
+  in:  'id', // Android legacy    → Indonesian
+  iw:  'he', // Android legacy    → Hebrew
+};
+
 function detectLocale(): string {
-  const tag = Localization.getLocales()[0]?.languageTag ?? 'en';
-  const code = tag.split('-')[0].toLowerCase();
-  return translations[code] ? code : 'en';
+  const tag = Localization.getLocales()[0]?.languageTag ?? 'en-US';
+  let base = tag.split('-')[0].toLowerCase();
+  base = LOCALE_ALIASES[base] ?? base;
+  return translations[base] ? base : 'en';
 }
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<string>('en');
+  // Synchronous device-locale detection as the initial value eliminates the
+  // English flash on first render. AsyncStorage override is applied in useEffect.
+  const [locale, setLocaleState] = useState<string>(() => detectLocale());
 
   useEffect(() => {
     AsyncStorage.getItem(LOCALE_KEY).then((stored) => {

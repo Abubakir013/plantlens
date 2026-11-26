@@ -128,22 +128,6 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      {/* Botanical corner photo accents */}
-      <View style={styles.cornerLeafTR} pointerEvents="none">
-        <Image
-          source={require('../../../assets/images/flower-lily-single.png')}
-          style={{ width: 160, height: 200 }}
-          resizeMode="contain"
-        />
-      </View>
-      <View style={styles.cornerLeafBL} pointerEvents="none">
-        <Image
-          source={require('../../../assets/images/flower-orchid.png')}
-          style={{ width: 140, height: 175 }}
-          resizeMode="contain"
-        />
-      </View>
-
       <Animated.View
         style={[styles.orbSmall, { transform: [{ scale: pulseAnim }] }]}
         pointerEvents="none"
@@ -350,22 +334,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 3,
   },
-  cornerLeafTR: {
-    position: 'absolute',
-    top: -28,
-    right: -52,
-    opacity: 0.09,
-    transform: [{ rotate: '22deg' }],
-    zIndex: 0,
-  },
-  cornerLeafBL: {
-    position: 'absolute',
-    bottom: 100,
-    left: -58,
-    opacity: 0.07,
-    transform: [{ rotate: '-12deg' }, { scaleX: -1 }],
-    zIndex: 0,
-  },
   heroSection: {
     alignItems: 'center',
     paddingVertical: 12,
@@ -471,7 +439,7 @@ const styles = StyleSheet.create({
   },
   // ── Notification modal ──
   backdrop: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(0,0,0,0.38)',
   },
   notifPanel: {

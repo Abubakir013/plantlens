@@ -1,9 +1,11 @@
-import { Award, Flame, Flower, Leaf, Microscope, Sprout, Target } from 'lucide-react-native';
+import { Award, Flame, Flower, Microscope, Sprout, Target } from 'lucide-react-native';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { Colors } from '@/constants/colors';
 import { usePlantCollection } from '@/hooks/usePlantCollection';
@@ -14,7 +16,6 @@ function BotanicalBorder({ width = 340 }: { width?: number }) {
   const cx = width / 2;
   return (
     <Svg width={width} height={36} viewBox={`0 0 ${width} 36`}>
-      {/* Left rule */}
       <Path
         d={`M0 18 L${cx - 36} 18`}
         stroke="#2D6A4F"
@@ -22,7 +23,6 @@ function BotanicalBorder({ width = 340 }: { width?: number }) {
         strokeLinecap="round"
         opacity={0.28}
       />
-      {/* Right rule */}
       <Path
         d={`M${cx + 36} 18 L${width} 18`}
         stroke="#2D6A4F"
@@ -30,28 +30,41 @@ function BotanicalBorder({ width = 340 }: { width?: number }) {
         strokeLinecap="round"
         opacity={0.28}
       />
-      {/* Left leaf */}
       <Path
         d={`M${cx - 6} 18 C${cx - 16} 11 ${cx - 30} 12 ${cx - 33} 18 C${cx - 30} 24 ${cx - 16} 25 ${cx - 6} 18 Z`}
         fill="#2D6A4F"
-        opacity={0.48}
+        opacity={0.42}
       />
-      {/* Right leaf */}
       <Path
         d={`M${cx + 6} 18 C${cx + 16} 11 ${cx + 30} 12 ${cx + 33} 18 C${cx + 30} 24 ${cx + 16} 25 ${cx + 6} 18 Z`}
         fill="#2D6A4F"
-        opacity={0.48}
+        opacity={0.42}
       />
-      {/* Centre dot */}
       <Circle cx={cx} cy={18} r={2} fill="#2D6A4F" opacity={0.52} />
     </Svg>
   );
 }
 
-function StatCard({ Icon, value, label }: { Icon: React.ComponentType<{ size?: number; color?: string }>; value: string; label: string }) {
+function StatCard({
+  Icon,
+  value,
+  label,
+  iconBg,
+  iconColor,
+  accentColor,
+}: {
+  Icon: React.ComponentType<{ size?: number; color?: string }>;
+  value: string;
+  label: string;
+  iconBg: string;
+  iconColor: string;
+  accentColor: string;
+}) {
   return (
-    <View style={styles.statCard}>
-      <Icon size={24} color={Colors.primaryGreen} />
+    <View style={[styles.statCard, { borderTopColor: accentColor }]}>
+      <View style={[styles.statIconCircle, { backgroundColor: iconBg }]}>
+        <Icon size={18} color={iconColor} />
+      </View>
       <Text style={styles.statValue}>{value}</Text>
       <Text style={styles.statLabel}>{label}</Text>
     </View>
@@ -75,7 +88,7 @@ export default function ProfileScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
-      {/* Top bar with gear/settings icon */}
+      {/* Top bar */}
       <View style={styles.topBar}>
         <Text style={styles.topBarTitle}>{t('tabs.profile')}</Text>
         <TouchableOpacity
@@ -102,57 +115,107 @@ export default function ProfileScreen() {
           </Svg>
         </TouchableOpacity>
       </View>
+
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        {/* Botanical header */}
-        <View style={styles.headerCard}>
-          <View style={styles.avatarRing}>
-            <View style={styles.avatar}>
-              <Leaf size={36} color={Colors.primaryGreen} />
-            </View>
+
+        {/* Hero card */}
+        <Animated.View entering={FadeInDown.delay(0).duration(560)}>
+          <View style={styles.headerCardShadow}>
+            <LinearGradient
+              colors={['#EDF6F1', '#FFFFFF']}
+              start={{ x: 0.5, y: 0 }}
+              end={{ x: 0.5, y: 1 }}
+              style={styles.headerCard}
+            >
+              <View style={styles.avatarRing}>
+                <View style={styles.avatar}>
+                  <Image
+                    source={require('../../../assets/images/flower-lily-pink.png')}
+                    style={styles.avatarPhoto}
+                    resizeMode="cover"
+                  />
+                </View>
+              </View>
+              <Text style={styles.userName}>{t('profile.userName')}</Text>
+              <Text style={styles.userBio}>{t('profile.userBio')}</Text>
+              <View style={styles.dividerContainer}>
+                <BotanicalBorder width={300} />
+              </View>
+            </LinearGradient>
           </View>
-          <Text style={styles.userName}>{t('profile.userName')}</Text>
-          <Text style={styles.userBio}>{t('profile.userBio')}</Text>
-          <View style={styles.dividerContainer}>
-            <BotanicalBorder width={300} />
-          </View>
-        </View>
+        </Animated.View>
 
         {/* Stats */}
-        <Text style={styles.sectionTitle}>{t('profile.yourStats')}</Text>
-        <View style={styles.statsGrid}>
-          <StatCard Icon={Sprout} value={plants.length.toString()} label={t('profile.plantsFound')} />
-          <StatCard Icon={Flame}  value={streak.toString()} label={t('profile.dayStreak')} />
-          <StatCard
-            Icon={Target}
-            value={plants.length > 0 ? `${totalConfidence}%` : '–'}
-            label={t('profile.avgAccuracy')}
-          />
-          <StatCard Icon={Flower} value={rarest.split(' ')[0]} label={t('profile.rarestFind')} />
-        </View>
+        <Animated.View entering={FadeInDown.delay(100).duration(560)}>
+          <Text style={styles.sectionTitle}>{t('profile.yourStats')}</Text>
+          <View style={styles.statsGrid}>
+            <StatCard
+              Icon={Sprout}
+              value={plants.length.toString()}
+              label={t('profile.plantsFound')}
+              iconBg="rgba(82, 183, 136, 0.15)"
+              iconColor={Colors.primaryGreen}
+              accentColor={Colors.primaryGreen}
+            />
+            <StatCard
+              Icon={Flame}
+              value={streak.toString()}
+              label={t('profile.dayStreak')}
+              iconBg="rgba(217, 119, 6, 0.13)"
+              iconColor="#D97706"
+              accentColor="#D97706"
+            />
+            <StatCard
+              Icon={Target}
+              value={plants.length > 0 ? `${totalConfidence}%` : '–'}
+              label={t('profile.avgAccuracy')}
+              iconBg="rgba(82, 183, 136, 0.15)"
+              iconColor={Colors.primaryGreen}
+              accentColor={Colors.primaryGreen}
+            />
+            <StatCard
+              Icon={Flower}
+              value={rarest.split(' ')[0]}
+              label={t('profile.rarestFind')}
+              iconBg="rgba(45, 106, 79, 0.12)"
+              iconColor={Colors.forestMid}
+              accentColor={Colors.forestMid}
+            />
+          </View>
+        </Animated.View>
 
         {/* Badge row */}
-        <View style={styles.badgeRow}>
-          {[
-            { Icon: Award,      label: t('profile.firstId') },
-            { Icon: Flower,     label: t('profile.fivePlants') },
-            { Icon: Microscope, label: t('profile.botanist') },
-          ].map((b) => (
-            <View
-              key={b.label}
-              style={[styles.badge, plants.length === 0 && styles.badgeLocked]}
-            >
-              <b.Icon size={22} color={Colors.primaryGreen} />
-              <Text style={styles.badgeLabel}>{b.label}</Text>
-            </View>
-          ))}
-        </View>
+        <Animated.View entering={FadeInDown.delay(200).duration(560)}>
+          <View style={styles.badgeRow}>
+            {[
+              { Icon: Award,      label: t('profile.firstId'),    unlocked: plants.length >= 1 },
+              { Icon: Flower,     label: t('profile.fivePlants'), unlocked: plants.length >= 5 },
+              { Icon: Microscope, label: t('profile.botanist'),   unlocked: plants.length >= 10 },
+            ].map((b) => (
+              <View
+                key={b.label}
+                style={[styles.badge, !b.unlocked && styles.badgeLocked]}
+              >
+                <b.Icon
+                  size={22}
+                  color={b.unlocked ? Colors.primaryGreen : Colors.textMuted}
+                />
+                <Text style={[styles.badgeLabel, !b.unlocked && styles.badgeLabelLocked]}>
+                  {b.label}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </Animated.View>
 
         {/* About */}
-        <View style={styles.aboutCard}>
-          <Text style={styles.aboutTitle}>{t('common.appName')}</Text>
-          <Text style={styles.aboutVersion}>{t('profile.version')}</Text>
-          <Text style={styles.aboutText}>{t('profile.aboutText')}</Text>
-        </View>
+        <Animated.View entering={FadeInDown.delay(300).duration(560)}>
+          <View style={styles.aboutCard}>
+            <Text style={styles.aboutTitle}>{t('common.appName')}</Text>
+            <Text style={styles.aboutVersion}>{t('profile.version')}</Text>
+            <Text style={styles.aboutText}>{t('profile.aboutText')}</Text>
+          </View>
+        </Animated.View>
 
         <View style={{ height: 32 }} />
       </ScrollView>
@@ -197,34 +260,50 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
   },
-  headerCard: {
+
+  // Hero card — outer wrapper carries the shadow so gradient clipping doesn't cut it
+  headerCardShadow: {
+    borderRadius: 24,
+    marginBottom: 24,
     backgroundColor: Colors.white,
+    shadowColor: Colors.shadowGreen,
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.14,
+    shadowRadius: 18,
+    elevation: 6,
+  },
+  headerCard: {
     borderRadius: 24,
     padding: 24,
     alignItems: 'center',
-    marginBottom: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    elevation: 4,
     gap: 8,
+    overflow: 'hidden',
   },
+
+  // Avatar with soft green glow
   avatarRing: {
     width: 88,
     height: 88,
     borderRadius: 44,
-    borderWidth: 3,
+    borderWidth: 2.5,
     borderColor: Colors.primaryGreen,
     padding: 3,
     marginBottom: 4,
+    shadowColor: Colors.primaryGreen,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.32,
+    shadowRadius: 10,
+    elevation: 4,
   },
   avatar: {
     flex: 1,
     borderRadius: 40,
-    backgroundColor: Colors.lightMintBg,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#000',
+    overflow: 'hidden',
+  },
+  avatarPhoto: {
+    width: '100%',
+    height: '100%',
   },
   userName: {
     fontSize: 22,
@@ -242,6 +321,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     overflow: 'hidden',
   },
+
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
@@ -255,6 +335,8 @@ const styles = StyleSheet.create({
     gap: 10,
     marginBottom: 20,
   },
+
+  // Stat card — white bg, subtle shadow, 2.5px tinted top border
   statCard: {
     flex: 1,
     minWidth: '45%',
@@ -262,25 +344,36 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     alignItems: 'center',
-    gap: 6,
+    gap: 7,
+    borderTopWidth: 2.5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 2,
+    shadowOpacity: 0.07,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  statIconCircle: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   statValue: {
-    fontSize: 22,
-    fontWeight: '800',
+    fontSize: 24,
+    fontWeight: '900',
     color: Colors.textPrimary,
     fontFamily: 'Inter_700Bold',
+    letterSpacing: -0.5,
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: 11.5,
     color: Colors.textMuted,
     fontFamily: 'Inter_400Regular',
     textAlign: 'center',
+    lineHeight: 15,
   },
+
   badgeRow: {
     flexDirection: 'row',
     gap: 12,
@@ -288,17 +381,26 @@ const styles = StyleSheet.create({
   },
   badge: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: 'rgba(82, 183, 136, 0.09)',
     borderRadius: 14,
     padding: 12,
     alignItems: 'center',
     gap: 6,
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: Colors.primaryGreen,
+    shadowColor: Colors.shadowGreen,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 1,
   },
   badgeLocked: {
-    opacity: 0.4,
+    opacity: 0.38,
+    backgroundColor: Colors.mintMid,
     borderColor: Colors.cardBorder,
+    borderWidth: 1,
+    shadowOpacity: 0,
+    elevation: 0,
   },
   badgeLabel: {
     fontSize: 11,
@@ -307,6 +409,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_600SemiBold',
     textAlign: 'center',
   },
+  badgeLabelLocked: {
+    color: Colors.textMuted,
+  },
+
   aboutCard: {
     backgroundColor: Colors.mintMid,
     borderRadius: 18,

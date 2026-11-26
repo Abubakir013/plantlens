@@ -41,11 +41,12 @@ import ca from './locales/ca.json';
 
 export type TranslationSchema = typeof en;
 
-export const translations: Record<string, TranslationSchema> = {
+// Non-English locales may be missing newer keys; runtime falls back to en via getNestedValue.
+export const translations = {
   en, es, fr, de, it, pt, ru, zh, ja, ko, ar, hi, nl, pl, tr, sv, no, da,
   fi, cs, sk, hu, ro, bg, hr, sr, uk, el, he, th, vi, id, ms, tl, bn, ur,
   fa, sw, af, ca,
-};
+} as unknown as Record<string, TranslationSchema>;
 
 export const RTL_CODES = new Set(['ar', 'he', 'ur', 'fa']);
 

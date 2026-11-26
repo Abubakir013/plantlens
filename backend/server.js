@@ -396,6 +396,7 @@ const server = http.createServer(async (req, res) => {
     });
     return res.end();
   }
+  if (req.method === 'GET' && req.url === '/health') return send(res, 200, { status: 'ok' });
   if (req.method === 'POST' && req.url === '/identify') return handleIdentify(req, res);
   if (req.method === 'POST' && req.url === '/guide') return handleGuide(req, res);
   if (req.method === 'POST' && req.url === '/diagnose') return handleDiagnose(req, res);

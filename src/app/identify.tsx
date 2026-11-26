@@ -118,28 +118,6 @@ function PulsingCorners() {
   );
 }
 
-// ── Background leaf photo decorations ────────────────────────────────────────
-function BgLeaves() {
-  return (
-    <>
-      <View style={styles.bgLeafTR} pointerEvents="none">
-        <Image
-          source={require('../../assets/images/flower-orchid.png')}
-          style={styles.bgLeafImg}
-          resizeMode="contain"
-        />
-      </View>
-      <View style={styles.bgLeafBL} pointerEvents="none">
-        <Image
-          source={require('../../assets/images/flower-tulip.png')}
-          style={styles.bgLeafImg}
-          resizeMode="contain"
-        />
-      </View>
-    </>
-  );
-}
-
 // ── Expanding ring around capture button ─────────────────────────────────────
 function CaptureRing({ active }: { active: boolean }) {
   const scale = useRef(new Animated.Value(1)).current;
@@ -366,8 +344,6 @@ export default function IdentifyScreen() {
         mode="picture"
         onCameraReady={() => setCameraReady(true)}
       />
-
-      <BgLeaves />
 
       <LinearGradient
         colors={['rgba(0,0,0,0.60)', 'transparent']}
@@ -625,31 +601,6 @@ const styles = StyleSheet.create({
     height: 26,
     borderRadius: 13,
     backgroundColor: 'rgba(255,255,255,0.35)',
-  },
-  // Background leaf decorations
-  bgLeafTR: {
-    position: 'absolute',
-    top: 52,
-    right: -24,
-    width: 130,
-    height: 155,
-    opacity: 0.10,
-    transform: [{ rotate: '18deg' }],
-    zIndex: 1,
-  },
-  bgLeafBL: {
-    position: 'absolute',
-    bottom: 160,
-    left: -24,
-    width: 120,
-    height: 142,
-    opacity: 0.10,
-    transform: [{ rotate: '-14deg' }],
-    zIndex: 1,
-  },
-  bgLeafImg: {
-    width: '100%',
-    height: '100%',
   },
   // Preview
   preview: {
