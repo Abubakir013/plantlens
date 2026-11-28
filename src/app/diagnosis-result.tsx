@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   AccessibilityInfo,
+  Alert,
   Animated,
   Image,
   LayoutAnimation,
@@ -336,22 +337,28 @@ export default function DiagnosisResultScreen() {
   const treatment = result.treatment ?? { urgency: '', steps: [], materialsNeeded: [] };
   const prevention = result.prevention ?? { summary: '', tips: [] };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (saved || !imageUri) return;
-    savePlant({
-      id: `diag_${Date.now()}`,
-      name: result.plantName || t('diagnose.title'),
-      scientificName: diagnosis.problemName,
-      confidence: diagnosis.confidence,
-      imageUri,
-      dateIdentified: new Date().toISOString(),
-      watering: '',
-      light: '',
-      temperature: '',
-      toxicity: '',
-      funFact: result.expectedRecovery ?? '',
-    });
-    setSaved(true);
+    try {
+      await savePlant({
+        id: `diag_${Date.now()}`,
+        name: result.plantName || t('diagnose.title'),
+        scientificName: diagnosis.problemName,
+        confidence: diagnosis.confidence,
+        imageUri,
+        dateIdentified: new Date().toISOString(),
+        watering: '',
+        light: '',
+        temperature: '',
+        toxicity: '',
+        funFact: result.expectedRecovery ?? '',
+      });
+      setSaved(true);
+      diagnosisStore.clear();
+      router.replace('/(tabs)/collection');
+    } catch {
+      Alert.alert(t('common.error'), `${result.plantName} ${t('result.savedMessage')}`);
+    }
   };
 
   const CARD_DELAY_BASE = 180;

@@ -8,7 +8,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.1.7:3000"
+        "EXPO_PUBLIC_API_URL": "https://plantlens-production.up.railway.app"
       }
     },
     "preview": {
@@ -17,7 +17,7 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.1.7:3000"
+        "EXPO_PUBLIC_API_URL": "https://plantlens-production.up.railway.app"
       }
     },
     "production": {
@@ -26,7 +26,7 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://TODO_REPLACE_WITH_PUBLIC_BACKEND_URL"
+        "EXPO_PUBLIC_API_URL": "https://plantlens-production.up.railway.app"
       }
     }
   },

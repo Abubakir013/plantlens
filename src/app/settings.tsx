@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { openBrowserAsync } from 'expo-web-browser';
 import { router } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -17,6 +18,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 
+import { PAYMENTS_ENABLED } from '@/constants/config';
 import { Colors } from '@/constants/colors';
 import { LANGUAGES } from '@/constants/languages';
 import { useLocale } from '@/hooks/useLocale';
@@ -27,6 +29,8 @@ const STORE_URL =
   Platform.OS === 'ios'
     ? 'https://apps.apple.com/app/id000000000'
     : 'https://play.google.com/store/apps/details?id=com.plantlens';
+const PRIVACY_URL = 'https://plantlens-production.up.railway.app/privacy';
+const SUPPORT_URL = 'https://plantlens-production.up.railway.app/support';
 
 // ── Row icons (react-native-svg, consistent 2px stroke) ──
 
@@ -342,15 +346,15 @@ export default function SettingsScreen() {
           <Row
             icon={<IconHelp />}
             label={t('settings.helpCenter')}
-            onPress={() => Alert.alert(t('settings.helpCenter'), t('settings.helpText'))}
+            onPress={() => openBrowserAsync(SUPPORT_URL).catch(() => {})}
             a11y={t('settings.helpCenter')}
           />
           <RowDivider />
           <Row
             icon={<IconMail />}
             label={t('settings.contact')}
-            subtitle="support@plantlens.app"
-            onPress={() => Linking.openURL('mailto:support@plantlens.app').catch(() => {})}
+            subtitle="aabdulazanov88@gmail.com"
+            onPress={() => openBrowserAsync(SUPPORT_URL).catch(() => {})}
             a11y={t('settings.contact')}
           />
         </Section>
@@ -382,16 +386,18 @@ export default function SettingsScreen() {
           />
         </Section>
 
-        {/* 4 — Членство */}
-        <Section title={t('settings.membership')} anim={{ op: a3op, y: a3y }}>
-          <Row
-            icon={<IconCrown />}
-            label={t('settings.freePlan')}
-            subtitle={t('settings.freePlanDesc')}
-            onPress={() => Alert.alert(t('settings.membership'), t('settings.premiumSoon'))}
-            a11y={t('settings.membership')}
-          />
-        </Section>
+        {/* 4 — Членство (hidden until PAYMENTS_ENABLED = true) */}
+        {PAYMENTS_ENABLED && (
+          <Section title={t('settings.membership')} anim={{ op: a3op, y: a3y }}>
+            <Row
+              icon={<IconCrown />}
+              label={t('settings.freePlan')}
+              subtitle={t('settings.freePlanDesc')}
+              onPress={() => Alert.alert(t('settings.membership'), t('settings.premiumSoon'))}
+              a11y={t('settings.membership')}
+            />
+          </Section>
+        )}
 
         {/* 5 — Счёт */}
         <Section title={t('settings.account')} anim={{ op: a4op, y: a4y }}>
@@ -408,14 +414,14 @@ export default function SettingsScreen() {
           <Row
             icon={<IconShield />}
             label={t('settings.privacyPolicy')}
-            onPress={() => Linking.openURL('https://plantlens.app/privacy').catch(() => {})}
+            onPress={() => openBrowserAsync(PRIVACY_URL).catch(() => {})}
             a11y={t('settings.privacyPolicy')}
           />
           <RowDivider />
           <Row
             icon={<IconShield />}
             label={t('settings.termsOfService')}
-            onPress={() => Linking.openURL('https://plantlens.app/terms').catch(() => {})}
+            onPress={() => openBrowserAsync(PRIVACY_URL).catch(() => {})}
             a11y={t('settings.termsOfService')}
           />
         </Section>

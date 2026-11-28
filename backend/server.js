@@ -386,6 +386,106 @@ async function handleDiagnose(req, res) {
   }
 }
 
+// ─── Static HTML pages ────────────────────────────────────────────────────────
+function sendHtml(res, html) {
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end(html);
+}
+
+const PRIVACY_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlantLens Privacy Policy</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F3F6F1;color:#0D1F15;padding:24px 20px 60px}
+  .card{background:#fff;border-radius:16px;padding:24px;max-width:640px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+  h1{font-size:22px;font-weight:700;color:#1B4332;margin-bottom:4px}
+  .date{font-size:13px;color:#7A9080;margin-bottom:24px}
+  h2{font-size:15px;font-weight:700;color:#2D6A4F;margin:20px 0 8px}
+  p,li{font-size:14px;line-height:1.65;color:#3D5247}
+  ul{padding-left:18px;margin-top:4px}
+  li{margin-bottom:4px}
+  a{color:#2D6A4F}
+  .divider{height:1px;background:#D8E4DC;margin:20px 0}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>PlantLens Privacy Policy</h1>
+  <p class="date">Effective date: November 28, 2026</p>
+
+  <p>PlantLens identifies plants and diagnoses plant health from photos. We collect as little data as possible.</p>
+
+  <h2>What we process</h2>
+  <ul>
+    <li><strong>Photos you take or choose:</strong> sent to our server and forwarded to our AI provider (Anthropic) only to identify the plant or diagnose its health. We do not store your photos on our server.</li>
+    <li><strong>App language:</strong> sent with each request so results come back in your language.</li>
+    <li><strong>Technical logs:</strong> request time, size and errors. Logs contain no photos and nothing that identifies you.</li>
+  </ul>
+
+  <h2>What stays on your device</h2>
+  <p>Your plant collection, saved photos, care guides, statistics and settings are stored only on your device. Deleting the app deletes them.</p>
+
+  <h2>What we do not do</h2>
+  <ul>
+    <li>No account or registration — we do not collect your name, email or phone number.</li>
+    <li>No ads, no tracking, no analytics profiles, no sale or sharing of data for marketing.</li>
+  </ul>
+
+  <h2>Permissions</h2>
+  <ul>
+    <li><strong>Camera and Photo Library:</strong> to take or choose plant photos.</li>
+    <li><strong>Notifications (optional):</strong> care reminders, scheduled on your device.</li>
+  </ul>
+
+  <h2>Third parties</h2>
+  <p>Anthropic (AI analysis of photos) and Railway (server hosting) process data on our behalf.</p>
+
+  <h2>Children</h2>
+  <p>PlantLens is not directed to children under 13 and we do not knowingly collect their data.</p>
+
+  <h2>Your choices</h2>
+  <p>You can delete all app data by deleting the app. Since we keep no personal data on our servers, there is nothing to delete there. Questions: <a href="mailto:aabdulazanov88@gmail.com">aabdulazanov88@gmail.com</a>.</p>
+
+  <div class="divider"></div>
+
+  <h2>Changes</h2>
+  <p>We may update this policy; the date above shows the latest version.</p>
+</div>
+</body>
+</html>`;
+
+const SUPPORT_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlantLens Support</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F3F6F1;color:#0D1F15;padding:24px 20px 60px}
+  .card{background:#fff;border-radius:16px;padding:24px;max-width:640px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+  h1{font-size:22px;font-weight:700;color:#1B4332;margin-bottom:16px}
+  p{font-size:14px;line-height:1.65;color:#3D5247;margin-bottom:12px}
+  a{color:#2D6A4F;font-weight:600;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .leaf{font-size:32px;margin-bottom:12px;display:block}
+</style>
+</head>
+<body>
+<div class="card">
+  <span class="leaf">🌿</span>
+  <h1>PlantLens Support</h1>
+  <p>Have a question or run into a problem? We&rsquo;re here to help.</p>
+  <p>Email us at <a href="mailto:aabdulazanov88@gmail.com">aabdulazanov88@gmail.com</a> and we&rsquo;ll reply within a few days.</p>
+  <p>Please include a brief description of the issue and, if relevant, the device and OS version you&rsquo;re using.</p>
+</div>
+</body>
+</html>`;
+
 // ─── Server ───────────────────────────────────────────────────────────────────
 const server = http.createServer(async (req, res) => {
   if (req.method === 'OPTIONS') {
@@ -397,6 +497,8 @@ const server = http.createServer(async (req, res) => {
     return res.end();
   }
   if (req.method === 'GET' && req.url === '/health') return send(res, 200, { status: 'ok' });
+  if (req.method === 'GET' && req.url === '/privacy') return sendHtml(res, PRIVACY_HTML);
+  if (req.method === 'GET' && req.url === '/support') return sendHtml(res, SUPPORT_HTML);
   if (req.method === 'POST' && req.url === '/identify') return handleIdentify(req, res);
   if (req.method === 'POST' && req.url === '/guide') return handleGuide(req, res);
   if (req.method === 'POST' && req.url === '/diagnose') return handleDiagnose(req, res);

@@ -38,6 +38,7 @@ import Svg, {
 } from 'react-native-svg';
 import { Bug, Droplet, Leaf, Ruler, Trophy } from 'lucide-react-native';
 
+import { PAYMENTS_ENABLED } from '@/constants/config';
 import { useLocale } from '@/hooks/useLocale';
 import { getOnboardingT, OStr } from '@/i18n/onboarding-strings';
 
@@ -805,7 +806,7 @@ function RV_Reveal({ t, data, onNext, step }: { t: TFn; data: OData; onNext: () 
         );
       })}
       <View style={{ height: 28 }} />
-      <BouncyBtn label={t('rv_cta')} onPress={onNext} style={{ width: SW - 64 }} />
+      <BouncyBtn label={PAYMENTS_ENABLED ? t('rv_cta') : t('continue')} onPress={onNext} style={{ width: SW - 64 }} />
     </View>
   );
 }
@@ -937,18 +938,26 @@ export default function OnboardingScreen() {
     });
   }, []);
 
+  const finish = useCallback(async () => {
+    if (!PAYMENTS_ENABLED) {
+      await AsyncStorage.setItem(PREMIUM_KEY, 'true');
+    }
+    await AsyncStorage.setItem(ONBOARDING_KEY, 'true');
+    router.replace('/(tabs)');
+  }, []);
+
   const goNext = useCallback(() => {
-    if (step < TOTAL - 1) changeStep(step + 1);
-  }, [step, changeStep]);
+    let next = step + 1;
+    if (!PAYMENTS_ENABLED) {
+      if (next === 20) next = 21; // skip price-comparison screen
+      if (next === 28) { finish(); return; } // skip paywall → finish directly
+    }
+    if (next < TOTAL) changeStep(next);
+  }, [step, changeStep, finish]);
 
   const goBack = useCallback(() => {
     if (step > 0 && !NO_BACK.has(step)) changeStep(step - 1);
   }, [step, changeStep]);
-
-  const finish = useCallback(async () => {
-    await AsyncStorage.setItem(ONBOARDING_KEY, 'true');
-    router.replace('/(tabs)');
-  }, []);
 
   const toggleStruggle = useCallback((v: string) => {
     setData((d) => ({
